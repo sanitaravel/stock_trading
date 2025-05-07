@@ -1,0 +1,30 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div id="content-main">
+    <div class="module">
+        <h2>Stock Price Update Results</h2>
+        <div style="margin: 20px;">
+            {% if updated_count > 0 %}
+            <div style="background-color: #dff0d8; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+                <p style="color: #3c763d; margin: 0;">
+                    <strong>Success!</strong> Updated prices for {{ updated_count }} stocks.
+                </p>
+            </div>
+            {% else %}
+            <div style="background-color: #fcf8e3; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+                <p style="color: #8a6d3b; margin: 0;">
+                    <strong>Note:</strong> No stock prices were updated. This could be because there are no stocks in the database,
+                    or because the markets were closed today.
+                </p>
+            </div>
+            {% endif %}
+            
+            <div style="margin-top: 20px;">
+                <a href="{% url 'admin:stock_logic_stock_changelist' %}" class="button">Return to Stocks</a>
+                <a href="{% url 'admin:index' %}" class="button" style="margin-left: 10px;">Return to Admin Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

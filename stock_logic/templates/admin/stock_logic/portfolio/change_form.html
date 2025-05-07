@@ -1,0 +1,107 @@
+{% extends "admin/change_form.html" %}
+
+{% block admin_change_form_document_ready %}
+{{ block.super }}
+<script type="text/javascript">
+(function($) {
+    $(document).ready(function() {
+        // Handle dynamically added inline forms
+        function setupStockPriceAutoPopulate() {
+            $('.field-stock select').each(function() {
+                // Remove existing handlers to prevent duplicate binding
+                $(this).off('change.stockprice');
+                
+                // Add a new change handler
+                $(this).on('change.stockprice', function() {
+                    var $row = $(this).closest('tr');
+                    var $priceField = $row.find('.field-initial_price input');
+                    var $quantityField = $row.find('.field-quantity input');
+                    var $totalField = $row.find('.field-total_investment input');
+                    var stockId = $(this).val();
+                    
+                    if (stockId) {
+                        $.ajax({
+                            url: '/stock-logic/api/get-stock-price/',
+                            data: {
+                                'stock_id': stockId
+                            },
+                            dataType: 'json',
+                            success: function(data) {
+                                $priceField.val(data.formatted_price);
+                                
+                                // Only update one field, not both
+                                if ($totalField.val() && $totalField.val().trim() !== '') {
+                                    // If total investment is entered, clear quantity
+                                    $quantityField.val('');
+                                    // Calculate quantity but don't update the field
+                                    // (for display purposes only)
+                                    var total = parseFloat($totalField.val());
+                                    var price = parseFloat(data.formatted_price);
+                                } else if ($quantityField.val() && $quantityField.val().trim() !== '') {
+                                    // If quantity is entered, clear total investment
+                                    $totalField.val('');
+                                }
+                            },
+                            error: function(xhr, textStatus, errorThrown) {
+                                console.error("Error fetching stock price:", errorThrown);
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // Add change handlers to quantity and total investment fields
+            $('.field-quantity input').each(function() {
+                $(this).off('change.stockprice');
+                $(this).on('change.stockprice', function() {
+                    var $row = $(this).closest('tr');
+                    var $totalField = $row.find('.field-total_investment input');
+                    
+                    // If quantity is entered, clear total investment
+                    if ($(this).val() && $(this).val().trim() !== '') {
+                        $totalField.val('');
+                    }
+                });
+            });
+            
+            $('.field-total_investment input').each(function() {
+                $(this).off('change.stockprice');
+                $(this).on('change.stockprice', function() {
+                    var $row = $(this).closest('tr');
+                    var $quantityField = $row.find('.field-quantity input');
+                    
+                    // If total investment is entered, clear quantity
+                    if ($(this).val() && $(this).val().trim() !== '') {
+                        $quantityField.val('');
+                    }
+                });
+            });
+        }
+        
+        // Initial setup
+        setupStockPriceAutoPopulate();
+        
+        // Set up for dynamically added rows (when "Add another" is clicked)
+        $('.add-row a').click(function() {
+            // Use setTimeout to ensure the new row has been added to the DOM
+            setTimeout(setupStockPriceAutoPopulate, 100);
+        });
+        
+        // Before form submission, make sure we're not sending both fields
+        $('form').submit(function() {
+            $('.field-quantity input').each(function() {
+                var $row = $(this).closest('tr');
+                var $totalField = $row.find('.field-total_investment input');
+                
+                if ($(this).val() && $(this).val().trim() !== '' && 
+                    $totalField.val() && $totalField.val().trim() !== '') {
+                    // If both fields have values, prioritize quantity
+                    $totalField.val('');
+                }
+            });
+            return true;
+        });
+    });
+})(django.jQuery);
+</script>
+{% endblock %}
