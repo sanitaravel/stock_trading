@@ -1,3 +1,244 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from stock_logic.models import Portfolio, PortfolioPosition, Stock, StockPrice
+import json
+from django.db.models import Max, Case, When
+from datetime import datetime, timedelta
 
-# Create your views here.
+def index(request):
+    """Home page with portfolio leaderboard and comparison charts"""
+    portfolios = Portfolio.objects.all()
+    
+    # Get performance data for leaderboard
+    portfolio_data = [{
+        'id': p.id,
+        'name': p.name,
+        'current_value': float(p.current_value()),
+        'initial_value': float(p.initial_value()),
+        'performance': float(p.performance()),
+    } for p in portfolios]
+    
+    # Sort portfolios by performance (descending)
+    portfolio_data.sort(key=lambda x: x['performance'], reverse=True)
+    
+    # Create a sorted list of portfolio objects based on the sorted portfolio_data
+    portfolio_ids = [item['id'] for item in portfolio_data]
+    # Use the Case/When to preserve the sort order when querying
+    preserved_order = Case(*[When(id=pk, then=pos) for pos, pk in enumerate(portfolio_ids)])
+    sorted_portfolios = Portfolio.objects.filter(id__in=portfolio_ids).order_by(preserved_order)
+    
+    context = {
+        'portfolios': sorted_portfolios,
+        'portfolio_data_json': json.dumps(portfolio_data),
+    }
+    return render(request, 'stock_visualization/index.html', context)
+
+def portfolio_detail(request, portfolio_id):
+    """Individual portfolio detail page"""
+    portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
+    
+    # Get positions and sort them by performance (descending)
+    positions = sorted(
+        portfolio.positions.select_related('stock').all(),
+        key=lambda pos: pos.performance(),
+        reverse=True
+    )
+    
+    # Get position data for charts
+    position_data = [{
+        'id': pos.id,
+        'stock_symbol': pos.stock.symbol,
+        'stock_name': pos.stock.company_name,
+        'quantity': float(pos.quantity) if pos.quantity else 0,
+        'initial_price': float(pos.initial_price),
+        'current_value': float(pos.current_value()),
+        'performance': float(pos.performance()),
+    } for pos in positions]
+    
+    context = {
+        'portfolio': portfolio,
+        'positions': positions,
+        'position_data_json': json.dumps(position_data),
+        'portfolio_value': portfolio.current_value(),
+        'portfolio_initial': portfolio.initial_value(),
+        'portfolio_performance': portfolio.performance(),
+    }
+    return render(request, 'stock_visualization/portfolio_detail.html', context)
+
+def portfolio_history_data(request, portfolio_id):
+    """API endpoint to get portfolio history data for charts"""
+    portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
+    positions = portfolio.positions.select_related('stock').all()
+    
+    # Get data from the last 30 days
+    end_date = datetime.now().date()
+    start_date = end_date - timedelta(days=30)
+    
+    # Get all dates in the period where we have price data
+    dates = StockPrice.objects.filter(
+        stock__in=[pos.stock for pos in positions],
+        date__gte=start_date, 
+        date__lte=end_date
+    ).values('date').distinct().order_by('date')
+    
+    history_data = {
+        'labels': [],
+        'values': []
+    }
+    
+    # For each date, calculate portfolio value based on positions and stock prices
+    for date_obj in dates:
+        date = date_obj['date']
+        history_data['labels'].append(date.strftime('%Y-%m-%d'))
+        
+        total_value = 0
+        for pos in positions:
+            # Get the stock price on this date if available
+            price = StockPrice.objects.filter(
+                stock=pos.stock, 
+                date__lte=date
+            ).order_by('-date').first()
+            
+            if price and pos.quantity:
+                total_value += float(price.close_price) * float(pos.quantity)
+                
+        history_data['values'].append(round(total_value, 2))
+    
+    # If we have no historical data, create some placeholder data
+    if not history_data['labels']:
+        history_data = {
+            'labels': [(end_date - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(30, 0, -1)],
+            'values': [float(portfolio.current_value()) for _ in range(30)]
+        }
+    
+    return JsonResponse(history_data)
+
+def all_portfolios_history_data(request):
+    """API endpoint to get history data for all portfolios"""
+    portfolios = Portfolio.objects.all()
+    
+    # Get data from the last 30 days
+    end_date = datetime.now().date()
+    start_date = end_date - timedelta(days=30)
+    
+    # Get all dates in the period where we have price data
+    dates = StockPrice.objects.filter(
+        date__gte=start_date, 
+        date__lte=end_date
+    ).values('date').distinct().order_by('date')
+    
+    data = {
+        'labels': [],
+        'datasets': []
+    }
+    
+    date_list = []
+    for date_obj in dates:
+        date = date_obj['date']
+        date_list.append(date)
+        data['labels'].append(date.strftime('%Y-%m-%d'))
+    
+    colors = [
+        '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b',
+        '#6f42c1', '#5a5c69', '#858796', '#3498db', '#e67e22'
+    ]
+    
+    # For each portfolio, calculate values over time
+    for i, portfolio in enumerate(portfolios):
+        positions = portfolio.positions.select_related('stock').all()
+        color_index = i % len(colors)
+        
+        values = []
+        for date in date_list:
+            total_value = 0
+            for pos in positions:
+                # Get the stock price on this date if available
+                price = StockPrice.objects.filter(
+                    stock=pos.stock, 
+                    date__lte=date
+                ).order_by('-date').first()
+                
+                if price and pos.quantity:
+                    total_value += float(price.close_price) * float(pos.quantity)
+            
+            values.append(round(total_value, 2))
+        
+        # If we have no values (no historical data), use current value
+        if not values and not date_list:
+            # Create placeholder data
+            data['labels'] = [(end_date - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(30, 0, -1)]
+            values = [float(portfolio.current_value()) for _ in range(30)]
+        
+        dataset = {
+            'label': portfolio.name,
+            'data': values,
+            'backgroundColor': 'transparent',
+            'borderColor': colors[color_index],
+            'pointBackgroundColor': colors[color_index],
+            'borderWidth': 2,
+            'pointRadius': 3,
+            'lineTension': 0.3,
+        }
+        data['datasets'].append(dataset)
+    
+    return JsonResponse(data)
+
+def stock_detail(request, stock_id):
+    """Individual stock detail page"""
+    stock = get_object_or_404(Stock, pk=stock_id)
+    
+    # Get price history
+    end_date = datetime.now().date()
+    start_date = end_date - timedelta(days=90)  # Last 90 days
+    
+    price_history = StockPrice.objects.filter(
+        stock=stock,
+        date__gte=start_date,
+        date__lte=end_date
+    ).order_by('date')
+    
+    # Get portfolios that include this stock
+    portfolio_positions = []
+    portfolios_with_stock = Portfolio.objects.filter(positions__stock=stock).distinct()
+    
+    # Prepare portfolio position data for each portfolio containing this stock
+    for portfolio in portfolios_with_stock:
+        try:
+            position = PortfolioPosition.objects.get(portfolio=portfolio, stock=stock)
+            portfolio_positions.append({
+                'portfolio': portfolio,
+                'position': position
+            })
+        except PortfolioPosition.DoesNotExist:
+            continue
+    
+    # Get latest price and change
+    latest_price = stock.prices.order_by('-date').first()
+    previous_price = stock.prices.filter(date__lt=latest_price.date).order_by('-date').first() if latest_price else None
+    
+    price_change = 0
+    price_change_percent = 0
+    
+    if latest_price and previous_price:
+        price_change = latest_price.close_price - previous_price.close_price
+        price_change_percent = (price_change / previous_price.close_price) * 100
+    
+    # Prepare data for chart
+    labels = [price.date.strftime('%Y-%m-%d') for price in price_history]
+    values = [float(price.close_price) for price in price_history]
+    
+    chart_data = json.dumps({
+        'labels': labels,
+        'values': values
+    })
+    
+    context = {
+        'stock': stock,
+        'price_history': price_history,
+        'portfolio_positions': portfolio_positions,
+        'chart_data': chart_data,
+        'latest_price': latest_price,
+        'price_change': price_change,
+        'price_change_percent': price_change_percent
+    }
+    return render(request, 'stock_visualization/stock_detail.html', context)

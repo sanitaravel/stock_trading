@@ -1,0 +1,151 @@
+{% extends 'stock_visualization/base.html' %}
+
+{% block title %}{{ portfolio.name }} - Portfolio Details{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>{{ portfolio.name }}</h2>
+    <a href="{% url 'stock_visualization:index' %}" class="btn btn-outline-primary">
+        <i class="bi bi-arrow-left"></i> Back to Leaderboard
+    </a>
+</div>
+
+<!-- Add portfolio description -->
+{% if portfolio.description %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-body">
+                <p class="lead mb-0">{{ portfolio.description }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h5 class="card-title">Current Value</h5>
+                <h3 class="text-primary">${{ portfolio_value|floatformat:2 }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h5 class="card-title">Initial Investment</h5>
+                <h3>${{ portfolio_initial|floatformat:2 }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h5 class="card-title">Performance</h5>
+                <h3 class="{% if portfolio_performance > 0 %}text-success{% elif portfolio_performance < 0 %}text-danger{% endif %}">
+                    {% if portfolio_performance > 0 %}+{% endif %}{{ portfolio_performance|floatformat:2 }}%
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="m-0">Portfolio Value Over Time</h5>
+            </div>
+            <div class="card-body chart-container">
+                <canvas id="portfolioHistoryChart" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-7">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="m-0">Portfolio Positions</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Stock</th>
+                                <th>Quantity</th>
+                                <th>Current Value</th>
+                                <th>Initial Price</th>
+                                <th>Performance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for position in positions %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'stock_visualization:stock_detail' position.stock.id %}">
+                                        {{ position.stock.symbol }} ({{ position.stock.company_name }})
+                                    </a>
+                                </td>
+                                <td>{{ position.quantity|floatformat:2 }}</td>
+                                <td>${{ position.current_value|floatformat:2 }}</td>
+                                <td>${{ position.initial_price|floatformat:2 }}</td>
+                                <td>
+                                    {% with performance=position.performance %}
+                                    <span class="badge {% if performance > 0 %}bg-success{% elif performance < 0 %}bg-danger{% else %}bg-secondary{% endif %}">
+                                        {% if performance > 0 %}+{% endif %}{{ performance|floatformat:2 }}%
+                                    </span>
+                                    {% endwith %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center">No positions in this portfolio</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="m-0">Portfolio Allocation</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="allocationChart" height="260"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="m-0">Position Performance</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="positionPerformanceChart" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Portfolio ID for API calls
+    const portfolioId = {{ portfolio.id }};
+    
+    // Position data from the server
+    const positionData = {{ position_data_json|safe }};
+</script>
+<script src="/static/stock_visualization/js/portfolio.js"></script>
+{% endblock %}

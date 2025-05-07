@@ -1,0 +1,692 @@
+openapi: 3.0.0
+info:
+  title: Stock Trading API
+  description: API for managing stocks, portfolios and price tracking
+  version: 1.0.0
+  
+servers:
+  - url: /stock-logic/api
+    description: API base URL
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  
+  schemas:
+    Stock:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        symbol:
+          type: string
+          example: "AAPL"
+        company_name:
+          type: string
+          example: "Apple Inc."
+        sector:
+          type: string
+          example: "Technology"
+        latest_price:
+          type: number
+          format: float
+          example: 145.86
+        price_change:
+          type: object
+          properties:
+            change:
+              type: number
+              format: float
+              example: 2.5
+            percent:
+              type: number
+              format: float
+              example: 1.75
+    
+    StockPrice:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        date:
+          type: string
+          format: date
+          example: "2023-05-15"
+        price_timestamp:
+          type: string
+          format: date-time
+          example: "2023-05-15T16:00:00Z"
+        open_price:
+          type: number
+          format: float
+          example: 142.50
+        close_price:
+          type: number
+          format: float
+          example: 145.86
+        high_price:
+          type: number
+          format: float
+          example: 146.20
+        low_price:
+          type: number
+          format: float
+          example: 142.10
+        volume:
+          type: integer
+          format: int64
+          example: 75000000
+        last_updated:
+          type: string
+          format: date-time
+          example: "2023-05-15T16:30:00Z"
+    
+    Portfolio:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: "Tech Portfolio"
+        description:
+          type: string
+          example: "Portfolio focused on technology stocks"
+        created_at:
+          type: string
+          format: date-time
+          example: "2023-01-01T00:00:00Z"
+        last_updated:
+          type: string
+          format: date-time
+          example: "2023-05-15T14:30:00Z"
+        current_value:
+          type: number
+          format: float
+          example: 10500.75
+        initial_value:
+          type: number
+          format: float
+          example: 10000.00
+        performance:
+          type: number
+          format: float
+          example: 5.01
+        positions_count:
+          type: integer
+          example: 5
+        positions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PortfolioPosition'
+    
+    PortfolioPosition:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        portfolio:
+          type: integer
+          format: int64
+          example: 1
+        stock:
+          type: integer
+          format: int64
+          example: 1
+        stock_symbol:
+          type: string
+          example: "AAPL"
+        stock_name:
+          type: string
+          example: "Apple Inc."
+        quantity:
+          type: number
+          format: float
+          example: 10.0
+        total_investment:
+          type: number
+          format: float
+          example: 1450.00
+        initial_price:
+          type: number
+          format: float
+          example: 145.00
+        purchase_date:
+          type: string
+          format: date
+          example: "2023-01-15"
+        current_value:
+          type: number
+          format: float
+          example: 1458.60
+        performance:
+          type: number
+          format: float
+          example: 0.59
+  
+  responses:
+    UnauthorizedError:
+      description: Authentication information is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: "Authentication credentials were not provided."
+
+security:
+  - bearerAuth: []
+
+paths:
+  /stocks/:
+    get:
+      summary: Retrieve a list of stocks
+      description: Get all stocks with optional filtering
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Search by symbol, company name, or sector
+        - in: query
+          name: ordering
+          schema:
+            type: string
+          description: Field to order results by (prefix with - for descending order)
+      responses:
+        '200':
+          description: A list of stocks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Stock'
+    post:
+      summary: Create a new stock
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Stock'
+      responses:
+        '201':
+          description: Stock created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stock'
+  
+  /stocks/{id}/:
+    get:
+      summary: Retrieve a specific stock
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID of the stock to retrieve
+      responses:
+        '200':
+          description: Stock details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stock'
+        '404':
+          description: Stock not found
+    
+    put:
+      summary: Update a specific stock
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID of the stock to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Stock'
+      responses:
+        '200':
+          description: Stock updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stock'
+    
+    delete:
+      summary: Delete a specific stock
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID of the stock to delete
+      responses:
+        '204':
+          description: Stock deleted successfully
+  
+  /stocks/update_prices/:
+    post:
+      summary: Update prices for all stocks
+      description: Fetch latest market data and update prices for all stocks in the database
+      responses:
+        '200':
+          description: Prices updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  updated_count:
+                    type: integer
+                    example: 10
+                  message:
+                    type: string
+                    example: "Updated prices for 10 stocks"
+  
+  /stocks/{id}/price_history/:
+    get:
+      summary: Get historical price data for a specific stock
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID of the stock
+        - in: query
+          name: start_date
+          schema:
+            type: string
+            format: date
+          description: Filter by start date (YYYY-MM-DD)
+        - in: query
+          name: end_date
+          schema:
+            type: string
+            format: date
+          description: Filter by end date (YYYY-MM-DD)
+      responses:
+        '200':
+          description: Historical price data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StockPrice'
+  
+  /portfolios/:
+    get:
+      summary: Retrieve a list of portfolios
+      responses:
+        '200':
+          description: A list of portfolios
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Portfolio'
+    
+    post:
+      summary: Create a new portfolio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Tech Portfolio"
+                description:
+                  type: string
+                  example: "Portfolio focused on technology stocks"
+      responses:
+        '201':
+          description: Portfolio created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Portfolio'
+  
+  /portfolios/{id}/:
+    get:
+      summary: Retrieve a specific portfolio
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID of the portfolio to retrieve
+      responses:
+        '200':
+          description: Portfolio details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Portfolio'
+        '404':
+          description: Portfolio not found
+    
+    put:
+      summary: Update a specific portfolio
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID of the portfolio to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Updated Portfolio Name"
+                description:
+                  type: string
+                  example: "Updated portfolio description"
+      responses:
+        '200':
+          description: Portfolio updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Portfolio'
+    
+    delete:
+      summary: Delete a specific portfolio
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID of the portfolio to delete
+      responses:
+        '204':
+          description: Portfolio deleted successfully
+  
+  /portfolios/{id}/add_position/:
+    post:
+      summary: Add a new position to a portfolio
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID of the portfolio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock:
+                  type: integer
+                  example: 1
+                quantity:
+                  type: number
+                  format: float
+                  example: 10.0
+                initial_price:
+                  type: number
+                  format: float
+                  example: 145.00
+                total_investment:
+                  type: number
+                  format: float
+                  example: 1450.00
+                purchase_date:
+                  type: string
+                  format: date
+                  example: "2023-05-15"
+      responses:
+        '201':
+          description: Position added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioPosition'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+  
+  /positions/:
+    get:
+      summary: Retrieve a list of portfolio positions
+      responses:
+        '200':
+          description: A list of portfolio positions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PortfolioPosition'
+    
+    post:
+      summary: Create a new portfolio position
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortfolioPosition'
+      responses:
+        '201':
+          description: Position created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioPosition'
+
+  /positions/{id}/:
+    get:
+      summary: Retrieve a specific portfolio position
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID of the position to retrieve
+      responses:
+        '200':
+          description: Position details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioPosition'
+        '404':
+          description: Position not found
+    
+    put:
+      summary: Update a specific portfolio position
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID of the position to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortfolioPosition'
+      responses:
+        '200':
+          description: Position updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioPosition'
+    
+    delete:
+      summary: Delete a specific portfolio position
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID of the position to delete
+      responses:
+        '204':
+          description: Position deleted successfully
+  
+  /stock-prices/:
+    get:
+      summary: Retrieve a list of stock prices
+      parameters:
+        - in: query
+          name: stock_id
+          schema:
+            type: integer
+          description: Filter by stock ID
+        - in: query
+          name: ordering
+          schema:
+            type: string
+          description: Field to order results by (e.g., date, price_timestamp)
+      responses:
+        '200':
+          description: A list of stock prices
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StockPrice'
+  
+  /stock-prices/fetch_latest/:
+    post:
+      summary: Fetch the latest price for a specific stock symbol
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                symbol:
+                  type: string
+                  example: "AAPL"
+      responses:
+        '200':
+          description: Latest price fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockPrice'
+        '400':
+          description: Symbol is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Symbol is required"
+        '404':
+          description: Stock not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Could not fetch data for this symbol"

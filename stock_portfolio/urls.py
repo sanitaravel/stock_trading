@@ -44,6 +44,7 @@ urlpatterns = [
     
     # API v1 endpoints
     path('api/v1/', include('stock_logic.urls')),
+    path('stock-visualization/', include('stock_visualization.urls')),
     
     # Authentication endpoints
     path('api/auth/token/', obtain_auth_token, name='api_token_auth'),
