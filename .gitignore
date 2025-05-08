@@ -75,6 +75,7 @@ schema/
 .env.prod
 .env.staging
 gunicorn.conf.py
+*.md
 
 # Node.js (for frontend if applicable)
 node_modules/
