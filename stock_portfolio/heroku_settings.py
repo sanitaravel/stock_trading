@@ -19,21 +19,24 @@ if custom_domain:
 # Add localhost for local testing with heroku_settings
 ALLOWED_HOSTS += ['localhost', '127.0.0.1']
 
-# Configure database - use Heroku's PostgreSQL configuration
+# IMPORTANT: This completely replaces the DATABASES setting from settings.py
+# Parse database configuration from $DATABASE_URL
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:
-    # Replace the entire default configuration with Heroku's
     DATABASES = {
-        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+        'default': dj_database_url.parse(DATABASE_URL)
     }
 else:
-    # For local development only, not on Heroku
+    # Fallback for local development
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+
+# Print the actual database configuration for debugging (this will show in Heroku logs)
+print(f"Database config: ENGINE={DATABASES['default']['ENGINE']}")
 
 # Static files configuration
 STATIC_ROOT = BASE_DIR / 'staticfiles'
