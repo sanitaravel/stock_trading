@@ -24,6 +24,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'stock_visualization:index' %}">Leaderboard</a>
                     </li>
+                    <!-- Add new navigation items for sectors and industries -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'stock_visualization:sector_list' %}">Sectors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'stock_visualization:industry_list' %}">Industries</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/" target="_blank">Admin</a>
                     </li>

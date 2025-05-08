@@ -61,22 +61,28 @@ html {
 }
 
 .card-body canvas {
-    min-height: 300px;
     width: 100% !important;
-    height: 100% !important;
+    height: auto !important;
+    max-height: 100%;
 }
 
 .chart-container {
     position: relative;
-    height: 400px;
     width: 100%;
-    min-height: 300px;
+    min-height: 350px;
+    height: auto;
 }
 
 .chart-container canvas {
     width: 100% !important;
     height: auto !important;
     max-height: 100%;
+}
+
+/* Add margin below chart elements to prevent cut-off */
+.chart-container > div,
+.chart-container > canvas {
+    margin-bottom: 20px;
 }
 
 .bg-primary {
@@ -310,4 +316,62 @@ html[data-theme="dark"] .table-striped tbody tr:nth-of-type(even) td,
 html[data-theme="dark"] .table-striped tbody tr td,
 html[data-theme="dark"] .table td {
     color: white !important;
+}
+
+/* Chart loader overlay */
+.chart-loader {
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+html[data-theme="dark"] .chart-loader {
+    background-color: rgba(31, 41, 55, 0.8);
+}
+
+/* Date range selector buttons */
+.btn-outline-light {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.card-header .btn-group-sm .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+/* Theme-specific colors for chart containers */
+html[data-theme="light"] .chart-loader {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+html[data-theme="dark"] .chart-loader {
+    background-color: rgba(31, 41, 55, 0.8);
+}
+
+/* Date range selector buttons - improve styles for buttons on colored backgrounds */
+
+/* Make date range buttons consistent across all pages */
+.btn-group[aria-label="Date range selector"] .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+/* Remove any previous styles that might be overriding */
+.card-header .btn-group-sm .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+/* Ensure range selector buttons remain visible in dark theme */
+html[data-theme="dark"] .card-header.bg-primary .btn-outline-light {
+    color: white;
+}
+
+html[data-theme="dark"] .card-header.bg-primary .btn-outline-light.active {
+    color: var(--btn-primary-bg);
 }

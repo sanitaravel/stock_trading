@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from stock_logic.models import Portfolio, PortfolioPosition, Stock, StockPrice
+from stock_logic.models import Portfolio, PortfolioPosition, Stock, StockPrice, Sector, Industry
 import json
 from django.db.models import Max, Case, When
 from datetime import datetime, timedelta
@@ -70,9 +70,25 @@ def portfolio_history_data(request, portfolio_id):
     portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
     positions = portfolio.positions.select_related('stock').all()
     
-    # Get data from the last 30 days
-    end_date = datetime.now().date()
-    start_date = end_date - timedelta(days=30)
+    # Get date parameters from request, or use defaults
+    end_date_str = request.GET.get('end_date')
+    start_date_str = request.GET.get('start_date')
+    
+    if end_date_str:
+        try:
+            end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+        except ValueError:
+            end_date = datetime.now().date()
+    else:
+        end_date = datetime.now().date()
+    
+    if start_date_str:
+        try:
+            start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+        except ValueError:
+            start_date = end_date - timedelta(days=30)
+    else:
+        start_date = end_date - timedelta(days=30)
     
     # Get all dates in the period where we have price data
     dates = StockPrice.objects.filter(
@@ -106,9 +122,10 @@ def portfolio_history_data(request, portfolio_id):
     
     # If we have no historical data, create some placeholder data
     if not history_data['labels']:
+        days_range = min(30, (end_date - start_date).days)
         history_data = {
-            'labels': [(end_date - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(30, 0, -1)],
-            'values': [float(portfolio.current_value()) for _ in range(30)]
+            'labels': [(end_date - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(days_range, 0, -1)],
+            'values': [float(portfolio.current_value()) for _ in range(days_range)]
         }
     
     return JsonResponse(history_data)
@@ -117,9 +134,25 @@ def all_portfolios_history_data(request):
     """API endpoint to get history data for all portfolios"""
     portfolios = Portfolio.objects.all()
     
-    # Get data from the last 30 days
-    end_date = datetime.now().date()
-    start_date = end_date - timedelta(days=30)
+    # Get date parameters from request, or use defaults
+    end_date_str = request.GET.get('end_date')
+    start_date_str = request.GET.get('start_date')
+    
+    if end_date_str:
+        try:
+            end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+        except ValueError:
+            end_date = datetime.now().date()
+    else:
+        end_date = datetime.now().date()
+    
+    if start_date_str:
+        try:
+            start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+        except ValueError:
+            start_date = end_date - timedelta(days=30)
+    else:
+        start_date = end_date - timedelta(days=30)
     
     # Get all dates in the period where we have price data
     dates = StockPrice.objects.filter(
@@ -166,8 +199,9 @@ def all_portfolios_history_data(request):
         # If we have no values (no historical data), use current value
         if not values and not date_list:
             # Create placeholder data
-            data['labels'] = [(end_date - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(30, 0, -1)]
-            values = [float(portfolio.current_value()) for _ in range(30)]
+            days_range = min(30, (end_date - start_date).days)
+            data['labels'] = [(end_date - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(days_range, 0, -1)]
+            values = [float(portfolio.current_value()) for _ in range(days_range)]
         
         dataset = {
             'label': portfolio.name,
@@ -242,3 +276,37 @@ def stock_detail(request, stock_id):
         'price_change_percent': price_change_percent
     }
     return render(request, 'stock_visualization/stock_detail.html', context)
+
+# New views for sectors
+def sector_list(request):
+    sectors = Sector.objects.all()
+    context = {
+        'sectors': sectors,
+    }
+    return render(request, 'stock_visualization/sector_list.html', context)
+
+def sector_detail(request, sector_id):
+    sector = get_object_or_404(Sector, id=sector_id)
+    stocks = Stock.objects.filter(sector=sector)
+    context = {
+        'sector': sector,
+        'stocks': stocks,
+    }
+    return render(request, 'stock_visualization/sector_detail.html', context)
+
+# New views for industries
+def industry_list(request):
+    industries = Industry.objects.all()
+    context = {
+        'industries': industries,
+    }
+    return render(request, 'stock_visualization/industry_list.html', context)
+
+def industry_detail(request, industry_id):
+    industry = get_object_or_404(Industry, id=industry_id)
+    stocks = Stock.objects.filter(industry=industry)
+    context = {
+        'industry': industry,
+        'stocks': stocks,
+    }
+    return render(request, 'stock_visualization/industry_detail.html', context)

@@ -1,0 +1,42 @@
+{% extends 'stock_visualization/base.html' %}
+{% load static %}
+
+{% block title %}Industries{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h2>Market Industries</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            {% for industry in industries %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ industry.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            {% if industry.sector %}
+                            Sector: <a href="{% url 'stock_visualization:sector_detail' industry.sector.id %}">{{ industry.sector.name }}</a>
+                            {% else %}
+                            No sector assigned
+                            {% endif %}
+                        </h6>
+                        {% if industry.description %}
+                        <p class="card-text">{{ industry.description|truncatewords:20 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'stock_visualization:industry_detail' industry.id %}" class="btn btn-primary">View Stocks</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p class="text-center">No industries found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
