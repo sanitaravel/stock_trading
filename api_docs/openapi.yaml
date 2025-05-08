@@ -5,7 +5,7 @@ info:
   version: 1.0.0
   
 servers:
-  - url: /stock-logic/api
+  - url: /api
     description: API base URL
 
 components:
@@ -14,6 +14,11 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Enter the token with the `Token` prefix, e.g. "Token abcde12345"'
   
   schemas:
     Stock:
@@ -184,9 +189,111 @@ components:
                 example: "Authentication credentials were not provided."
 
 security:
+  - tokenAuth: []
   - bearerAuth: []
 
 paths:
+  /api-token-auth/:
+    post:
+      summary: Obtain authentication token
+      description: Exchange username and password for an authentication token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "admin"
+                password:
+                  type: string
+                  example: "password"
+              required:
+                - username
+                - password
+      responses:
+        '200':
+          description: Token obtained successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "93138ba960dfb4ef2eef6b907718ae04a741693c"
+        '400':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  non_field_errors:
+                    type: array
+                    items:
+                      type: string
+                    example: ["Unable to log in with provided credentials."]
+
+  /auth/login/:
+    get:
+      summary: Session login form
+      description: Browser-based session authentication
+      security: []
+      responses:
+        '200':
+          description: Login form
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      summary: Session login submission
+      description: Browser-based session authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - password
+      responses:
+        '302':
+          description: Redirect after successful login
+          headers:
+            Location:
+              schema:
+                type: string
+        '200':
+          description: Login form with errors
+          content:
+            text/html:
+              schema:
+                type: string
+
+  /auth/logout/:
+    get:
+      summary: Session logout
+      description: Browser-based session logout
+      responses:
+        '302':
+          description: Redirect after logout
+          headers:
+            Location:
+              schema:
+                type: string
+
   /stocks/:
     get:
       summary: Retrieve a list of stocks
@@ -690,3 +797,80 @@ paths:
                   error:
                     type: string
                     example: "Could not fetch data for this symbol"
+
+  /portfolio-history/{portfolio_id}/:
+    get:
+      summary: Get historical value data for a specific portfolio
+      parameters:
+        - in: path
+          name: portfolio_id
+          required: true
+          schema:
+            type: integer
+          description: ID of the portfolio
+      responses:
+        '200':
+          description: Historical value data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                    example: ["2023-05-01", "2023-05-02", "2023-05-03"]
+                  values:
+                    type: array
+                    items:
+                      type: number
+                    example: [10500.75, 10600.50, 10450.25]
+
+  /all-portfolios-history/:
+    get:
+      summary: Get historical value data for all portfolios
+      responses:
+        '200':
+          description: Historical value data for all portfolios
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                    example: ["2023-05-01", "2023-05-02", "2023-05-03"]
+                  datasets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        label:
+                          type: string
+                          example: "Tech Portfolio"
+                        data:
+                          type: array
+                          items:
+                            type: number
+                          example: [10500.75, 10600.50, 10450.25]
+                        backgroundColor:
+                          type: string
+                          example: "transparent"
+                        borderColor:
+                          type: string
+                          example: "#4285f4"
+                        pointBackgroundColor:
+                          type: string
+                          example: "#4285f4"
+                        borderWidth:
+                          type: integer
+                          example: 2
+                        pointRadius:
+                          type: integer
+                          example: 3
+                        lineTension:
+                          type: number
+                          example: 0.3
