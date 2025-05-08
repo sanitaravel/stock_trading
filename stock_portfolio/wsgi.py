@@ -11,6 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'stock_portfolio.settings')
+# Change to heroku_settings for Heroku deployment
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'stock_portfolio.heroku_settings')
 
 application = get_wsgi_application()
