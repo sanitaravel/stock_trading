@@ -22,8 +22,18 @@ ALLOWED_HOSTS += ['localhost', '127.0.0.1']
 # Configure database - use Heroku's PostgreSQL configuration
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:
-    # Override the default PostgreSQL settings with Heroku's
-    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    # Replace the entire default configuration with Heroku's
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+    }
+else:
+    # For local development only, not on Heroku
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Static files configuration
 STATIC_ROOT = BASE_DIR / 'staticfiles'
