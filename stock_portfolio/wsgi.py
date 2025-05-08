@@ -8,16 +8,10 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 """
 
 import os
-import sys
 
-# Add your project directory to the sys.path
-path = '/home/sanitaravel/stock_trading'  # Replace with your username and path
-if path not in sys.path:
-    sys.path.append(path)
-
-# Set environment variable for Django settings
-os.environ['DJANGO_SETTINGS_MODULE'] = 'stock_portfolio.production_settings'
-
-# Serve with WSGI
 from django.core.wsgi import get_wsgi_application
+
+# Change to heroku_settings for Heroku deployment
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'stock_portfolio.heroku_settings')
+
 application = get_wsgi_application()
