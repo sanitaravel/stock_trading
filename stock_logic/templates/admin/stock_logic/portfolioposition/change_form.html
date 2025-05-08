@@ -1,0 +1,107 @@
+{% extends "admin/change_form.html" %}
+
+{% block admin_change_form_document_ready %}
+{{ block.super }}
+<script type="text/javascript">
+(function($) {
+    // When document is ready
+    $(document).ready(function() {
+        var $quantity = $('#id_quantity');
+        var $total = $('#id_total_investment');
+        var $price = $('#id_initial_price');
+        var $stock = $('#id_stock');
+        
+        // Function to calculate quantity from total investment
+        function calculateQuantity() {
+            var total = parseFloat($total.val());
+            var price = parseFloat($price.val());
+            
+            if (!isNaN(total) && !isNaN(price) && price > 0) {
+                $quantity.val((total / price).toFixed(2));
+            }
+        }
+        
+        // Function to calculate total from quantity
+        function calculateTotal() {
+            var quantity = parseFloat($quantity.val());
+            var price = parseFloat($price.val());
+            
+            if (!isNaN(quantity) && !isNaN(price) && price > 0) {
+                $total.val((quantity * price).toFixed(2));
+            }
+        }
+        
+        // When total investment changes, calculate quantity
+        $total.change(function() {
+            if ($(this).val() && $(this).val().trim() !== '') {
+                $quantity.val(''); // Clear quantity field
+                // Don't call calculateQuantity() to avoid validation error
+            }
+        });
+        
+        // When quantity changes, calculate total
+        $quantity.change(function() {
+            if ($(this).val() && $(this).val().trim() !== '') {
+                $total.val(''); // Clear total field
+                // Don't call calculateTotal() to avoid validation error
+            }
+        });
+        
+        // When price changes, only update the relevant field
+        $price.change(function() {
+            if ($quantity.val() && $quantity.val().trim() !== '') {
+                // Keep quantity, recalculate total but don't update the field
+                // We just keep one field populated
+            } else if ($total.val() && $total.val().trim() !== '') {
+                // Keep total, recalculate quantity but don't update the field
+                // We just keep one field populated
+            }
+        });
+        
+        // Function to fetch and update stock price
+        function updateStockPrice(stockId) {
+            if (!stockId) return;
+            
+            $.ajax({
+                url: '{% url "admin-get-stock-price" %}',
+                data: {
+                    'stock_id': stockId
+                },
+                dataType: 'json',
+                success: function(data) {
+                    $price.val(data.formatted_price);
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    console.error("Error fetching stock price:", errorThrown);
+                }
+            });
+        }
+        
+        // Handle both regular change and select2 events
+        $stock.on('change', function() {
+            updateStockPrice($(this).val());
+        });
+        
+        // Handle select2 selection specifically
+        $stock.on('select2:select', function(e) {
+            updateStockPrice(e.params.data.id);
+        });
+        
+        // If stock is already selected on page load, fetch its price
+        if ($stock.val()) {
+            updateStockPrice($stock.val());
+        }
+        
+        // Before form submission, make sure we're not sending both fields
+        $('form').submit(function() {
+            if ($quantity.val() && $quantity.val().trim() !== '' && 
+                $total.val() && $total.val().trim() !== '') {
+                // If both fields have values, prioritize quantity
+                $total.val('');
+            }
+            return true;
+        });
+    });
+})(django.jQuery);
+</script>
+{% endblock %}
