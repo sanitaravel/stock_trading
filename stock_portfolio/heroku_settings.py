@@ -19,12 +19,13 @@ if custom_domain:
 # Add localhost for local testing with heroku_settings
 ALLOWED_HOSTS += ['localhost', '127.0.0.1']
 
-# Database configuration for Heroku PostgreSQL
+# Configure database - use PostgreSQL on Heroku and fallback to SQLite locally
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
     }
+# Otherwise, the default SQLite config from settings.py will be used
 
 # Static files configuration
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -44,7 +45,7 @@ ALPHA_VANTAGE_API_KEY = os.environ.get('ALPHA_VANTAGE_API_KEY')
 
 # Configure HTTPS settings
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'True') == 'True'
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
