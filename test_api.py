@@ -2,13 +2,14 @@ import requests
 import json
 from pprint import pprint
 
-BASE_URL = 'http://localhost:8000/api'
+BASE_URL = 'http://localhost:8000/api/v1'  # For local production testing
+
 TOKEN = None  # You'll need to set this after authentication
 
 def authenticate(username, password):
     global TOKEN
     response = requests.post(
-        'http://localhost:8000/api-token-auth/',
+        'http://localhost:8000/api/auth/token/',  # Updated auth endpoint
         data={'username': username, 'password': password}
     )
     if response.status_code == 200:
