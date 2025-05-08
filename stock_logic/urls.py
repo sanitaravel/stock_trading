@@ -2,7 +2,8 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .api_views import (
     StockViewSet, PortfolioViewSet, 
-    PortfolioPositionViewSet, StockPriceViewSet
+    PortfolioPositionViewSet, StockPriceViewSet,
+    SectorViewSet, IndustryViewSet
 )
 from .views import get_current_stock_price
 
@@ -16,6 +17,10 @@ router.register('stock-prices', StockPriceViewSet, basename='stock-price')
 # Portfolio resources
 router.register('portfolios', PortfolioViewSet, basename='portfolio')
 router.register('positions', PortfolioPositionViewSet, basename='position')
+
+# New resources
+router.register(r'sectors', SectorViewSet)
+router.register(r'industries', IndustryViewSet)
 
 # URL patterns
 urlpatterns = [

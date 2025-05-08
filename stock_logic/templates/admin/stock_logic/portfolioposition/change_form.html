@@ -58,28 +58,39 @@
             }
         });
         
-        // Auto-populate initial price when stock is selected
+        // Function to fetch and update stock price
+        function updateStockPrice(stockId) {
+            if (!stockId) return;
+            
+            $.ajax({
+                url: '{% url "admin-get-stock-price" %}',
+                data: {
+                    'stock_id': stockId
+                },
+                dataType: 'json',
+                success: function(data) {
+                    $price.val(data.formatted_price);
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    console.error("Error fetching stock price:", errorThrown);
+                }
+            });
+        }
+        
+        // Handle both regular change and select2 events
         $stock.on('change', function() {
-            var stockId = $(this).val();
-            if (stockId) {
-                $.ajax({
-                    url: '/stock-logic/api/get-stock-price/',
-                    data: {
-                        'stock_id': stockId
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        $price.val(data.formatted_price);
-                        
-                        // Don't recalculate to avoid validation errors
-                        // We'll let the model handle this during saving
-                    },
-                    error: function(xhr, textStatus, errorThrown) {
-                        console.error("Error fetching stock price:", errorThrown);
-                    }
-                });
-            }
+            updateStockPrice($(this).val());
         });
+        
+        // Handle select2 selection specifically
+        $stock.on('select2:select', function(e) {
+            updateStockPrice(e.params.data.id);
+        });
+        
+        // If stock is already selected on page load, fetch its price
+        if ($stock.val()) {
+            updateStockPrice($stock.val());
+        }
         
         // Before form submission, make sure we're not sending both fields
         $('form').submit(function() {

@@ -1,0 +1,782 @@
+[
+{
+    "model": "stock_logic.portfolio",
+    "pk": 1,
+    "fields": {
+        "name": "o4-mini GrowthForce 10 Portfolio",
+        "description": "A medium-risk, growth-oriented basket of ten NYSE stocks spanning technology, healthcare, finance, industrials, utilities, consumer entertainment, and materials. Designed for investors with a 1–3 year horizon seeking capital appreciation via exposure to established innovators and sector leaders.",
+        "created_at": "2025-05-08T11:48:23.849Z",
+        "last_updated": "2025-05-08T11:48:23.849Z"
+    }
+},
+{
+    "model": "stock_logic.portfolio",
+    "pk": 2,
+    "fields": {
+        "name": "Deepseek R1 Horizon 2027 Portfolio",
+        "description": "Built using the Deepseek R1 Model, this portfolio targets high-growth companies listed on the NYSE, balancing sector diversification and valuation discipline. It emphasizes innovation in AI, cloud computing, healthcare, and consumer resilience, while hedging with stable industrials and materials.",
+        "created_at": "2025-05-08T11:56:21.627Z",
+        "last_updated": "2025-05-08T11:56:21.627Z"
+    }
+},
+{
+    "model": "stock_logic.portfolio",
+    "pk": 3,
+    "fields": {
+        "name": "Claude's Balanced Horizon",
+        "description": "This portfolio balances growth potential with reasonable risk over a 1-3 year horizon by diversifying across key economic sectors. It focuses on established large and mid-cap companies with strong fundamentals and growth trajectories.",
+        "created_at": "2025-05-08T11:58:15.505Z",
+        "last_updated": "2025-05-08T11:58:15.505Z"
+    }
+},
+{
+    "model": "stock_logic.portfolio",
+    "pk": 4,
+    "fields": {
+        "name": "Gemini 2.5 Pro AnalystGrowth Navigator Portfolio",
+        "description": "This portfolio has been carefully constructed for investors with a medium risk tolerance who are seeking capital appreciation over a 1-3 year investment period. It consists of ten carefully chosen stocks listed on the New York Stock Exchange (NYSE), with a focus on established large- to mid-cap companies that exhibit strong growth characteristics. Recognizing the importance of risk management, the portfolio emphasizes diversification across a variety of sectors to provide a balanced exposure to the market's growth potential. The selection process for each stock involved a thorough evaluation of factors such as historical revenue and earnings growth, the presence of sustainable competitive advantages, leadership positions within their respective markets, and the overall sentiment among financial analysts. The \"Gemini 2.5 Pro AnalystGrowth Navigator Portfolio\" is designed to guide investors through the current investment environment by strategically allocating capital to companies poised to benefit from prevailing growth trends while maintaining a degree of stability through sector diversification.",
+        "created_at": "2025-05-08T12:00:21.207Z",
+        "last_updated": "2025-05-08T12:00:21.207Z"
+    }
+},
+{
+    "model": "stock_logic.portfolio",
+    "pk": 5,
+    "fields": {
+        "name": "Mistral Diversified Growth Portfolio",
+        "description": "The \"Mistral Diversified Growth Portfolio\" is designed to capture growth opportunities across various sectors while maintaining a balanced risk profile. This portfolio includes a mix of large- to mid-cap companies with strong growth potential and a history of solid performance.",
+        "created_at": "2025-05-08T12:02:31.737Z",
+        "last_updated": "2025-05-08T12:02:31.737Z"
+    }
+},
+{
+    "model": "stock_logic.portfolio",
+    "pk": 6,
+    "fields": {
+        "name": "Grok 3 Growth Diversified Portfolio 2025",
+        "description": "This portfolio, named the Grok 3 Growth Diversified Portfolio 2025, is tailored to request for a $100,000 investment in ten NYSE-listed growth stocks. It aligns with your 1-3 year investment horizon, medium risk tolerance, interest in growth stocks, preference for diversification, and focus on large- to mid-cap companies. The selected stocks are from diverse sectors, including technology, consumer cyclical, healthcare, industrials, financials, and consumer defensive, to balance growth potential with stability.",
+        "created_at": "2025-05-08T12:05:24.801Z",
+        "last_updated": "2025-05-08T12:05:24.801Z"
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 1,
+    "fields": {
+        "portfolio": 1,
+        "stock": 1,
+        "quantity": "359.41",
+        "initial_price": "278.23",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 2,
+    "fields": {
+        "portfolio": 1,
+        "stock": 2,
+        "quantity": "905.14",
+        "initial_price": "110.48",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 3,
+    "fields": {
+        "portfolio": 1,
+        "stock": 3,
+        "quantity": "1497.45",
+        "initial_price": "66.78",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 4,
+    "fields": {
+        "portfolio": 1,
+        "stock": 4,
+        "quantity": "128.75",
+        "initial_price": "776.72",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 5,
+    "fields": {
+        "portfolio": 1,
+        "stock": 5,
+        "quantity": "400.98",
+        "initial_price": "249.39",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 6,
+    "fields": {
+        "portfolio": 1,
+        "stock": 6,
+        "quantity": "467.62",
+        "initial_price": "213.85",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 7,
+    "fields": {
+        "portfolio": 1,
+        "stock": 7,
+        "quantity": "1484.56",
+        "initial_price": "67.36",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 8,
+    "fields": {
+        "portfolio": 1,
+        "stock": 8,
+        "quantity": "362.53",
+        "initial_price": "275.84",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 9,
+    "fields": {
+        "portfolio": 1,
+        "stock": 9,
+        "quantity": "979.53",
+        "initial_price": "102.09",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 10,
+    "fields": {
+        "portfolio": 1,
+        "stock": 10,
+        "quantity": "3514.94",
+        "initial_price": "28.45",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 11,
+    "fields": {
+        "portfolio": 2,
+        "stock": 11,
+        "quantity": "529.91",
+        "initial_price": "188.71",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 12,
+    "fields": {
+        "portfolio": 2,
+        "stock": 12,
+        "quantity": "572.93",
+        "initial_price": "174.54",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 13,
+    "fields": {
+        "portfolio": 2,
+        "stock": 13,
+        "quantity": "101.70",
+        "initial_price": "983.29",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 14,
+    "fields": {
+        "portfolio": 2,
+        "stock": 3,
+        "quantity": "1497.45",
+        "initial_price": "66.78",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 15,
+    "fields": {
+        "portfolio": 2,
+        "stock": 14,
+        "quantity": "827.40",
+        "initial_price": "120.86",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 16,
+    "fields": {
+        "portfolio": 2,
+        "stock": 2,
+        "quantity": "905.14",
+        "initial_price": "110.48",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 17,
+    "fields": {
+        "portfolio": 2,
+        "stock": 15,
+        "quantity": "1177.30",
+        "initial_price": "84.94",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 18,
+    "fields": {
+        "portfolio": 2,
+        "stock": 16,
+        "quantity": "352.91",
+        "initial_price": "283.36",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 19,
+    "fields": {
+        "portfolio": 2,
+        "stock": 17,
+        "quantity": "1910.22",
+        "initial_price": "52.35",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 20,
+    "fields": {
+        "portfolio": 2,
+        "stock": 18,
+        "quantity": "1632.92",
+        "initial_price": "61.24",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 21,
+    "fields": {
+        "portfolio": 3,
+        "stock": 19,
+        "quantity": "285.84",
+        "initial_price": "349.85",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 22,
+    "fields": {
+        "portfolio": 3,
+        "stock": 20,
+        "quantity": "230.76",
+        "initial_price": "433.35",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 23,
+    "fields": {
+        "portfolio": 3,
+        "stock": 21,
+        "quantity": "275.67",
+        "initial_price": "362.75",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 24,
+    "fields": {
+        "portfolio": 3,
+        "stock": 22,
+        "quantity": "255.72",
+        "initial_price": "391.06",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 25,
+    "fields": {
+        "portfolio": 3,
+        "stock": 4,
+        "quantity": "128.75",
+        "initial_price": "776.72",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 26,
+    "fields": {
+        "portfolio": 3,
+        "stock": 7,
+        "quantity": "1484.56",
+        "initial_price": "67.36",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 27,
+    "fields": {
+        "portfolio": 3,
+        "stock": 23,
+        "quantity": "1705.90",
+        "initial_price": "58.62",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 28,
+    "fields": {
+        "portfolio": 3,
+        "stock": 24,
+        "quantity": "996.41",
+        "initial_price": "100.36",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 29,
+    "fields": {
+        "portfolio": 3,
+        "stock": 25,
+        "quantity": "531.66",
+        "initial_price": "188.09",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 30,
+    "fields": {
+        "portfolio": 3,
+        "stock": 26,
+        "quantity": "488.26",
+        "initial_price": "204.81",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 31,
+    "fields": {
+        "portfolio": 4,
+        "stock": 2,
+        "quantity": "905.14",
+        "initial_price": "110.48",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 32,
+    "fields": {
+        "portfolio": 4,
+        "stock": 27,
+        "quantity": "236.68",
+        "initial_price": "422.52",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 33,
+    "fields": {
+        "portfolio": 4,
+        "stock": 13,
+        "quantity": "101.70",
+        "initial_price": "983.29",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 34,
+    "fields": {
+        "portfolio": 4,
+        "stock": 28,
+        "quantity": "1058.20",
+        "initial_price": "94.50",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 35,
+    "fields": {
+        "portfolio": 4,
+        "stock": 29,
+        "quantity": "44.21",
+        "initial_price": "2262.09",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 36,
+    "fields": {
+        "portfolio": 4,
+        "stock": 1,
+        "quantity": "359.41",
+        "initial_price": "278.23",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 37,
+    "fields": {
+        "portfolio": 4,
+        "stock": 30,
+        "quantity": "660.59",
+        "initial_price": "151.38",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 38,
+    "fields": {
+        "portfolio": 4,
+        "stock": 11,
+        "quantity": "529.91",
+        "initial_price": "188.71",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 39,
+    "fields": {
+        "portfolio": 4,
+        "stock": 31,
+        "quantity": "186.51",
+        "initial_price": "536.15",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 40,
+    "fields": {
+        "portfolio": 4,
+        "stock": 32,
+        "quantity": "362.03",
+        "initial_price": "276.22",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 41,
+    "fields": {
+        "portfolio": 5,
+        "stock": 26,
+        "quantity": "488.26",
+        "initial_price": "204.81",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 42,
+    "fields": {
+        "portfolio": 5,
+        "stock": 33,
+        "quantity": "362.00",
+        "initial_price": "276.24",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 43,
+    "fields": {
+        "portfolio": 5,
+        "stock": 4,
+        "quantity": "128.75",
+        "initial_price": "776.72",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 44,
+    "fields": {
+        "portfolio": 5,
+        "stock": 34,
+        "quantity": "839.63",
+        "initial_price": "119.10",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 45,
+    "fields": {
+        "portfolio": 5,
+        "stock": 12,
+        "quantity": "572.93",
+        "initial_price": "174.54",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 46,
+    "fields": {
+        "portfolio": 5,
+        "stock": 35,
+        "quantity": "543.74",
+        "initial_price": "183.91",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 47,
+    "fields": {
+        "portfolio": 5,
+        "stock": 36,
+        "quantity": "3208.21",
+        "initial_price": "31.17",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 48,
+    "fields": {
+        "portfolio": 5,
+        "stock": 37,
+        "quantity": "6978.37",
+        "initial_price": "14.33",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 49,
+    "fields": {
+        "portfolio": 5,
+        "stock": 38,
+        "quantity": "26525.20",
+        "initial_price": "3.77",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 50,
+    "fields": {
+        "portfolio": 5,
+        "stock": 11,
+        "quantity": "529.91",
+        "initial_price": "188.71",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 51,
+    "fields": {
+        "portfolio": 6,
+        "stock": 12,
+        "quantity": "572.93",
+        "initial_price": "174.54",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 52,
+    "fields": {
+        "portfolio": 6,
+        "stock": 23,
+        "quantity": "1705.90",
+        "initial_price": "58.62",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 53,
+    "fields": {
+        "portfolio": 6,
+        "stock": 39,
+        "quantity": "2301.50",
+        "initial_price": "43.45",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 54,
+    "fields": {
+        "portfolio": 6,
+        "stock": 4,
+        "quantity": "128.75",
+        "initial_price": "776.72",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 55,
+    "fields": {
+        "portfolio": 6,
+        "stock": 40,
+        "quantity": "245.19",
+        "initial_price": "407.85",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 56,
+    "fields": {
+        "portfolio": 6,
+        "stock": 41,
+        "quantity": "312.22",
+        "initial_price": "320.29",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 57,
+    "fields": {
+        "portfolio": 6,
+        "stock": 42,
+        "quantity": "181.19",
+        "initial_price": "551.92",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 58,
+    "fields": {
+        "portfolio": 6,
+        "stock": 5,
+        "quantity": "400.98",
+        "initial_price": "249.39",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 59,
+    "fields": {
+        "portfolio": 6,
+        "stock": 43,
+        "quantity": "2901.92",
+        "initial_price": "34.46",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+},
+{
+    "model": "stock_logic.portfolioposition",
+    "pk": 60,
+    "fields": {
+        "portfolio": 6,
+        "stock": 33,
+        "quantity": "362.00",
+        "initial_price": "276.24",
+        "purchase_date": "2025-05-08",
+        "total_investment": null
+    }
+}
+]

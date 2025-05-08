@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Portfolio, Stock, PortfolioPosition, StockPrice
+from .models import Portfolio, Stock, PortfolioPosition, StockPrice, Sector, Industry
 from django.db.models import Sum
 from decimal import Decimal
 
@@ -12,16 +12,42 @@ class StockPriceSerializer(serializers.ModelSerializer):
         fields = ['id', 'date', 'price_timestamp', 'open_price', 'close_price', 
                  'high_price', 'low_price', 'volume', 'last_updated']
 
+class SectorSerializer(serializers.ModelSerializer):
+    """
+    Serializer for sector data.
+    """
+    industries_count = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Sector
+        fields = ['id', 'name', 'description', 'industries_count']
+    
+    def get_industries_count(self, obj):
+        return obj.industries.count()
+
+class IndustrySerializer(serializers.ModelSerializer):
+    """
+    Serializer for industry data, including sector information.
+    """
+    sector_name = serializers.CharField(source='sector.name', read_only=True)
+    
+    class Meta:
+        model = Industry
+        fields = ['id', 'name', 'description', 'sector', 'sector_name']
+
 class StockSerializer(serializers.ModelSerializer):
     """
     Serializer for stock data, including the latest price and price change.
     """
     latest_price = serializers.SerializerMethodField()
     price_change = serializers.SerializerMethodField()
+    sector_name = serializers.CharField(source='sector.name', read_only=True)
+    industry_name = serializers.CharField(source='industry.name', read_only=True)
     
     class Meta:
         model = Stock
-        fields = ['id', 'symbol', 'company_name', 'sector', 'latest_price', 'price_change']
+        fields = ['id', 'symbol', 'company_name', 'description', 'sector', 'sector_name', 
+                  'industry', 'industry_name', 'latest_price', 'price_change']
     
     def get_latest_price(self, obj):
         price = obj.get_latest_close_price()
