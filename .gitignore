@@ -86,3 +86,9 @@ package-lock.json
 # Testing
 .pytest_cache/
 .tox/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production

@@ -11,21 +11,32 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+import os
+
+# Initialize environ
+env = environ.Env(
+    # Set casting and default values
+    DEBUG=(bool, False),
+    ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1']),
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-m&#wv=51h^@c30kv&0gp^@tf3t1a$&+d*v_%$gc(d$6pa-ec(z'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -78,10 +89,7 @@ WSGI_APPLICATION = 'stock_portfolio.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': env.db('DATABASE_URL', default='sqlite:///db.sqlite3'),
 }
 
 
@@ -109,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = env('TIME_ZONE', default='UTC')
 
 USE_I18N = True
 
@@ -206,4 +214,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Add this if you don't already have it
-ALPHA_VANTAGE_API_KEY = 'RMQ9M1XBZFY2I95F'  # Replace with your actual Alpha Vantage API key
+ALPHA_VANTAGE_API_KEY = env('ALPHA_VANTAGE_API_KEY')
