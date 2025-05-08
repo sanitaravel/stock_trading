@@ -1,0 +1,1395 @@
+[
+{
+    "model": "stock_logic.sector",
+    "pk": 1,
+    "fields": {
+        "name": "Energy",
+        "description": "This sector includes companies involved in the exploration, production, and distribution of energy resources, such as oil, gas, and coal. It also encompasses firms providing equipment and services to these industries. Energy sector performance is closely tied to commodity prices and global economic activity."
+    }
+},
+{
+    "model": "stock_logic.sector",
+    "pk": 2,
+    "fields": {
+        "name": "Materials",
+        "description": "Companies in this sector are engaged in the discovery, development, and processing of raw materials. This includes mining, forestry, and chemical production. The sector's performance often correlates with the global economic cycle."
+    }
+},
+{
+    "model": "stock_logic.sector",
+    "pk": 3,
+    "fields": {
+        "name": "Industrials",
+        "description": "This sector comprises companies that produce capital goods, including machinery, aerospace and defense equipment, and construction products. It also includes transportation services and professional services like waste management. Industrial sector performance is sensitive to economic cycles."
+    }
+},
+{
+    "model": "stock_logic.sector",
+    "pk": 4,
+    "fields": {
+        "name": "Consumer Discretionary",
+        "description": "This sector includes businesses that sell non-essential goods and services, such as automobiles, apparel, entertainment, and leisure products. Consumer discretionary companies tend to perform well during economic expansions and may struggle during downturns."
+    }
+},
+{
+    "model": "stock_logic.sector",
+    "pk": 5,
+    "fields": {
+        "name": "Consumer Staples",
+        "description": "Companies in this sector produce and sell essential products, including food, beverages, household goods, and personal care items. The sector is considered defensive, often maintaining stable performance during economic downturns."
+    }
+},
+{
+    "model": "stock_logic.sector",
+    "pk": 6,
+    "fields": {
+        "name": "Healthcare",
+        "description": "This sector encompasses companies that provide medical services, manufacture medical equipment or drugs, and support the healthcare system. It includes pharmaceuticals, biotechnology, and healthcare providers. The sector is often seen as defensive due to consistent demand."
+    }
+},
+{
+    "model": "stock_logic.sector",
+    "pk": 7,
+    "fields": {
+        "name": "Financials",
+        "description": "The financial sector includes firms involved in banking, investment, insurance, and real estate. These companies are sensitive to interest rate changes and economic cycles, influencing their profitability and performance."
+    }
+},
+{
+    "model": "stock_logic.sector",
+    "pk": 8,
+    "fields": {
+        "name": "Technology",
+        "description": "This sector covers companies that produce software, hardware, and semiconductor equipment, as well as those providing IT services. It includes some of the largest and most influential companies in the market. The sector is known for growth potential but can be volatile."
+    }
+},
+{
+    "model": "stock_logic.sector",
+    "pk": 9,
+    "fields": {
+        "name": "Communication Services",
+        "description": "Companies in this sector provide communication and related services, including telecommunications, media, entertainment, and interactive media. The sector has evolved with technology, encompassing traditional and digital communication platforms."
+    }
+},
+{
+    "model": "stock_logic.sector",
+    "pk": 10,
+    "fields": {
+        "name": "Utilities",
+        "description": "This sector comprises companies that provide essential services such as electricity, water, and natural gas. Utilities are typically considered defensive investments due to their stable demand, but they can be sensitive to interest rate changes."
+    }
+},
+{
+    "model": "stock_logic.sector",
+    "pk": 11,
+    "fields": {
+        "name": "Real Estate",
+        "description": "The real estate sector includes companies involved in real estate development, management, and investment trusts (REITs). It encompasses residential, commercial, and industrial properties. The sector's performance is influenced by interest rates and economic conditions."
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 1,
+    "fields": {
+        "name": "Pharmaceutical Retailers",
+        "description": "This industry comprises companies that operate pharmacies and drugstores, providing prescription medications, over-the-counter drugs, and health-related products directly to consumers. These retailers serve as the final link in the pharmaceutical supply chain, ensuring accessibility and convenience for patients. However, they face challenges such as shrinking prescription reimbursements, rising operational costs, and competition from online retailers.",
+        "sector": 6
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 2,
+    "fields": {
+        "name": "Medical Instruments & Supplies",
+        "description": "Companies in this industry develop, manufacture, and distribute a wide range of products used in medical procedures and patient care. This includes surgical instruments, diagnostic equipment, and disposable medical supplies like gloves and syringes. These tools are essential for healthcare providers to deliver effective and safe patient care.",
+        "sector": 6
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 3,
+    "fields": {
+        "name": "Medical Distribution",
+        "description": "This industry focuses on the logistics of transporting, storing, and distributing medical supplies and equipment to healthcare facilities. Distributors ensure that hospitals, clinics, and pharmacies receive the necessary products efficiently, playing a critical role in the healthcare supply chain.",
+        "sector": 6
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 4,
+    "fields": {
+        "name": "Medical Devices",
+        "description": "Companies in this sector design and produce equipment used for medical purposes, ranging from diagnostic machines to therapeutic devices. The integration of networked medical devices, such as smart implants and connected monitoring systems, is transforming patient care by enabling early detection and improved post-operative monitoring.",
+        "sector": 6
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 5,
+    "fields": {
+        "name": "Medical Care Facilities",
+        "description": "This industry encompasses organizations that provide direct patient care, including hospitals, clinics, and specialized treatment centers. These facilities offer a range of services from emergency care to elective procedures, forming the backbone of the healthcare delivery system.",
+        "sector": 6
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 6,
+    "fields": {
+        "name": "Healthcare Plans",
+        "description": "Companies in this sector offer health insurance products that cover medical expenses for individuals and groups. They play a pivotal role in financing healthcare services, managing risk, and negotiating with providers to control costs and ensure access to care.",
+        "sector": 6
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 7,
+    "fields": {
+        "name": "Health Information Services",
+        "description": "This industry manages and organizes health data and medical records, ensuring that patient information is accurate, secure, and accessible to healthcare providers. They also leverage technology to improve patient care, research, and healthcare operations through electronic health records, health information exchanges, and data analytics.",
+        "sector": 6
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 8,
+    "fields": {
+        "name": "Drug Manufacturers – Specialty & Generic",
+        "description": "This sector focuses on the development, production, and marketing of specialty pharmaceuticals and generic drugs. Specialty drugs target specific, often complex conditions, while generic drugs offer cost-effective alternatives to branded medications, increasing accessibility and promoting competition within the pharmaceutical market.",
+        "sector": 6
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 9,
+    "fields": {
+        "name": "Drug Manufacturers – General",
+        "description": "Companies in this industry develop and produce a broad range of pharmaceutical products, including both branded and generic medications. They are involved in extensive research and development to bring new drugs to market, addressing various health conditions and contributing to medical advancements.",
+        "sector": 6
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 10,
+    "fields": {
+        "name": "Diagnostics & Research",
+        "description": "This industry develops and provides medical tests that help diagnose diseases and conditions. They conduct research to create new diagnostic tools, analyze data, and contribute to finding treatments and cures, playing a crucial role in the healthcare system by enabling accurate and timely medical decisions.",
+        "sector": 6
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 11,
+    "fields": {
+        "name": "Biotechnology",
+        "description": "Biotechnology companies utilize living organisms and molecular biology to develop healthcare-related products, including new drugs and therapies. This science-driven industry is at the forefront of medical innovation, applying genetic engineering and other technologies to address complex diseases and improve patient outcomes.",
+        "sector": 6
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 12,
+    "fields": {
+        "name": "Shell Companies",
+        "description": "Shell companies are corporations without active business operations or significant assets. They are often established for legitimate purposes such as facilitating mergers, acquisitions, or serving as vehicles for raising capital. However, they can also be misused for illicit activities like money laundering or tax evasion.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 13,
+    "fields": {
+        "name": "Mortgage Finance",
+        "description": "This industry involves the origination, funding, and servicing of mortgage loans. It includes entities like banks, credit unions, and government-sponsored enterprises (e.g., Fannie Mae, Freddie Mac) that provide financing for residential and commercial real estate purchases.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 14,
+    "fields": {
+        "name": "Insurance Brokers",
+        "description": "Insurance brokers act as intermediaries between clients and insurance companies. They assess clients' needs and negotiate with multiple insurers to find the most suitable coverage options. Unlike agents who represent specific insurers, brokers work on behalf of the insured.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 15,
+    "fields": {
+        "name": "Insurance – Specialty",
+        "description": "Specialty insurance provides customized coverage for unique or high-risk situations not typically covered by standard policies. This includes areas like professional liability, cyber risk, or event cancellation. Specialty insurers tailor policies to meet specific client needs.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 16,
+    "fields": {
+        "name": "Insurance – Reinsurance",
+        "description": "Reinsurance involves insurance companies transferring portions of their risk portfolios to other insurers (reinsurers) to reduce the likelihood of paying large obligations resulting from claims. This practice helps insurers manage risk and maintain financial stability.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 17,
+    "fields": {
+        "name": "Insurance – Property & Casualty",
+        "description": "This segment offers coverage for physical assets (property insurance) and protection against legal liabilities (casualty insurance). It includes policies for homes, vehicles, businesses, and liability claims arising from accidents or negligence.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 18,
+    "fields": {
+        "name": "Insurance – Life",
+        "description": "Life insurance companies provide financial protection to beneficiaries upon the death of the insured. Policies can also include investment components or coverage for critical illnesses, offering both security and financial planning tools.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 19,
+    "fields": {
+        "name": "Insurance – Diversified",
+        "description": "Diversified insurance companies offer a broad range of insurance products across multiple lines, such as life, health, property, and casualty insurance. This diversification helps spread risk and can provide more stable revenue streams.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 20,
+    "fields": {
+        "name": "Financial Data & Stock Exchanges",
+        "description": "This industry encompasses organizations that facilitate the trading of financial securities (stock exchanges) and those that provide critical financial data and analytics. They play a vital role in market transparency and efficiency.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 21,
+    "fields": {
+        "name": "Financial Conglomerates",
+        "description": "Financial conglomerates are large corporations that operate across multiple financial sectors, including banking, insurance, and investment services. They offer a wide array of financial products and services under one umbrella, leveraging synergies across different operations.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 22,
+    "fields": {
+        "name": "Credit Services",
+        "description": "This industry includes companies that provide credit-related services such as issuing credit cards, offering personal and business loans, and managing credit information. They play a crucial role in consumer finance and credit accessibility.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 23,
+    "fields": {
+        "name": "Capital Markets",
+        "description": "Capital markets are venues where savings and investments are channeled between suppliers and those in need, including businesses and governments. This industry includes entities involved in underwriting, trading, and managing securities like stocks and bonds.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 24,
+    "fields": {
+        "name": "Banks – Regional",
+        "description": "Regional banks operate within specific geographic areas, offering banking services such as deposits, loans, and mortgages. They focus on serving local communities and small to medium-sized businesses.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 25,
+    "fields": {
+        "name": "Banks – Diversified",
+        "description": "Diversified banks, also known as universal banks, provide a wide range of financial services, including commercial and investment banking. They cater to various customer segments, from individuals to large corporations.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 26,
+    "fields": {
+        "name": "Asset Management",
+        "description": "Asset management firms manage investments on behalf of clients, aiming to grow their portfolios through strategic allocation in various financial instruments. They serve individuals, institutions, and governments, tailoring strategies to meet specific financial goals.",
+        "sector": 7
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 27,
+    "fields": {
+        "name": "Solar",
+        "description": "The Solar industry focuses on harnessing solar energy through the development and deployment of photovoltaic panels, solar thermal systems, and energy storage solutions. Technological advancements have significantly reduced costs and improved efficiency, making solar power a pivotal component in the transition to renewable energy sources.",
+        "sector": 8
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 28,
+    "fields": {
+        "name": "Software – Infrastructure",
+        "description": "This industry encompasses companies that develop foundational software enabling the operation of computer systems and networks. Products include operating systems, middleware, and cloud infrastructure platforms that support applications and manage hardware resources.",
+        "sector": 8
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 29,
+    "fields": {
+        "name": "Software – Application",
+        "description": "Application software companies create programs designed for end-users to perform specific tasks, such as word processing, data management, or graphic design. This sector includes both consumer-oriented applications and enterprise solutions like Customer Relationship Management (CRM) and Enterprise Resource Planning (ERP) systems.",
+        "sector": 8
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 30,
+    "fields": {
+        "name": "Semiconductors",
+        "description": "The Semiconductor industry designs and manufactures microchips that serve as the brains of electronic devices. These components are essential for a wide array of products, from smartphones to medical equipment, and are critical to advancements in artificial intelligence, 5G, and autonomous vehicles.",
+        "sector": 8
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 31,
+    "fields": {
+        "name": "Semiconductor Equipment & Materials",
+        "description": "This sector provides the machinery, tools, and raw materials necessary for semiconductor fabrication. Companies produce equipment for processes like lithography and etching, as well as materials such as silicon wafers and photoresists, enabling the production of increasingly complex and miniaturized chips.",
+        "sector": 8
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 32,
+    "fields": {
+        "name": "Scientific & Technical Instruments",
+        "description": "Companies in this industry manufacture precision instruments used for scientific research, industrial applications, and healthcare diagnostics. Products include spectrometers, microscopes, and analytical devices essential for quality control and innovation across various sectors.",
+        "sector": 8
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 33,
+    "fields": {
+        "name": "Information Technology Services",
+        "description": "This industry comprises firms that offer services related to the implementation, management, and support of IT systems. Services range from consulting and system integration to managed services and outsourcing, helping organizations optimize their technological infrastructure.",
+        "sector": 8
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 34,
+    "fields": {
+        "name": "Electronics & Computer Distribution",
+        "description": "Companies in this sector act as intermediaries between manufacturers and end-users, distributing electronic components, computer hardware, and related products. They play a crucial role in the supply chain, ensuring timely delivery and availability of technology products.",
+        "sector": 8
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 35,
+    "fields": {
+        "name": "Electronic Components",
+        "description": "This industry focuses on the production of fundamental components such as resistors, capacitors, and connectors that are integral to electronic circuits. These components are essential for the functionality of a wide range of electronic devices and systems.",
+        "sector": 8
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 36,
+    "fields": {
+        "name": "Consumer Electronics",
+        "description": "The Consumer Electronics industry designs and manufactures electronic devices intended for everyday use, including smartphones, televisions, and wearable technology. This sector is characterized by rapid innovation cycles and evolving consumer preferences.",
+        "sector": 8
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 37,
+    "fields": {
+        "name": "Computer Hardware",
+        "description": "Companies in this sector produce physical components of computers, such as processors, memory devices, and storage systems. Advancements in hardware technology drive improvements in computing power, efficiency, and miniaturization.",
+        "sector": 8
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 38,
+    "fields": {
+        "name": "Communication Equipment",
+        "description": "This industry develops and manufactures devices that facilitate communication, including routers, switches, and transmission equipment. These products are vital for telecommunications infrastructure, enabling data transfer and connectivity across networks.",
+        "sector": 8
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 39,
+    "fields": {
+        "name": "Uranium",
+        "description": "The Uranium industry focuses on the extraction and processing of uranium ore, which is primarily used as fuel for nuclear power plants. Uranium, a dense and radioactive metal, undergoes enrichment processes to produce fuel rods for nuclear reactors. The industry is characterized by a relatively small number of producers, with significant production concentrated in countries like Kazakhstan, Canada, Australia, and Namibia.",
+        "sector": 1
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 40,
+    "fields": {
+        "name": "Thermal Coal",
+        "description": "Thermal coal is primarily used for electricity generation in power plants. Despite global efforts to reduce carbon emissions, thermal coal remains a significant energy source in countries like India and Southeast Asia. However, the seaborne thermal coal market is projected to decline by 60% by 2050, driven by decreasing demand in Europe and China.",
+        "sector": 1
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 41,
+    "fields": {
+        "name": "Oil & Gas Refining & Marketing",
+        "description": "This industry involves the processing of crude oil into refined products such as gasoline, diesel, and jet fuel, as well as the marketing and distribution of these products to consumers. Companies operate refineries and manage networks of retail outlets, including gas stations and convenience stores.",
+        "sector": 1
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 42,
+    "fields": {
+        "name": "Oil & Gas Midstream",
+        "description": "The Midstream sector encompasses the transportation, storage, and wholesale marketing of crude or refined petroleum products. Companies in this industry operate pipelines, storage facilities, and transportation networks that move oil and gas from production sites to refineries and end-users.",
+        "sector": 1
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 43,
+    "fields": {
+        "name": "Oil & Gas Integrated",
+        "description": "Integrated oil and gas companies are involved in all key stages of the energy supply chain, including exploration, production, refining, distribution, and marketing. This vertical integration allows for greater control over operations and diversification of revenue streams.",
+        "sector": 1
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 44,
+    "fields": {
+        "name": "Oil & Gas Exploration & Production",
+        "description": "Also known as the upstream segment, this industry focuses on locating and extracting oil and natural gas reserves. Activities include geological surveys, drilling, and operating wells to bring hydrocarbons to the surface. Companies in this sector are primarily concerned with the initial stages of energy production.",
+        "sector": 1
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 45,
+    "fields": {
+        "name": "Oil & Gas Equipment & Services",
+        "description": "This industry provides the necessary equipment and services to support oil and gas exploration and production activities. Offerings include drilling rigs, seismic testing, well construction, and maintenance services. Companies in this sector are critical to the operational efficiency and safety of upstream activities.",
+        "sector": 1
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 46,
+    "fields": {
+        "name": "Oil & Gas Drilling",
+        "description": "The Drilling industry specializes in the creation of boreholes to access oil and natural gas reserves. This includes both onshore and offshore drilling operations, employing various techniques to reach and extract hydrocarbons from beneath the Earth's surface.",
+        "sector": 1
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 47,
+    "fields": {
+        "name": "Aerospace & Defense",
+        "description": "Companies in this industry design, manufacture, and service aircraft, spacecraft, satellites, and defense systems. They cater to both commercial aviation markets and government defense contracts.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 48,
+    "fields": {
+        "name": "Airlines",
+        "description": "This industry includes passenger and cargo airlines that provide air transportation services. Their performance is influenced by factors such as fuel prices, travel demand, and regulatory policies.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 49,
+    "fields": {
+        "name": "Airports & Air Services",
+        "description": "Entities in this category operate airports and provide ancillary services like ground handling, maintenance, and air traffic control. They play a crucial role in the aviation infrastructure.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 50,
+    "fields": {
+        "name": "Building Products & Equipment",
+        "description": "Companies here manufacture materials and equipment used in construction, such as windows, doors, HVAC systems, and insulation products. Their demand is tied to construction activity levels.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 51,
+    "fields": {
+        "name": "Business Equipment & Supplies",
+        "description": "This industry produces office machinery, supplies, and related products essential for business operations, including printers, copiers, and stationery.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 52,
+    "fields": {
+        "name": "Conglomerates",
+        "description": "Conglomerates are large corporations that own a diverse portfolio of businesses across various industries, providing operational stability through diversification.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 53,
+    "fields": {
+        "name": "Consulting Services",
+        "description": "Firms in this sector offer professional advice and solutions in areas like management, strategy, IT, and human resources to help organizations improve performance.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 54,
+    "fields": {
+        "name": "Electrical Equipment & Parts",
+        "description": "This industry encompasses manufacturers of electrical components and systems, including transformers, switchgear, and circuit breakers, essential for power distribution and industrial applications.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 55,
+    "fields": {
+        "name": "Engineering & Construction",
+        "description": "Companies provide engineering design and construction services for infrastructure projects such as roads, bridges, and buildings, often engaging in large-scale, complex developments.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 56,
+    "fields": {
+        "name": "Farm & Heavy Construction Machinery",
+        "description": "Manufacturers in this category produce machinery used in agriculture and construction, like tractors, excavators, and loaders, vital for productivity in these sectors.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 57,
+    "fields": {
+        "name": "Industrial Distribution",
+        "description": "Firms distribute a wide range of industrial products, including tools, safety equipment, and maintenance supplies, serving as intermediaries between manufacturers and end-users.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 58,
+    "fields": {
+        "name": "Infrastructure Operations",
+        "description": "Companies operate and maintain essential public infrastructure, such as toll roads, bridges, and utilities, ensuring their functionality and efficiency.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 59,
+    "fields": {
+        "name": "Integrated Freight & Logistics",
+        "description": "This industry includes companies that provide comprehensive logistics solutions, combining transportation, warehousing, and supply chain management services.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 60,
+    "fields": {
+        "name": "Marine Shipping",
+        "description": "Firms operate cargo ships and tankers that transport goods across oceans, playing a critical role in global trade and supply chains.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 61,
+    "fields": {
+        "name": "Metal Fabrication",
+        "description": "Companies in this sector specialize in cutting, bending, and assembling metal structures and components used in various industries, including construction and manufacturing.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 62,
+    "fields": {
+        "name": "Pollution & Treatment Controls",
+        "description": "This industry focuses on technologies and services that control pollution and treat waste, including air and water purification systems, contributing to environmental protection.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 63,
+    "fields": {
+        "name": "Railroads",
+        "description": "Railroad companies provide freight and passenger rail services, offering efficient land transportation solutions for bulk goods and commuters.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 64,
+    "fields": {
+        "name": "Rental & Leasing Services",
+        "description": "Firms offer rental and leasing options for equipment, vehicles, and machinery, providing cost-effective solutions for businesses needing temporary assets.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 65,
+    "fields": {
+        "name": "Security & Protection Services",
+        "description": "Companies provide security personnel, surveillance systems, and risk management services to protect assets, people, and information.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 66,
+    "fields": {
+        "name": "Specialty Business Services",
+        "description": "This diverse category includes companies offering specialized services like document management, pest control, and facility maintenance, supporting various business operations.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 67,
+    "fields": {
+        "name": "Specialty Industrial Machinery",
+        "description": "Manufacturers produce specialized machinery tailored for specific industrial applications, such as textile machines, printing presses, and food processing equipment.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 68,
+    "fields": {
+        "name": "Staffing & Employment Services",
+        "description": "Firms in this industry provide recruitment, temporary staffing, and workforce management solutions, connecting employers with suitable candidates.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 69,
+    "fields": {
+        "name": "Tools & Accessories",
+        "description": "Companies manufacture hand tools, power tools, and related accessories used in construction, manufacturing, and DIY projects.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 70,
+    "fields": {
+        "name": "Trucking",
+        "description": "Trucking companies offer ground transportation services for goods, playing a vital role in domestic supply chains and logistics.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 71,
+    "fields": {
+        "name": "Waste Management",
+        "description": "This industry involves the collection, transportation, processing, and disposal of waste materials, including recycling and environmental remediation services.",
+        "sector": 3
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 72,
+    "fields": {
+        "name": "Advertising Agencies",
+        "description": "Companies in this industry create, plan, and manage advertising campaigns across various media platforms. They provide services such as brand strategy, creative development, media buying, and digital marketing to help businesses reach and engage their target audiences.",
+        "sector": 9
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 73,
+    "fields": {
+        "name": "Broadcasting",
+        "description": "Broadcasting firms operate television and radio stations that produce and transmit content for public or commercial consumption. This includes news, sports, entertainment, and educational programming. Revenue typically comes from advertising and licensing fees.",
+        "sector": 9
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 74,
+    "fields": {
+        "name": "Electronic Gaming & Multimedia",
+        "description": "This industry encompasses developers and publishers of video games and interactive digital entertainment. It also includes companies that operate gaming platforms and virtual environments. Growth is driven by advances in mobile gaming, virtual reality, and esports.",
+        "sector": 9
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 75,
+    "fields": {
+        "name": "Entertainment",
+        "description": "Entertainment companies produce and distribute movies, television shows, music, and live performances. This industry also includes streaming services and theme parks. These firms rely heavily on content creation and intellectual property monetization.",
+        "sector": 9
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 76,
+    "fields": {
+        "name": "Internet Content & Information",
+        "description": "Companies in this segment provide digital content and online services such as search engines, social media platforms, news portals, and forums. Their business models often rely on advertising revenue, subscription services, and data analytics.",
+        "sector": 9
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 77,
+    "fields": {
+        "name": "Publishing",
+        "description": "Publishing includes companies that produce and distribute printed and digital content like books, newspapers, and magazines. Despite the decline of traditional print, many are transitioning to online platforms and subscription-based revenue streams.",
+        "sector": 9
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 78,
+    "fields": {
+        "name": "Telecom Services",
+        "description": "Telecom firms provide wired and wireless communication services including voice, data, and internet connectivity. This industry underpins global communication infrastructure and is essential for mobile, broadband, and enterprise-level connectivity.",
+        "sector": 9
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 79,
+    "fields": {
+        "name": "Beverages - Brewers",
+        "description": "This industry includes companies that produce and market beer and malt beverages. Firms range from large multinational breweries to regional craft brewers. Revenue is influenced by brand strength, distribution scale, and changing consumer preferences for alcoholic beverages.",
+        "sector": 5
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 80,
+    "fields": {
+        "name": "Beverages - Non-Alcoholic",
+        "description": "Companies in this segment produce soft drinks, bottled water, energy drinks, juices, and other non-alcoholic beverages. Leading firms often have global distribution networks and rely on strong brand recognition and innovation in health-conscious offerings.",
+        "sector": 5
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 81,
+    "fields": {
+        "name": "Beverages - Wineries & Distilleries",
+        "description": "This industry focuses on the production and distribution of wine, spirits, and liquors. Companies may own vineyards, distilleries, or a portfolio of premium alcohol brands. Growth is often driven by consumer trends, premiumization, and export demand.",
+        "sector": 5
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 82,
+    "fields": {
+        "name": "Confectioners",
+        "description": "Confectionery firms manufacture chocolate, candy, gum, and other sweets. These products are typically seen as affordable indulgences, giving the industry some resilience during economic downturns. Innovation often includes new flavors, health-conscious options, and seasonal offerings.",
+        "sector": 5
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 83,
+    "fields": {
+        "name": "Discount Stores",
+        "description": "This segment includes large retail chains offering a wide range of consumer staples at lower prices. These companies thrive on high volume, efficient supply chains, and economies of scale. They often benefit from increased demand during economic slowdowns.",
+        "sector": 5
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 84,
+    "fields": {
+        "name": "Education & Training Services",
+        "description": "Although somewhat atypical in Consumer Staples, this industry includes companies that provide basic educational services and training programs. These services are often considered essential and recession-resistant, especially when focused on workforce development and K-12 learning.",
+        "sector": 5
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 85,
+    "fields": {
+        "name": "Farm Products",
+        "description": "Companies in this industry grow, process, and distribute crops and livestock products such as grains, vegetables, dairy, and meat. These are the upstream suppliers for many food and beverage companies, and they are deeply affected by commodity prices and weather patterns.",
+        "sector": 5
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 86,
+    "fields": {
+        "name": "Food Distribution",
+        "description": "These firms handle the logistics and wholesale distribution of food products from producers to retailers, restaurants, and institutions. Efficiency, cold-chain infrastructure, and strong supplier relationships are key competitive advantages.",
+        "sector": 5
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 87,
+    "fields": {
+        "name": "Grocery Stores",
+        "description": "Grocery chains sell food and everyday household goods directly to consumers. They often operate on low margins but benefit from consistent demand. Many are investing in digital transformation through online ordering and delivery services.",
+        "sector": 5
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 88,
+    "fields": {
+        "name": "Household & Personal Products",
+        "description": "This industry includes manufacturers of cleaning products, toiletries, paper goods, and personal care items. Brand loyalty and shelf presence are critical, and many firms expand globally to drive growth in emerging markets.",
+        "sector": 5
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 89,
+    "fields": {
+        "name": "Packaged Foods",
+        "description": "Packaged food companies produce ready-to-eat or easy-to-prepare food items such as cereals, snacks, frozen meals, and canned goods. They benefit from consumer demand for convenience and long shelf life, and often face pressure to reformulate for health-conscious trends.",
+        "sector": 5
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 90,
+    "fields": {
+        "name": "Tobacco",
+        "description": "Tobacco firms produce cigarettes, cigars, and smokeless tobacco products, and increasingly invest in reduced-risk alternatives like e-cigarettes. Despite declining smoking rates in many regions, these companies remain profitable due to pricing power and loyal customer bases.",
+        "sector": 5
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 91,
+    "fields": {
+        "name": "Apparel Manufacturing",
+        "description": "Companies in this industry design and produce clothing and fashion items. They may operate their own brands or manufacture on behalf of others. Key drivers include fashion trends, cost efficiency, and global supply chain management.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 92,
+    "fields": {
+        "name": "Apparel Retail",
+        "description": "This includes companies that sell clothing and accessories directly to consumers through physical stores or online platforms. Brand identity, pricing, inventory control, and omnichannel strategies are crucial in this competitive space.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 93,
+    "fields": {
+        "name": "Auto & Truck Dealerships",
+        "description": "Dealerships sell new and used vehicles, offering financing, service, and parts. Their performance is tied to consumer confidence, interest rates, and auto manufacturer incentives.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 94,
+    "fields": {
+        "name": "Auto Manufacturers",
+        "description": "These firms design and build passenger cars, trucks, and electric vehicles. Global players compete on innovation, fuel efficiency, safety, and autonomous technology, with EVs becoming a central growth focus.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 95,
+    "fields": {
+        "name": "Auto Parts",
+        "description": "Auto parts manufacturers supply components for vehicles, either to automakers or the aftermarket. Demand is supported by new vehicle production and the ongoing need for repairs and maintenance of existing vehicles.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 96,
+    "fields": {
+        "name": "Department Stores",
+        "description": "These large retailers offer a variety of goods including apparel, cosmetics, home goods, and more. They’re undergoing major transformation due to the rise of e-commerce, often shifting toward omnichannel models.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 97,
+    "fields": {
+        "name": "Footwear & Accessories",
+        "description": "Companies in this category design, produce, and sell shoes, bags, and fashion accessories. Strong branding and seasonal demand are key, with sportswear and lifestyle products showing strong global appeal.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 98,
+    "fields": {
+        "name": "Furnishings, Fixtures & Appliances",
+        "description": "This industry includes companies that manufacture and sell furniture, home décor, kitchen equipment, and large appliances. Performance is tied to housing trends and consumer spending on home improvement.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 99,
+    "fields": {
+        "name": "Gambling",
+        "description": "Gambling companies offer casino games, sports betting, online wagering, and lottery services. Regulations vary significantly by region, but digital expansion is opening up new revenue streams.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 100,
+    "fields": {
+        "name": "Home Improvement Retail",
+        "description": "These retailers sell building materials, tools, and home improvement products to DIY consumers and professional contractors. Demand is closely linked to housing markets and renovation activity.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 101,
+    "fields": {
+        "name": "Internet Retail",
+        "description": "Internet retailers sell products exclusively or primarily online. They benefit from scalability, personalization, data-driven marketing, and logistical efficiency. Market leaders often disrupt traditional retail segments.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 102,
+    "fields": {
+        "name": "Leisure",
+        "description": "This industry includes recreational services like theme parks, cruise lines, and sporting activities. It’s sensitive to economic cycles but benefits from increasing consumer focus on experiences over possessions.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 103,
+    "fields": {
+        "name": "Lodging",
+        "description": "Lodging companies operate hotels, motels, and vacation rentals. Revenue depends on travel trends, tourism, and business travel. Brand loyalty and pricing strategies are central to profitability.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 104,
+    "fields": {
+        "name": "Luxury Goods",
+        "description": "Luxury firms produce high-end fashion, jewelry, watches, and personal goods. They rely on brand prestige, exclusivity, and affluent consumers, often with strong exposure to international markets.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 105,
+    "fields": {
+        "name": "Packaging & Containers",
+        "description": "Although often seen as an industrial component, in this sector it refers to packaging designed for consumer goods, often with a focus on design, branding, and sustainability.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 106,
+    "fields": {
+        "name": "Personal Services",
+        "description": "This broad category includes salons, fitness centers, dry cleaners, and other lifestyle services. These businesses rely on discretionary income and consumer preferences for convenience and experience.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 107,
+    "fields": {
+        "name": "Recreational Vehicles",
+        "description": "Manufacturers of motorhomes, trailers, and related parts serve a market of travel enthusiasts and retirees. The industry sees strong demand in periods of high consumer confidence and mobility interest.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 108,
+    "fields": {
+        "name": "Residential Construction",
+        "description": "This includes builders of single-family homes, condominiums, and residential communities. Demand is driven by mortgage rates, population growth, and housing affordability.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 109,
+    "fields": {
+        "name": "Resorts & Casinos",
+        "description": "These companies operate vacation destinations and gambling establishments. They cater to both domestic and international tourism, with performance tied to consumer leisure spending and economic cycles.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 110,
+    "fields": {
+        "name": "Restaurants",
+        "description": "This industry includes fast food chains, casual dining, and fine dining establishments. Competition is fierce, and companies must adapt to changing food preferences, delivery trends, and cost pressures.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 111,
+    "fields": {
+        "name": "Specialty Retail",
+        "description": "These are niche retailers focused on specific product categories like electronics, beauty, sporting goods, or pet supplies. Brand loyalty, product expertise, and unique inventory are key to differentiation.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 112,
+    "fields": {
+        "name": "Textile Manufacturing",
+        "description": "Firms in this space produce raw textiles and fabrics used in clothing, furnishings, and industrial applications. Global competition and cost efficiency are major strategic factors.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 113,
+    "fields": {
+        "name": "Travel Services",
+        "description": "Companies in this industry include online travel agencies, booking platforms, and tour operators. Demand is driven by tourism trends, travel accessibility, and technology adoption in trip planning.",
+        "sector": 4
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 114,
+    "fields": {
+        "name": "Agricultural Inputs",
+        "description": "Companies in this industry produce fertilizers, pesticides, and crop protection chemicals essential for modern farming. Demand is driven by global food production, crop yields, and commodity prices.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 115,
+    "fields": {
+        "name": "Aluminum",
+        "description": "This industry covers the mining, refining, and production of aluminum and aluminum-based products. Aluminum is crucial in construction, packaging, transportation, and aerospace, with demand tied to industrial activity and global trade.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 116,
+    "fields": {
+        "name": "Building Materials",
+        "description": "Firms here manufacture products like cement, insulation, drywall, roofing, and other structural materials. Growth depends on residential, commercial, and infrastructure construction projects.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 117,
+    "fields": {
+        "name": "Chemicals",
+        "description": "This broad category includes companies producing industrial chemicals used across sectors like manufacturing, textiles, automotive, and agriculture. Innovation, scale, and energy costs heavily influence margins.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 118,
+    "fields": {
+        "name": "Coking Coal",
+        "description": "Also known as metallurgical coal, coking coal is a key input for steel production. This industry’s health is closely linked to global steel demand and mining regulations.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 119,
+    "fields": {
+        "name": "Copper",
+        "description": "Copper producers mine and process this essential industrial metal, used in electrical wiring, construction, and electronics. Prices are driven by global infrastructure development, especially in emerging markets.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 120,
+    "fields": {
+        "name": "Gold",
+        "description": "Gold companies explore, mine, and refine this precious metal. Gold is valued for its use in jewelry, electronics, and as a financial hedge. Prices are influenced by inflation, interest rates, and geopolitical risk.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 121,
+    "fields": {
+        "name": "Lumber & Wood Production",
+        "description": "This includes logging, sawmills, and engineered wood product manufacturers. Demand is tied to housing, furniture, and paper production, with seasonal and environmental considerations affecting output.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 122,
+    "fields": {
+        "name": "Other Industrial Metals & Mining",
+        "description": "This diverse group includes producers of metals like nickel, zinc, and lithium. These metals are key to batteries, alloys, and electronics, with strategic importance rising in clean energy and tech sectors.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 123,
+    "fields": {
+        "name": "Other Precious Metals & Mining",
+        "description": "Covers companies mining platinum, palladium, and rare earth elements. These are essential for automotive, electronics, and green technologies. Supply constraints and geopolitical concentration influence pricing.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 124,
+    "fields": {
+        "name": "Paper & Paper Products",
+        "description": "Companies here produce office paper, cardboard, tissue, and packaging materials. Digitalization has impacted demand for traditional paper, while e-commerce has driven growth in packaging.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 125,
+    "fields": {
+        "name": "Silver",
+        "description": "Silver mining companies provide this dual-purpose metal used in industrial applications (like solar panels and electronics) and as a precious metal. Its valuation swings between industrial and investment demand.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 126,
+    "fields": {
+        "name": "Specialty Chemicals",
+        "description": "These companies create high-performance chemicals used in pharmaceuticals, electronics, construction, and agriculture. High margins and innovation distinguish them from bulk chemical producers.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 127,
+    "fields": {
+        "name": "Steel",
+        "description": "Steel producers manufacture the world’s most used alloy, vital for infrastructure, machinery, vehicles, and buildings. Prices and profits are cyclical, influenced by construction activity and trade dynamics.",
+        "sector": 2
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 128,
+    "fields": {
+        "name": "Utilities - Diversified",
+        "description": "These companies operate across multiple utility services, often including a combination of electricity, gas, and water. Their broad operations provide stability through diversification, and they typically serve large, multi-state or international markets.",
+        "sector": 10
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 129,
+    "fields": {
+        "name": "Utilities - Independent Power Producers",
+        "description": "Firms in this industry generate electricity for wholesale markets rather than directly serving retail customers. They often operate outside traditional utility regulation and may rely on competitive markets, long-term contracts, or merchant sales for revenue.",
+        "sector": 10
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 130,
+    "fields": {
+        "name": "Utilities - Regulated Electric",
+        "description": "This group includes companies that generate, transmit, and distribute electricity under state and federal regulations. Their earnings are generally stable, tied to approved rate structures, and influenced by infrastructure investment and electricity demand.",
+        "sector": 10
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 131,
+    "fields": {
+        "name": "Utilities - Regulated Gas",
+        "description": "These companies deliver natural gas to residential, commercial, and industrial customers through regulated pipelines and distribution networks. Like electric utilities, they benefit from consistent demand but face regulatory oversight of rates and safety.",
+        "sector": 10
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 132,
+    "fields": {
+        "name": "Utilities - Regulated Water",
+        "description": "Companies in this category provide clean water and wastewater services to municipalities and private customers. They operate in highly regulated environments, with stable revenue streams and long-term infrastructure planning.",
+        "sector": 10
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 133,
+    "fields": {
+        "name": "Utilities - Renewable",
+        "description": "These firms focus on generating power from sustainable sources like wind, solar, geothermal, and hydroelectric. Growth is driven by global decarbonization efforts, regulatory incentives, and technological advancements, though profitability can vary with subsidies and market access.",
+        "sector": 10
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 134,
+    "fields": {
+        "name": "REIT - Diversified",
+        "description": "These Real Estate Investment Trusts own and operate a mix of property types—such as office, residential, industrial, and retail—providing revenue diversification and exposure to multiple real estate markets.",
+        "sector": 11
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 135,
+    "fields": {
+        "name": "REIT - Healthcare Facilities",
+        "description": "This category includes REITs that invest in healthcare-related properties like hospitals, nursing facilities, and medical office buildings. Demand is supported by aging populations and long-term healthcare trends.",
+        "sector": 11
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 136,
+    "fields": {
+        "name": "REIT - Hotel & Motel",
+        "description": "REITs in this industry own hospitality properties, including hotels, resorts, and motels. Performance is cyclical and tied to business travel, tourism, and macroeconomic health.",
+        "sector": 11
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 137,
+    "fields": {
+        "name": "REIT - Industrial",
+        "description": "These REITs focus on properties like warehouses, distribution centers, and logistics hubs. Growth has been strong due to the rise of e-commerce and supply chain infrastructure investment.",
+        "sector": 11
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 138,
+    "fields": {
+        "name": "REIT - Mortgage",
+        "description": "Unlike equity REITs, mortgage REITs (mREITs) invest in mortgages or mortgage-backed securities. They earn income through interest spreads and are highly sensitive to interest rate changes.",
+        "sector": 11
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 139,
+    "fields": {
+        "name": "REIT - Office",
+        "description": "These REITs own office buildings and lease space to corporate tenants. Their performance is linked to employment trends, urban development, and shifts in remote work policies.",
+        "sector": 11
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 140,
+    "fields": {
+        "name": "REIT - Residential",
+        "description": "Residential REITs own and manage rental housing—such as apartments, manufactured homes, or single-family rentals. Demand is driven by population growth, affordability trends, and housing supply dynamics.",
+        "sector": 11
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 141,
+    "fields": {
+        "name": "REIT - Retail",
+        "description": "This group owns shopping centers, malls, and standalone retail spaces. Performance depends on consumer spending, tenant stability, and the evolving impact of e-commerce on brick-and-mortar retail.",
+        "sector": 11
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 142,
+    "fields": {
+        "name": "REIT - Specialty",
+        "description": "Specialty REITs focus on niche assets such as data centers, cell towers, casinos, timberland, or self-storage. These REITs often benefit from specific economic or technological trends.",
+        "sector": 11
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 143,
+    "fields": {
+        "name": "Real Estate - Development",
+        "description": "Companies in this industry are involved in buying land, planning, building, and selling or leasing new developments. They take on higher risk for potentially greater returns and are sensitive to economic cycles and interest rates.",
+        "sector": 11
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 144,
+    "fields": {
+        "name": "Real Estate - Diversified",
+        "description": "These companies operate across various real estate services or property types but may not be structured as REITs. Their income streams can come from property management, leasing, and ownership.",
+        "sector": 11
+    }
+},
+{
+    "model": "stock_logic.industry",
+    "pk": 145,
+    "fields": {
+        "name": "Real Estate Services",
+        "description": "Firms here provide professional real estate services like brokerage, appraisal, leasing, consulting, and property management. They serve both residential and commercial markets and earn revenue via transaction volume or management fees.",
+        "sector": 11
+    }
+}
+]

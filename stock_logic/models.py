@@ -37,10 +37,34 @@ class Portfolio(models.Model):
             return 0
         return round((self.current_value() - initial) / initial * 100, 2)
 
+class Sector(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True)
+    
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        ordering = ['name']
+
+class Industry(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True)
+    sector = models.ForeignKey(Sector, on_delete=models.CASCADE, related_name='industries')
+    
+    def __str__(self):
+        return f"{self.name} ({self.sector.name})"
+    
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = "Industries"
+
 class Stock(models.Model):
     symbol = models.CharField(max_length=10, unique=True)
     company_name = models.CharField(max_length=200)
-    sector = models.CharField(max_length=100, blank=True)
+    description = models.TextField(blank=True, help_text="Company description and additional information")
+    sector = models.ForeignKey(Sector, on_delete=models.SET_NULL, null=True, blank=True, related_name='stocks')
+    industry = models.ForeignKey(Industry, on_delete=models.SET_NULL, null=True, blank=True, related_name='stocks')
     
     def __str__(self):
         return f"{self.symbol} - {self.company_name}"

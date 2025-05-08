@@ -5,59 +5,70 @@
 <script type="text/javascript">
 (function($) {
     $(document).ready(function() {
-        // Handle dynamically added inline forms
-        function setupStockPriceAutoPopulate() {
-            $('.field-stock select').each(function() {
-                // Remove existing handlers to prevent duplicate binding
-                $(this).off('change.stockprice');
-                
-                // Add a new change handler
-                $(this).on('change.stockprice', function() {
-                    var $row = $(this).closest('tr');
-                    var $priceField = $row.find('.field-initial_price input');
-                    var $quantityField = $row.find('.field-quantity input');
-                    var $totalField = $row.find('.field-total_investment input');
-                    var stockId = $(this).val();
+        // Function to update stock price when a stock is selected
+        function updateStockPrice($select) {
+            var stockId = $select.val();
+            if (!stockId) return;
+            
+            var $row = $select.closest('tr');
+            var $priceField = $row.find('.field-initial_price input');
+            var $quantityField = $row.find('.field-quantity input');
+            var $totalField = $row.find('.field-total_investment input');
+            
+            $.ajax({
+                url: '{% url "admin-get-stock-price" %}',
+                data: {
+                    'stock_id': stockId
+                },
+                dataType: 'json',
+                success: function(data) {
+                    $priceField.val(data.formatted_price);
                     
-                    if (stockId) {
-                        $.ajax({
-                            url: '/stock-logic/api/get-stock-price/',
-                            data: {
-                                'stock_id': stockId
-                            },
-                            dataType: 'json',
-                            success: function(data) {
-                                $priceField.val(data.formatted_price);
-                                
-                                // Only update one field, not both
-                                if ($totalField.val() && $totalField.val().trim() !== '') {
-                                    // If total investment is entered, clear quantity
-                                    $quantityField.val('');
-                                    // Calculate quantity but don't update the field
-                                    // (for display purposes only)
-                                    var total = parseFloat($totalField.val());
-                                    var price = parseFloat(data.formatted_price);
-                                } else if ($quantityField.val() && $quantityField.val().trim() !== '') {
-                                    // If quantity is entered, clear total investment
-                                    $totalField.val('');
-                                }
-                            },
-                            error: function(xhr, textStatus, errorThrown) {
-                                console.error("Error fetching stock price:", errorThrown);
-                            }
-                        });
+                    // Only update one field, not both
+                    if ($totalField.val() && $totalField.val().trim() !== '') {
+                        $quantityField.val('');
+                    } else if ($quantityField.val() && $quantityField.val().trim() !== '') {
+                        $totalField.val('');
                     }
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    console.error("Error fetching stock price:", errorThrown);
+                }
+            });
+        }
+        
+        // Function to set up event handlers for all stock selects
+        function setupStockPriceAutoPopulate() {
+            // Find all stock select fields (both regular and select2)
+            $('.field-stock select').each(function() {
+                var $select = $(this);
+                
+                // Remove any existing handlers to avoid duplicates
+                $select.off('change.stockprice select2:select.stockprice');
+                
+                // Handle regular change event
+                $select.on('change.stockprice', function() {
+                    updateStockPrice($select);
                 });
+                
+                // Handle select2 selection event
+                $select.on('select2:select.stockprice', function() {
+                    updateStockPrice($select);
+                });
+                
+                // If a stock is already selected, fetch its price
+                if ($select.val()) {
+                    updateStockPrice($select);
+                }
             });
             
-            // Add change handlers to quantity and total investment fields
+            // Setup quantity/total investment mutual exclusivity
             $('.field-quantity input').each(function() {
                 $(this).off('change.stockprice');
                 $(this).on('change.stockprice', function() {
                     var $row = $(this).closest('tr');
                     var $totalField = $row.find('.field-total_investment input');
                     
-                    // If quantity is entered, clear total investment
                     if ($(this).val() && $(this).val().trim() !== '') {
                         $totalField.val('');
                     }
@@ -70,7 +81,6 @@
                     var $row = $(this).closest('tr');
                     var $quantityField = $row.find('.field-quantity input');
                     
-                    // If total investment is entered, clear quantity
                     if ($(this).val() && $(this).val().trim() !== '') {
                         $quantityField.val('');
                     }
@@ -81,10 +91,15 @@
         // Initial setup
         setupStockPriceAutoPopulate();
         
-        // Set up for dynamically added rows (when "Add another" is clicked)
+        // Django admin adds new forms dynamically, so we need to handle that
         $('.add-row a').click(function() {
             // Use setTimeout to ensure the new row has been added to the DOM
-            setTimeout(setupStockPriceAutoPopulate, 100);
+            setTimeout(setupStockPriceAutoPopulate, 300);
+        });
+        
+        // Also handle dynamically added forms through formset:added event
+        $(document).on('formset:added', function(event, $row) {
+            setupStockPriceAutoPopulate();
         });
         
         // Before form submission, make sure we're not sending both fields

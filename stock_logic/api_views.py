@@ -2,32 +2,81 @@ from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from .permissions import IsAdminUserOrReadOnly
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from django.shortcuts import get_object_or_404
 from django.db import transaction
-from .models import Portfolio, Stock, PortfolioPosition, StockPrice
+from .models import Portfolio, Stock, PortfolioPosition, StockPrice, Sector, Industry
 from .serializers import (
     PortfolioSerializer, StockSerializer, 
-    PortfolioPositionSerializer, StockPriceSerializer
+    PortfolioPositionSerializer, StockPriceSerializer,
+    SectorSerializer, IndustrySerializer
 )
 from .utils import update_stock_prices, fetch_stock_data
 import logging
 
 logger = logging.getLogger(__name__)
 
+class SectorViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for sector management.
+    Only admin users can modify sectors.
+    """
+    queryset = Sector.objects.all()
+    serializer_class = SectorSerializer
+    permission_classes = [IsAdminUserOrReadOnly]
+    search_fields = ['name', 'description']
+    
+    @swagger_auto_schema(
+        operation_description="Get industries for a specific sector",
+        responses={200: IndustrySerializer(many=True)}
+    )
+    @action(detail=True, methods=['get'])
+    def industries(self, request, pk=None):
+        """Get all industries for a specific sector"""
+        sector = self.get_object()
+        industries = sector.industries.all()
+        serializer = IndustrySerializer(industries, many=True)
+        return Response(serializer.data)
+
+class IndustryViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for industry management.
+    Only admin users can modify industries.
+    """
+    queryset = Industry.objects.all()
+    serializer_class = IndustrySerializer
+    permission_classes = [IsAdminUserOrReadOnly]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name', 'description', 'sector__name']
+    filterset_fields = ['sector']
+    
+    @swagger_auto_schema(
+        operation_description="Get stocks for a specific industry",
+        responses={200: StockSerializer(many=True)}
+    )
+    @action(detail=True, methods=['get'])
+    def stocks(self, request, pk=None):
+        """Get all stocks for a specific industry"""
+        industry = self.get_object()
+        stocks = industry.stocks.all()
+        serializer = StockSerializer(stocks, many=True)
+        return Response(serializer.data)
+
+# Update StockViewSet to include sector/industry filtering
 class StockViewSet(viewsets.ModelViewSet):
     """
     API endpoint for stock management.
-    Provides CRUD operations for stocks and additional actions
-    for price updates and history retrieval.
+    Only admin users can modify stocks.
     """
     queryset = Stock.objects.all()
     serializer_class = StockSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUserOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ['symbol', 'company_name', 'sector']
-    ordering_fields = ['symbol', 'company_name', 'sector']
+    search_fields = ['symbol', 'company_name', 'description']
+    ordering_fields = ['symbol', 'company_name']
+    filterset_fields = ['sector', 'industry']
     
     @swagger_auto_schema(
         operation_description="Update prices for all stocks in the database",
@@ -84,11 +133,10 @@ class StockViewSet(viewsets.ModelViewSet):
 class PortfolioViewSet(viewsets.ModelViewSet):
     """
     API endpoint for portfolio management.
-    Provides CRUD operations for portfolios and additional actions
-    for managing positions within a portfolio.
+    Only admin users can modify portfolios.
     """
     serializer_class = PortfolioSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUserOrReadOnly]
     
     def get_queryset(self):
         """Return only portfolios owned by the current user"""
@@ -129,11 +177,11 @@ class PortfolioViewSet(viewsets.ModelViewSet):
 class PortfolioPositionViewSet(viewsets.ModelViewSet):
     """
     API endpoint for portfolio position management.
-    Provides CRUD operations for portfolio positions.
+    Only admin users can modify positions.
     """
     queryset = PortfolioPosition.objects.all()
     serializer_class = PortfolioPositionSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUserOrReadOnly]
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['purchase_date', 'stock__symbol']
     
@@ -148,12 +196,11 @@ class PortfolioPositionViewSet(viewsets.ModelViewSet):
 class StockPriceViewSet(viewsets.ModelViewSet):
     """
     API endpoint for stock price management.
-    Provides CRUD operations for stock prices and additional actions
-    for fetching the latest price for a specific stock symbol.
+    Only admin users can modify stock prices.
     """
     queryset = StockPrice.objects.all()
     serializer_class = StockPriceSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUserOrReadOnly]
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['date', 'price_timestamp']
     

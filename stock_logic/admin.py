@@ -4,8 +4,8 @@ from django.urls import path
 from django.template.response import TemplateResponse
 from django.db.models import Sum, F, DecimalField
 from django.db.models.functions import TruncDay
-from .models import Portfolio, Stock, PortfolioPosition, StockPrice
-from .utils import update_stock_prices
+from .models import Portfolio, Stock, PortfolioPosition, StockPrice, Sector, Industry
+from .utils import update_stock_prices, ensure_sector_and_industry
 
 class PortfolioPositionInline(admin.TabularInline):
     model = PortfolioPosition
@@ -72,22 +72,59 @@ class PortfolioAdmin(admin.ModelAdmin):
         return format_html('${}', formatted_value)
     formatted_initial_value.short_description = 'Initial Value'
 
+@admin.register(Sector)
+class SectorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description', 'industries_count', 'stocks_count')
+    search_fields = ('name', 'description')
+    
+    def industries_count(self, obj):
+        return obj.industries.count()
+    industries_count.short_description = 'Industries'
+    
+    def stocks_count(self, obj):
+        return obj.stocks.count()
+    stocks_count.short_description = 'Stocks'
+
+@admin.register(Industry)
+class IndustryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'sector', 'description', 'stocks_count')
+    list_filter = ('sector',)
+    search_fields = ('name', 'description', 'sector__name')
+    autocomplete_fields = ['sector']
+    
+    def stocks_count(self, obj):
+        return obj.stocks.count()
+    stocks_count.short_description = 'Stocks'
+
 @admin.register(Stock)
 class StockAdmin(admin.ModelAdmin):
-    list_display = ('symbol', 'company_name', 'sector', 'formatted_latest_open', 'formatted_latest_close', 'daily_change', 'has_price_data')
-    search_fields = ('symbol', 'company_name')
-    list_filter = ('sector',)
-    readonly_fields = ('get_latest_open_price', 'get_latest_close_price', 'price_change')
+    list_display = ('symbol', 'company_name', 'sector_display', 'industry_display', 'formatted_latest_open', 'formatted_latest_close', 'daily_change', 'has_price_data')
+    search_fields = ('symbol', 'company_name', 'description')
+    list_filter = ('sector', 'industry')
+    readonly_fields = ('get_latest_open_price', 'get_latest_close_price', 'price_change', 'sector')
+    autocomplete_fields = ['industry']
     inlines = [StockPriceInline]
     fieldsets = (
         ('Stock Information', {
-            'fields': ('symbol', 'company_name', 'sector')
+            'fields': ('symbol', 'company_name', 'description', 'industry')
         }),
         ('Latest Pricing Data', {
             'fields': ('get_latest_open_price', 'get_latest_close_price', 'price_change'),
             'classes': ('wide',)
         }),
     )
+    
+    def sector_display(self, obj):
+        if obj.sector:
+            return obj.sector.name
+        return '-'
+    sector_display.short_description = 'Sector'
+    
+    def industry_display(self, obj):
+        if obj.industry:
+            return obj.industry.name
+        return '-'
+    industry_display.short_description = 'Industry'
     
     def get_urls(self):
         urls = super().get_urls()
@@ -176,6 +213,14 @@ class StockAdmin(admin.ModelAdmin):
                 color, formatted_change, formatted_percent
             )
         return '-'
+
+    def save_model(self, request, obj, form, change):
+        # Set sector automatically based on the selected industry
+        if obj.industry and obj.industry.sector:
+            obj.sector = obj.industry.sector
+        
+        super().save_model(request, obj, form, change)
+        ensure_sector_and_industry(obj)
 
 @admin.register(PortfolioPosition)
 class PortfolioPositionAdmin(admin.ModelAdmin):
@@ -274,8 +319,8 @@ class StockPriceAdmin(admin.ModelAdmin):
             change = obj.close_price - obj.open_price
             percent = (change / obj.open_price) * 100
             color = 'green' if change > 0 else 'red' if change < 0 else 'gray'
-            formatted_change = '{:,.2f}'.format(change)
-            formatted_percent = '{:,.2f}'.format(percent)
+            formatted_change = '{:.2f}'.format(change)
+            formatted_percent = '{:.2f}'.format(percent)
             return format_html(
                 '<span style="color: {};">${} ({}%)</span>', 
                 color, formatted_change, formatted_percent
