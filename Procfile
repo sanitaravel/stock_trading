@@ -1,1 +1,2 @@
-web: gunicorn stock_portfolio.wsgi --log-file -
+web: python your_app_entry_point.py
+release: python manage.py migrate

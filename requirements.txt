@@ -50,5 +50,5 @@ yfinance==0.2.59
 
 # Heroku deployment requirements
 gunicorn==21.2.0
-psycopg2-binary==2.9.9
-dj-database-url==2.1.0
+psycopg2-binary==2.9.5
+dj-database-url==1.2.0
