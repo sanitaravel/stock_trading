@@ -16,6 +16,3 @@ class StockLogicConfig(AppConfig):
         from .models import Sector, Portfolio
         if Sector.objects.count() == 0:
             call_command('loaddata', 'initial_sector_industry_data.json')
-            
-        if Portfolio.objects.count() == 0:
-            call_command('loaddata', 'ai_portfolios.json')
