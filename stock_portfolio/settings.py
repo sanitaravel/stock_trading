@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'drf_yasg',
+    'django_apscheduler',
+    'scheduler',
 ]
 
 MIDDLEWARE = [
@@ -161,6 +163,11 @@ LOGGING = {
             'level': 'INFO',
             'propagate': True,
         },
+        'scheduler': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
     },
 }
 
@@ -209,3 +216,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Add this if you don't already have it
 ALPHA_VANTAGE_API_KEY = 'RMQ9M1XBZFY2I95F'  # Replace with your actual Alpha Vantage API key
+
+# APScheduler settings
+SCHEDULER_AUTOSTART = True
+SCHEDULER_DEFAULT_MAX_INSTANCES = 1
