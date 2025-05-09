@@ -6,7 +6,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
-    help = 'Update stock prices, runs at 4:10 PM ET (10 minutes after NYSE closes)'
+    help = 'Update stock prices, runs between 4:00 PM ET and 5:00 PM ET (after NYSE closes)'
 
     def handle(self, *args, **options):
         # Check if it's the right time to update prices
