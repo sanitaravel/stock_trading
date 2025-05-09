@@ -21,7 +21,6 @@ var/
 .installed.cfg
 *.egg
 .env
-.python-version
 celerybeat-schedule
 nosetests.xml
 coverage.xml
