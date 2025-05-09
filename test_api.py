@@ -32,7 +32,10 @@ def get_stocks():
         return None
 
 def get_portfolios():
-    response = requests.get(f'{BASE_URL}/portfolios/', headers=get_headers())
+    response = requests.get(
+        f'{BASE_URL}/portfolios/',
+        headers=get_headers()
+    )
     if response.status_code == 200:
         return response.json()
     else:
