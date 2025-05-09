@@ -139,7 +139,7 @@ def update_stock_prices():
 
 def is_nyse_closing_time():
     """
-    Check if it's exactly 10 minutes after NYSE close (4:10 PM ET)
+    Check if it's between NYSE close (4:00 PM ET) and 5:00 PM ET
     """
     eastern = pytz.timezone('US/Eastern')
     now = datetime.now(eastern)
@@ -147,17 +147,16 @@ def is_nyse_closing_time():
     # NYSE closing time (4:00 PM ET)
     closing_time = now.replace(hour=16, minute=0, second=0, microsecond=0)
     
-    # 10 minutes after closing
-    ten_min_after = closing_time + timedelta(minutes=10)
+    # 5:00 PM ET
+    end_window = now.replace(hour=17, minute=0, second=0, microsecond=0)
     
-    # Check if we're within a 2-minute window of 4:10 PM ET (to account for scheduling delays)
-    start_window = ten_min_after - timedelta(minutes=1)
-    end_window = ten_min_after + timedelta(minutes=1)
+    # Check if we're within the window between 4:00 PM ET and 5:00 PM ET
+    is_in_window = closing_time <= now <= end_window
     
     # Also check if it's a weekday (NYSE is closed on weekends)
     is_weekday = now.weekday() < 5  # 0-4 are Monday to Friday
     
-    return start_window <= now <= end_window and is_weekday
+    return is_in_window and is_weekday
 
 def ensure_sector_and_industry(stock, sector_name=None, industry_name=None):
     """
