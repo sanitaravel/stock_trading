@@ -1,4 +1,5 @@
 {% extends 'stock_visualization/base.html' %}
+{% load money_filters %}
 
 {% block title %}{{ portfolio.name }} - Portfolio Details{% endblock %}
 
@@ -24,28 +25,38 @@
 {% endif %}
 
 <div class="row mb-4">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card shadow">
             <div class="card-body text-center">
                 <h5 class="card-title">Current Value</h5>
-                <h3 class="text-primary">${{ portfolio_value|floatformat:2 }}</h3>
+                <h3 class="text-primary">{{ portfolio_value|money }}</h3>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card shadow">
             <div class="card-body text-center">
                 <h5 class="card-title">Initial Investment</h5>
-                <h3>${{ portfolio_initial|floatformat:2 }}</h3>
+                <h3>{{ portfolio_initial|money }}</h3>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h5 class="card-title">Total Gain/Loss</h5>
+                <h3 class="{% if portfolio_gain > 0 %}text-success{% elif portfolio_gain < 0 %}text-danger{% endif %}">
+                    {% if portfolio_gain > 0 %}+{% endif %}{{ portfolio_gain_formatted }}
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
         <div class="card shadow">
             <div class="card-body text-center">
                 <h5 class="card-title">Performance</h5>
                 <h3 class="{% if portfolio_performance > 0 %}text-success{% elif portfolio_performance < 0 %}text-danger{% endif %}">
-                    {% if portfolio_performance > 0 %}+{% endif %}{{ portfolio_performance|floatformat:2 }}%
+                    {% if portfolio_performance > 0 %}+{% endif %}{{ portfolio_performance|percentage }}
                 </h3>
             </div>
         </div>
@@ -107,12 +118,12 @@
                                     </a>
                                 </td>
                                 <td>{{ position.quantity|floatformat:2 }}</td>
-                                <td>${{ position.current_value|floatformat:2 }}</td>
-                                <td>${{ position.initial_price|floatformat:2 }}</td>
+                                <td>{{ position.current_value|money }}</td>
+                                <td>{{ position.initial_price|money }}</td>
                                 <td>
                                     {% with performance=position.performance %}
                                     <span class="badge {% if performance > 0 %}bg-success{% elif performance < 0 %}bg-danger{% else %}bg-secondary{% endif %}">
-                                        {% if performance > 0 %}+{% endif %}{{ performance|floatformat:2 }}%
+                                        {% if performance > 0 %}+{% endif %}{{ performance|percentage }}
                                     </span>
                                     {% endwith %}
                                 </td>

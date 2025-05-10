@@ -30,6 +30,10 @@ class Portfolio(models.Model):
             total += initial_price * quantity
         return round(total, 2)
     
+    def gain(self):
+        """Calculate the absolute gain/loss of the portfolio in dollars."""
+        return round(self.current_value() - self.initial_value(), 2)
+    
     def performance(self):
         """Calculate the performance of the portfolio."""
         initial = self.initial_value()

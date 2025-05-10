@@ -35,17 +35,19 @@ class StockPriceInline(admin.TabularInline):
 
 @admin.register(Portfolio)
 class PortfolioAdmin(admin.ModelAdmin):
-    list_display = ('name', 'formatted_current_value', 'formatted_initial_value', 'formatted_performance', 'positions_count', 'created_at')
+    list_display = ('name', 'formatted_current_value', 'formatted_initial_value', 
+                    'formatted_gain', 'formatted_performance', 'positions_count', 'created_at')
     search_fields = ('name', 'description')
     list_filter = ('created_at',)
     inlines = [PortfolioPositionInline]
-    readonly_fields = ('created_at', 'last_updated', 'current_value', 'initial_value', 'performance')
+    readonly_fields = ('created_at', 'last_updated', 'current_value', 'initial_value', 
+                       'gain', 'performance')
     fieldsets = (
         ('Portfolio Information', {
             'fields': ('name', 'description', 'created_at', 'last_updated')
         }),
         ('Performance Metrics', {
-            'fields': ('current_value', 'initial_value', 'performance'),
+            'fields': ('current_value', 'initial_value', 'gain', 'performance'),
             'classes': ('wide',)
         }),
     )
@@ -71,6 +73,14 @@ class PortfolioAdmin(admin.ModelAdmin):
         formatted_value = '{:,.2f}'.format(value)
         return format_html('${}', formatted_value)
     formatted_initial_value.short_description = 'Initial Value'
+    
+    def formatted_gain(self, obj):
+        gain = obj.gain()
+        color = 'green' if gain > 0 else 'red' if gain < 0 else 'gray'
+        prefix = '+' if gain > 0 else ''
+        formatted_value = '{:,.2f}'.format(gain)
+        return format_html('<span style="color: {};">${}{}</span>', color, prefix, formatted_value)
+    formatted_gain.short_description = 'Total Gain/Loss'
 
 @admin.register(Sector)
 class SectorAdmin(admin.ModelAdmin):

@@ -375,3 +375,26 @@ html[data-theme="dark"] .card-header.bg-primary .btn-outline-light {
 html[data-theme="dark"] .card-header.bg-primary .btn-outline-light.active {
     color: var(--btn-primary-bg);
 }
+
+/* Performance badge with gain */
+.badge {
+    padding: 0.5em 0.75em;
+    font-size: 0.85rem;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+.table .badge {
+    display: inline-block;
+    max-width: 100%;
+}
+
+/* Responsive adjustments for combined performance/gain badge */
+@media (max-width: 768px) {
+    .badge {
+        display: inline-block;
+        white-space: normal;
+        text-align: left;
+        line-height: 1.4;
+    }
+}
