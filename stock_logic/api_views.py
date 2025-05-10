@@ -15,6 +15,7 @@ from .serializers import (
 )
 from .utils import update_stock_prices, fetch_stock_data
 import logging
+from datetime import datetime, timedelta
 
 logger = logging.getLogger(__name__)
 
@@ -109,25 +110,37 @@ class StockViewSet(viewsets.ModelViewSet):
     )
     @action(detail=True, methods=['get'])
     def price_history(self, request, pk=None):
-        """Get price history for a specific stock"""
+        """Get price history for a specific stock with optional date filtering"""
         stock = self.get_object()
-        prices = stock.prices.order_by('-date')
         
-        # Optional date range filtering
-        start_date = request.query_params.get('start_date')
-        end_date = request.query_params.get('end_date')
+        # Get date parameters from request, or use defaults
+        end_date_str = request.query_params.get('end_date')
+        start_date_str = request.query_params.get('start_date')
         
-        if start_date:
-            prices = prices.filter(date__gte=start_date)
-        if end_date:
-            prices = prices.filter(date__lte=end_date)
-            
-        page = self.paginate_queryset(prices)
-        if page is not None:
-            serializer = StockPriceSerializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-            
-        serializer = StockPriceSerializer(prices, many=True)
+        if end_date_str:
+            try:
+                end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+            except ValueError:
+                end_date = datetime.now().date()
+        else:
+            end_date = datetime.now().date()
+        
+        if start_date_str:
+            try:
+                start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+            except ValueError:
+                start_date = end_date - timedelta(days=90)  # Default to 90 days
+        else:
+            start_date = end_date - timedelta(days=90)  # Default to 90 days
+        
+        # Query price history with date filters
+        queryset = StockPrice.objects.filter(
+            stock=stock,
+            date__gte=start_date,
+            date__lte=end_date
+        ).order_by('date')
+        
+        serializer = StockPriceSerializer(queryset, many=True)
         return Response(serializer.data)
 
 class PortfolioViewSet(viewsets.ModelViewSet):
@@ -173,6 +186,82 @@ class PortfolioViewSet(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @swagger_auto_schema(
+        operation_description="Get historical value data for a specific portfolio",
+        manual_parameters=[
+            openapi.Parameter('start_date', openapi.IN_QUERY, description="Filter by start date (YYYY-MM-DD)", type=openapi.TYPE_STRING),
+            openapi.Parameter('end_date', openapi.IN_QUERY, description="Filter by end date (YYYY-MM-DD)", type=openapi.TYPE_STRING),
+        ],
+        responses={200: openapi.Response("Success", schema=openapi.Schema(
+            type=openapi.TYPE_ARRAY,
+            items=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'date': openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_DATE),
+                    'value': openapi.Schema(type=openapi.TYPE_NUMBER),
+                }
+            )
+        ))}
+    )
+    @action(detail=True, methods=['get'])
+    def history(self, request, pk=None):
+        """Get historical value data for a specific portfolio with optional date filtering"""
+        portfolio = self.get_object()
+        
+        # Get date parameters from request, or use defaults
+        end_date_str = request.query_params.get('end_date')
+        start_date_str = request.query_params.get('start_date')
+        
+        if end_date_str:
+            try:
+                end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+            except ValueError:
+                end_date = datetime.now().date()
+        else:
+            end_date = datetime.now().date()
+        
+        if start_date_str:
+            try:
+                start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+            except ValueError:
+                start_date = end_date - timedelta(days=90)  # Default to 90 days
+        else:
+            start_date = end_date - timedelta(days=90)  # Default to 90 days
+        
+        # Get all positions in the portfolio
+        positions = portfolio.positions.all()
+        
+        # Initialize result list to store historical values
+        historical_values = []
+        
+        # Get all dates between start_date and end_date
+        date_range = [start_date + timedelta(days=x) for x in range((end_date - start_date).days + 1)]
+        
+        for date in date_range:
+            daily_value = 0
+            
+            # Calculate the portfolio value for each date
+            for position in positions:
+                # Check if the position was purchased before or on the current date
+                if position.purchase_date <= date:
+                    # Get the stock price for this date (or closest previous date)
+                    price = StockPrice.objects.filter(
+                        stock=position.stock,
+                        date__lte=date
+                    ).order_by('-date').first()
+                    
+                    if price:
+                        # Add the position value to the daily total
+                        daily_value += position.quantity * price.close_price
+            
+            # Add the date and value to the results
+            historical_values.append({
+                'date': date.strftime('%Y-%m-%d'),
+                'value': round(daily_value, 2)
+            })
+        
+        return Response(historical_values)
 
 class PortfolioPositionViewSet(viewsets.ModelViewSet):
     """

@@ -104,7 +104,7 @@ function fetchPortfolioComparison(range) {
     const { startDate, endDate } = getDateRange(range);
     
     // Build URL with query parameters
-    let url = `/stock-visualization/api/portfolios/history/?end_date=${endDate}`;
+    let url = `/api/portfolios/history/?end_date=${endDate}`;
     if (startDate) {
         url += `&start_date=${startDate}`;
     }
