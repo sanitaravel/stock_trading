@@ -1,5 +1,6 @@
 {% extends 'stock_visualization/base.html' %}
 {% load static %}
+{% load money_filters %}
 
 {% block title %}{{ stock.symbol }} - {{ stock.company_name }}{% endblock %}
 
@@ -38,7 +39,7 @@
                         </li>
                         <li class="list-group-item">
                             <strong>Latest Price:</strong> 
-                            ${{ stock.get_latest_close_price|floatformat:2 }}
+                            {{ stock.get_latest_close_price|money }}
                         </li>
                     </ul>
                 </div>

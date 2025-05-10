@@ -1,4 +1,5 @@
 {% extends 'stock_visualization/base.html' %}
+{% load money_filters %}
 
 {% block title %}AI Portfolio Leaderboard{% endblock %}
 
@@ -55,12 +56,13 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ portfolio.name }}</td>
-                                <td>${{ portfolio.current_value|floatformat:2 }}</td>
-                                <td>${{ portfolio.initial_value|floatformat:2 }}</td>
+                                <td>{{ portfolio.current_value|money }}</td>
+                                <td>{{ portfolio.initial_value|money }}</td>
                                 <td>
-                                    {% with performance=portfolio.performance %}
+                                    {% with performance=portfolio.performance gain=portfolio.gain %}
                                     <span class="badge {% if performance > 0 %}bg-success{% elif performance < 0 %}bg-danger{% else %}bg-secondary{% endif %}">
-                                        {% if performance > 0 %}+{% endif %}{{ performance|floatformat:2 }}%
+                                        {% if performance > 0 %}+{% endif %}{{ performance|percentage }} 
+                                        ({% if gain > 0 %}+{% endif %}{{ gain|money }})
                                     </span>
                                     {% endwith %}
                                 </td>

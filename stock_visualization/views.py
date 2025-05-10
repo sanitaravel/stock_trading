@@ -16,6 +16,7 @@ def index(request):
         'current_value': float(p.current_value()),
         'initial_value': float(p.initial_value()),
         'performance': float(p.performance()),
+        'gain': float(p.gain()),  # Add gain
     } for p in portfolios]
     
     # Sort portfolios by performance (descending)
@@ -44,7 +45,7 @@ def portfolio_detail(request, portfolio_id):
         reverse=True
     )
     
-    # Get position data for charts
+    # Get position data for charts with better number formatting
     position_data = [{
         'id': pos.id,
         'stock_symbol': pos.stock.symbol,
@@ -53,6 +54,9 @@ def portfolio_detail(request, portfolio_id):
         'initial_price': float(pos.initial_price),
         'current_value': float(pos.current_value()),
         'performance': float(pos.performance()),
+        # Add formatted values for display
+        'formatted_current_value': "${:,.2f}".format(pos.current_value()),
+        'formatted_initial_price': "${:,.2f}".format(pos.initial_price),
     } for pos in positions]
     
     context = {
@@ -62,6 +66,11 @@ def portfolio_detail(request, portfolio_id):
         'portfolio_value': portfolio.current_value(),
         'portfolio_initial': portfolio.initial_value(),
         'portfolio_performance': portfolio.performance(),
+        'portfolio_gain': portfolio.gain(),  # Add gain
+        # Add formatted values for display
+        'portfolio_value_formatted': "${:,.2f}".format(portfolio.current_value()),
+        'portfolio_initial_formatted': "${:,.2f}".format(portfolio.initial_value()),
+        'portfolio_gain_formatted': "${:,.2f}".format(portfolio.gain()),  # Format gain
     }
     return render(request, 'stock_visualization/portfolio_detail.html', context)
 
