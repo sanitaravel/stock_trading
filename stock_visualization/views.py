@@ -275,6 +275,9 @@ def stock_detail(request, stock_id):
         'values': values
     })
     
+    # Ensure proper API url for the frontend to use
+    api_price_history_url = f"/api/v1/stocks/{stock.id}/history/"
+    
     context = {
         'stock': stock,
         'price_history': price_history,
@@ -282,7 +285,8 @@ def stock_detail(request, stock_id):
         'chart_data': chart_data,
         'latest_price': latest_price,
         'price_change': price_change,
-        'price_change_percent': price_change_percent
+        'price_change_percent': price_change_percent,
+        'api_price_history_url': api_price_history_url
     }
     return render(request, 'stock_visualization/stock_detail.html', context)
 
