@@ -118,6 +118,12 @@ function fetchPortfolioComparison(range) {
             
             // Check if we have data
             if (data.labels && data.labels.length > 0 && data.datasets && data.datasets.length > 0) {
+                // Process datasets to ensure straight lines
+                data.datasets.forEach(dataset => {
+                    dataset.lineTension = 0; // Set tension to 0 for straight lines
+                    dataset.tension = 0;     // Newer Chart.js versions use this property
+                });
+                
                 // Create the real chart
                 comparisonChart = new Chart(ctx, {
                     type: 'line',
@@ -128,24 +134,60 @@ function fetchPortfolioComparison(range) {
                         aspectRatio: 2, // Reduce from 2.5 to 2 for better height
                         plugins: {
                             legend: {
-                                position: 'top',
+                                position: 'right',
+                                align: 'center',
+                                labels: {
+                                    boxWidth: 12,
+                                    padding: 10,
+                                    usePointStyle: true,
+                                    pointStyle: 'circle'
+                                },
+                                // Make legend more compact
+                                display: true,
+                                maxHeight: 50,
+                                maxWidth: 800
                             },
                             tooltip: {
                                 mode: 'index',
                                 intersect: false,
                                 callbacks: {
                                     label: function(context) {
+                                        // Get the dataset label (short name)
                                         let label = context.dataset.label || '';
-                                        if (label) {
-                                            label += ': ';
-                                        }
+                                        
+                                        // Find matching portfolio in portfolioData
+                                        const portfolio = portfolioData.find(p => 
+                                            p.short_name === label || p.name === label
+                                        );
+                                        
+                                        // Show full portfolio name in tooltip for clarity
+                                        let displayLabel = (portfolio?.name || label) + ': ';
+                                        
                                         if (context.parsed.y !== null) {
-                                            label += new Intl.NumberFormat('en-US', {
+                                            // Format the current value
+                                            const currentValue = new Intl.NumberFormat('en-US', {
                                                 style: 'currency',
                                                 currency: 'USD'
                                             }).format(context.parsed.y);
+                                            
+                                            displayLabel += currentValue;
+                                            
+                                            // If we have initial price data, show the performance
+                                            if (portfolio && portfolio.initial_price) {
+                                                const initialPrice = parseFloat(portfolio.initial_price);
+                                                const currentPrice = context.parsed.y;
+                                                const performancePercent = ((currentPrice - initialPrice) / initialPrice * 100).toFixed(2);
+                                                const performanceValue = new Intl.NumberFormat('en-US', {
+                                                    style: 'currency',
+                                                    currency: 'USD',
+                                                    signDisplay: 'always'
+                                                }).format(currentPrice - initialPrice);
+                                                
+                                                // Add a second line with performance data
+                                                return [displayLabel, `Change: ${performanceValue} (${performancePercent}%)`];
+                                            }
                                         }
-                                        return label;
+                                        return displayLabel;
                                     }
                                 }
                             },

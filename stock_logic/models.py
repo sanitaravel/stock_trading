@@ -5,15 +5,37 @@ import pytz
 
 class Portfolio(models.Model):
     name = models.CharField(max_length=100)
+    short_name = models.CharField(max_length=25, blank=True, null=True, help_text="A shorter name for display in charts and legends")
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+    initial_price = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True, 
+                                       help_text="Initial portfolio value when created")
+    current_price = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True,
+                                       help_text="Current portfolio value")
+    stored_initial_value = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True,
+                                             help_text="Initial value calculated once and stored")
     
     def __str__(self):
         return self.name
     
+    def update_prices(self):
+        """Update the initial_price and current_price fields"""
+        # Calculate and store initial value if not already set
+        if self.stored_initial_value is None:
+            self.stored_initial_value = self._calculate_initial_value()
+        
+        self.initial_price = self.initial_value()
+        self.current_price = self.current_value()
+        self.save(update_fields=['stored_initial_value', 'initial_price', 'current_price', 'last_updated'])
+    
     def current_value(self):
         """Calculate the current value of the portfolio."""
+        # If current_price is set, return it
+        if self.current_price is not None:
+            return self.current_price
+            
+        # Otherwise calculate from positions
         total = 0
         for position in self.positions.all():
             latest_price = position.stock.get_latest_close_price() if position.stock else 0
@@ -21,14 +43,31 @@ class Portfolio(models.Model):
             total += latest_price * quantity
         return round(total, 2)
     
-    def initial_value(self):
-        """Calculate the initial value of the portfolio."""
+    def _calculate_initial_value(self):
+        """Calculate the initial value of the portfolio from positions."""
         total = 0
         for position in self.positions.all():
             initial_price = position.initial_price or 0
             quantity = position.quantity or 0
             total += initial_price * quantity
         return round(total, 2)
+    
+    def initial_value(self):
+        """Return the stored initial value or calculate it once if not set."""
+        # If stored_initial_value is set, return it
+        if self.stored_initial_value is not None:
+            return self.stored_initial_value
+            
+        # If initial_price is set, return it
+        if self.initial_price is not None:
+            return self.initial_price
+            
+        # Otherwise calculate and store the initial value
+        calculated_value = self._calculate_initial_value()
+        self.stored_initial_value = calculated_value
+        self.save(update_fields=['stored_initial_value', 'last_updated'])
+        
+        return calculated_value
     
     def gain(self):
         """Calculate the absolute gain/loss of the portfolio in dollars."""
@@ -115,7 +154,24 @@ class PortfolioPosition(models.Model):
         if self.total_investment is not None and self.initial_price:
             if self.initial_price <= 0:
                 raise ValidationError("Initial price must be greater than zero.")
-            self.quantity = self.total_investment / self.initial_price
+            
+            # Only calculate quantity for new entries or when total_investment has changed
+            # Check if this is a new record (no primary key) or if the total investment has changed
+            # AND if the existing quantity is None or zero
+            if (not self.pk or self._check_if_field_changed('total_investment')) and \
+               (self.quantity is None or self.quantity == 0):
+                self.quantity = self.total_investment / self.initial_price
+    
+    def _check_if_field_changed(self, field_name):
+        """Check if a field value has changed from the database value"""
+        if not self.pk:  # New instance, field is considered changed
+            return True
+        
+        # Get the current value in the database
+        old_value = PortfolioPosition.objects.filter(pk=self.pk).values_list(field_name, flat=True).first()
+        current_value = getattr(self, field_name)
+        
+        return old_value != current_value
     
     def save(self, *args, **kwargs):
         self.clean()

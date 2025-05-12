@@ -103,7 +103,15 @@ class PortfolioPositionSerializer(serializers.ModelSerializer):
         if data.get('total_investment') is not None and data.get('initial_price'):
             if data['initial_price'] <= 0:
                 raise serializers.ValidationError("Initial price must be greater than zero.")
-            data['quantity'] = data['total_investment'] / data['initial_price']
+                
+            # Only calculate quantity for new entries or when total_investment is changing
+            # AND when quantity is None or zero
+            instance = getattr(self, 'instance', None)
+            existing_quantity = getattr(instance, 'quantity', None) if instance else None
+            
+            if (not instance or instance.total_investment != data['total_investment']) and \
+               (existing_quantity is None or existing_quantity == 0):
+                data['quantity'] = data['total_investment'] / data['initial_price']
         
         return data
 
@@ -119,8 +127,9 @@ class PortfolioSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Portfolio
-        fields = ['id', 'name', 'description', 'created_at', 'last_updated', 
-                 'positions', 'positions_count', 'current_value', 'initial_value', 'performance']
+        fields = ['id', 'name', 'short_name', 'description', 'created_at', 'last_updated', 
+                 'positions', 'positions_count', 'current_value', 'initial_value', 
+                 'performance', 'initial_price', 'current_price', 'stored_initial_value']
     
     def get_current_value(self, obj):
         return float(obj.current_value())

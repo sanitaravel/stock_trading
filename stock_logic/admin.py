@@ -35,19 +35,19 @@ class StockPriceInline(admin.TabularInline):
 
 @admin.register(Portfolio)
 class PortfolioAdmin(admin.ModelAdmin):
-    list_display = ('name', 'formatted_current_value', 'formatted_initial_value', 
+    list_display = ('name', 'short_name', 'formatted_current_value', 'formatted_initial_value', 
                     'formatted_gain', 'formatted_performance', 'positions_count', 'created_at')
-    search_fields = ('name', 'description')
+    search_fields = ('name', 'short_name', 'description')
     list_filter = ('created_at',)
     inlines = [PortfolioPositionInline]
     readonly_fields = ('created_at', 'last_updated', 'current_value', 'initial_value', 
-                       'gain', 'performance')
+                      'gain', 'performance', 'stored_initial_value')
     fieldsets = (
         ('Portfolio Information', {
-            'fields': ('name', 'description', 'created_at', 'last_updated')
+            'fields': ('name', 'short_name', 'description', 'created_at', 'last_updated')
         }),
         ('Performance Metrics', {
-            'fields': ('current_value', 'initial_value', 'gain', 'performance'),
+            'fields': ('current_value', 'initial_value', 'stored_initial_value', 'gain', 'performance'),
             'classes': ('wide',)
         }),
     )
@@ -69,6 +69,7 @@ class PortfolioAdmin(admin.ModelAdmin):
     formatted_current_value.short_description = 'Current Value'
     
     def formatted_initial_value(self, obj):
+        # This now uses the stored value or calculates it once
         value = obj.initial_value()
         formatted_value = '{:,.2f}'.format(value)
         return format_html('${}', formatted_value)
