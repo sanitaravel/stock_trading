@@ -26,7 +26,7 @@ class Portfolio(models.Model):
             self.stored_initial_value = self._calculate_initial_value()
         
         self.initial_price = self.initial_value()
-        self.current_price = self.current_value()
+        self.current_price = self._calculate_current_value()  # Use internal calculation method
         self.save(update_fields=['stored_initial_value', 'initial_price', 'current_price', 'last_updated'])
     
     def current_value(self):
@@ -36,6 +36,10 @@ class Portfolio(models.Model):
             return self.current_price
             
         # Otherwise calculate from positions
+        return self._calculate_current_value()
+    
+    def _calculate_current_value(self):
+        """Internal method to calculate current value from positions."""
         total = 0
         for position in self.positions.all():
             latest_price = position.stock.get_latest_close_price() if position.stock else 0

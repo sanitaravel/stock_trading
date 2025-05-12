@@ -124,6 +124,13 @@ function fetchPortfolioComparison(range) {
                     dataset.tension = 0;     // Newer Chart.js versions use this property
                 });
                 
+                // Sort datasets by the latest data point (richest to poorest)
+                data.datasets.sort((a, b) => {
+                    const aLastValue = a.data[a.data.length - 1] || 0;
+                    const bLastValue = b.data[b.data.length - 1] || 0;
+                    return bLastValue - aLastValue; // Descending order
+                });
+                
                 // Create the real chart
                 comparisonChart = new Chart(ctx, {
                     type: 'line',
@@ -140,7 +147,9 @@ function fetchPortfolioComparison(range) {
                                     boxWidth: 12,
                                     padding: 10,
                                     usePointStyle: true,
-                                    pointStyle: 'circle'
+                                    pointStyle: 'circle',
+                                    // Sort legend labels to match the dataset order (already sorted)
+                                    sort: null // Using null to preserve our custom sort order
                                 },
                                 // Make legend more compact
                                 display: true,
@@ -151,6 +160,15 @@ function fetchPortfolioComparison(range) {
                                 mode: 'index',
                                 intersect: false,
                                 callbacks: {
+                                    title: function(tooltipItems) {
+                                        // Format the tooltip title (date) to be more readable
+                                        if (tooltipItems.length > 0) {
+                                            const dateStr = tooltipItems[0].label;
+                                            const date = new Date(dateStr);
+                                            return date.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+                                        }
+                                        return '';
+                                    },
                                     label: function(context) {
                                         // Get the dataset label (short name)
                                         let label = context.dataset.label || '';
@@ -201,6 +219,24 @@ function fetchPortfolioComparison(range) {
                                 title: {
                                     display: true,
                                     text: 'Date'
+                                },
+                                ticks: {
+                                    callback: function(value, index) {
+                                        // Format x-axis date labels
+                                        const label = this.getLabelForValue(value);
+                                        const date = new Date(label);
+                                        
+                                        // Different formatting based on date range
+                                        if (data.labels.length > 30) {
+                                            // For longer periods, just show month/year
+                                            return date.toLocaleDateString(undefined, { month: 'short', year: '2-digit' });
+                                        } else {
+                                            // For shorter periods, show day/month
+                                            return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+                                        }
+                                    },
+                                    maxRotation: 45,
+                                    minRotation: 0
                                 }
                             },
                             y: {

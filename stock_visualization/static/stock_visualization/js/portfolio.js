@@ -154,6 +154,15 @@ function fetchPortfolioHistory(range) {
                         plugins: {
                             tooltip: {
                                 callbacks: {
+                                    title: function(tooltipItems) {
+                                        // Format the tooltip title (date) to be more readable
+                                        if (tooltipItems.length > 0) {
+                                            const dateStr = tooltipItems[0].label;
+                                            const date = new Date(dateStr);
+                                            return date.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+                                        }
+                                        return '';
+                                    },
                                     label: function(context) {
                                         let label = context.dataset.label || '';
                                         if (label) {
@@ -194,6 +203,22 @@ function fetchPortfolioHistory(range) {
                             x: {
                                 grid: {
                                     display: false
+                                },
+                                ticks: {
+                                    callback: function(value, index) {
+                                        // Format x-axis date labels
+                                        const label = this.getLabelForValue(value);
+                                        const date = new Date(label);
+                                        
+                                        // Different formatting based on date range
+                                        if (data.labels.length > 30) {
+                                            // For longer periods, just show month/year
+                                            return date.toLocaleDateString(undefined, { month: 'short', year: '2-digit' });
+                                        } else {
+                                            // For shorter periods, show day/month
+                                            return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+                                        }
+                                    }
                                 }
                             },
                             y: {
