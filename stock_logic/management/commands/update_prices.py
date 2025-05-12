@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from stock_logic.utils import update_stock_prices, is_nyse_closing_time
+from stock_logic.models import Portfolio
 from django.utils import timezone
 import logging
 
@@ -17,11 +18,23 @@ class Command(BaseCommand):
         
         if should_update or force_update:
             self.stdout.write(self.style.SUCCESS('Starting daily price update...'))
+            
+            # Count portfolios before update
+            portfolio_count = Portfolio.objects.count()
+            
+            # Update stock prices (which now also updates portfolio prices)
             updated_count = update_stock_prices()
-            self.stdout.write(self.style.SUCCESS(f'Successfully updated {updated_count} stock prices'))
+            
+            # Count portfolios with current_price set   
+            portfolios_updated = Portfolio.objects.exclude(current_price=None).count()
+            
+            self.stdout.write(self.style.SUCCESS(
+                f'Successfully updated {updated_count} stock prices and {portfolios_updated}/{portfolio_count} portfolios'
+            ))
             
             # Log the update
-            logger.info(f"Daily stock price update completed at {timezone.now()}, updated {updated_count} stocks")
+            logger.info(f"Daily stock price update completed at {timezone.now()}, "
+                      f"updated {updated_count} stocks and {portfolios_updated} portfolios")
         else:
             self.stdout.write(self.style.WARNING('Not updating prices - not within the 10-minute window after NYSE closing'))
     

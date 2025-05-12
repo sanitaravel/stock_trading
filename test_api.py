@@ -62,6 +62,7 @@ def update_stock_prices():
         return response.json()
     else:
         print(f"Error: {response.status_code}")
+        print(response.text)  # Add error text for more detailed error information
         return None
 
 def update_portfolio_prices(portfolio_id=None):

@@ -16,6 +16,57 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set default chart title to not display
         Chart.defaults.plugins.title.display = false;
         
+        // Add global tooltip title callback for date formatting
+        Chart.defaults.plugins.tooltip.callbacks.title = function(tooltipItems) {
+            if (tooltipItems.length > 0) {
+                const dateStr = tooltipItems[0].label;
+                // Check if this is a date format (YYYY-MM-DD)
+                if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+                    const date = new Date(dateStr);
+                    return date.toLocaleDateString(undefined, { 
+                        weekday: 'short', 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: 'numeric' 
+                    });
+                }
+            }
+            return tooltipItems[0]?.label || '';
+        };
+        
+        // Global date formatter function that can be used across charts
+        window.formatChartDate = function(dateStr, format = 'short') {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            
+            switch(format) {
+                case 'full':
+                    return date.toLocaleDateString(undefined, { 
+                        weekday: 'long',
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    });
+                case 'medium':
+                    return date.toLocaleDateString(undefined, { 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: 'numeric' 
+                    });
+                case 'monthYear':
+                    return date.toLocaleDateString(undefined, { 
+                        year: '2-digit', 
+                        month: 'short'
+                    });
+                case 'short':
+                default:
+                    return date.toLocaleDateString(undefined, { 
+                        month: 'short', 
+                        day: 'numeric' 
+                    });
+            }
+        };
+        
         // Function to create charts with theme awareness
         window.createThemeAwareChart = function(ctx, config) {
             // Add class to parent for theme awareness
@@ -38,6 +89,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 config.options.scales[scale].ticks.color = getComputedStyle(document.documentElement)
                     .getPropertyValue('--chart-text').trim();
             });
+            
+            // Apply date formatting to x-axis if it contains dates
+            if (config.data && config.data.labels && config.data.labels.length > 0) {
+                const firstLabel = config.data.labels[0];
+                // Check if labels are dates in ISO format
+                if (typeof firstLabel === 'string' && /^\d{4}-\d{2}-\d{2}/.test(firstLabel)) {
+                    if (!config.options.scales.x.ticks.callback) {
+                        config.options.scales.x.ticks.callback = function(value, index) {
+                            const label = this.getLabelForValue(value);
+                            return window.formatChartDate(label, 
+                                config.data.labels.length > 30 ? 'monthYear' : 'short');
+                        };
+                    }
+                }
+            }
             
             // Add legend configuration
             if (!config.options.plugins) config.options.plugins = {};

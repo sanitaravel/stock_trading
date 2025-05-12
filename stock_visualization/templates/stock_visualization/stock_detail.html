@@ -277,6 +277,22 @@
         
         // Load initial data with 3-month range
         fetchPriceData('3M');
+        
+        // Format date labels for x-axis to be more readable
+        function formatDateLabel(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        }
+        
+        Chart.defaults.plugins.tooltip.callbacks.title = function(tooltipItems) {
+            // Format the tooltip title (date) to be more readable
+            if (tooltipItems.length > 0) {
+                const dateStr = tooltipItems[0].label;
+                const date = new Date(dateStr);
+                return date.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+            }
+            return '';
+        };
     });
 </script>
 

@@ -135,6 +135,21 @@ def update_stock_prices():
             except Exception as e:
                 logger.error(f"Error updating price for {stock.symbol}: {e}")
     
+    # After updating stock prices, update all portfolio prices
+    from .models import Portfolio
+    portfolios = Portfolio.objects.all()
+    portfolio_count = 0
+    
+    for portfolio in portfolios:
+        try:
+            portfolio.update_prices()
+            portfolio_count += 1
+            logger.info(f"Updated prices for portfolio: {portfolio.name}")
+        except Exception as e:
+            logger.error(f"Error updating prices for portfolio {portfolio.name}: {e}")
+    
+    logger.info(f"Updated prices for {updated_count} stocks and {portfolio_count} portfolios")
+    
     return updated_count
 
 def is_nyse_closing_time():
