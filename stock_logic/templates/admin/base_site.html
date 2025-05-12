@@ -73,5 +73,20 @@
     .field-formatted_initial_value, .field-price_change, .field-daily_change_value {
         font-weight: bold;
     }
+    
+    /* Ensure sortable columns have proper styling */
+    th.column-daily_change .sortable {
+        color: var(--header-color);
+    }
+    
+    th.column-daily_change .sortable:hover {
+        color: var(--header-color);
+        opacity: 0.8;
+    }
+    
+    /* Keep colored values consistent when sorted */
+    th.column-daily_change a.sortable {
+        color: var(--header-color) !important;
+    }
 </style>
 {% endblock %}

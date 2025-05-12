@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import path
 from django.template.response import TemplateResponse
-from django.db.models import Sum, F, DecimalField
+from django.db.models import Sum, F, DecimalField, Case, When, Value, ExpressionWrapper, FloatField
 from django.db.models.functions import TruncDay
 from .models import Portfolio, Stock, PortfolioPosition, StockPrice, Sector, Industry
 from .utils import update_stock_prices, ensure_sector_and_industry
@@ -183,16 +183,19 @@ class StockAdmin(admin.ModelAdmin):
         # Add trend indicator if we have a previous price
         if previous:
             if latest.close_price > previous.close_price:
-                trend = '<span style="color:green">↑</span>'
+                return format_html('${} <span style="color:green">↑</span>', formatted_price)
             elif latest.close_price < previous.close_price:
-                trend = '<span style="color:red">↓</span>'
+                return format_html('${} <span style="color:red">↓</span>', formatted_price)
             else:
-                trend = '<span style="color:gray">→</span>'
-            
-            return format_html('${} {}', formatted_price, trend)
+                return format_html('${} <span style="color:gray">→</span>', formatted_price)
         
         return format_html('${}', formatted_price)
     formatted_latest_close.short_description = 'Latest Close'
+    
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        # Return the queryset without annotations - we'll sort manually if needed
+        return queryset
     
     def daily_change(self, obj):
         open_price = obj.get_latest_open_price()
@@ -204,6 +207,7 @@ class StockAdmin(admin.ModelAdmin):
             return format_html('<span style="color: {};">{}%</span>', color, formatted_change)
         return '-'
     daily_change.short_description = 'Daily Change'
+    # Remove the admin_order_field to prevent sorting issues
     
     def has_price_data(self, obj):
         return obj.prices.exists()
@@ -316,6 +320,23 @@ class StockPriceAdmin(admin.ModelAdmin):
         return format_html('${}', formatted_price)
     formatted_close_price.short_description = 'Close Price'
     
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        # Add annotation for sorting by daily change
+        return queryset.annotate(
+            daily_change_percent=Case(
+                When(
+                    open_price__gt=0,
+                    then=ExpressionWrapper(
+                        (F('close_price') - F('open_price')) * 100 / F('open_price'),
+                        output_field=FloatField()
+                    )
+                ),
+                default=Value(0),
+                output_field=FloatField()
+            )
+        )
+    
     def daily_change(self, obj):
         if obj.open_price and obj.close_price:
             change = (obj.close_price - obj.open_price) / obj.open_price * 100
@@ -324,6 +345,7 @@ class StockPriceAdmin(admin.ModelAdmin):
             return format_html('<span style="color: {};">{}%</span>', color, formatted_change)
         return '-'
     daily_change.short_description = 'Daily Change'
+    daily_change.admin_order_field = 'daily_change_percent'
     
     def daily_change_value(self, obj):
         if obj.open_price and obj.close_price:

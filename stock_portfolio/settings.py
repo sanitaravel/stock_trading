@@ -214,3 +214,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Add this if you don't already have it
 ALPHA_VANTAGE_API_KEY = 'RMQ9M1XBZFY2I95F'  # Replace with your actual Alpha Vantage API key
+
+# Session settings
+SESSION_COOKIE_AGE = 86400  # 1 day in seconds
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_SAVE_EVERY_REQUEST = True

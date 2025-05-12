@@ -62,3 +62,8 @@ CSRF_COOKIE_SECURE = True
 
 # Set CSRF trusted origins for your Heroku domain
 CSRF_TRUSTED_ORIGINS = [f'https://{host}' for host in ALLOWED_HOSTS if host not in ['localhost', '127.0.0.1']]
+
+# Session timeout settings - 1 day
+SESSION_COOKIE_AGE = 86400  # 1 day in seconds
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_SAVE_EVERY_REQUEST = True
