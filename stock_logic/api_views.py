@@ -155,6 +155,30 @@ class PortfolioViewSet(viewsets.ModelViewSet):
         """Return only portfolios owned by the current user"""
         return Portfolio.objects.all()
     
+    @action(detail=True, methods=['post'])
+    def update_prices(self, request, pk=None):
+        """Update the initial_price and current_price fields for a portfolio"""
+        portfolio = self.get_object()
+        portfolio.update_prices()
+        serializer = self.get_serializer(portfolio)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['post'])
+    def update_all_prices(self, request):
+        """Update the initial_price and current_price fields for all portfolios"""
+        portfolios = self.get_queryset()
+        updated_count = 0
+        
+        for portfolio in portfolios:
+            portfolio.update_prices()
+            updated_count += 1
+            
+        return Response({
+            'status': 'success',
+            'updated_count': updated_count,
+            'message': f'Updated prices for {updated_count} portfolios'
+        })
+    
     @swagger_auto_schema(
         operation_description="Get all positions for a specific portfolio",
         responses={200: PortfolioPositionSerializer(many=True)}

@@ -64,6 +64,22 @@ def update_stock_prices():
         print(f"Error: {response.status_code}")
         return None
 
+def update_portfolio_prices(portfolio_id=None):
+    if portfolio_id:
+        # Update single portfolio prices
+        url = f'{BASE_URL}/portfolios/{portfolio_id}/update_prices/'
+    else:
+        # Update all portfolio prices
+        url = f'{BASE_URL}/portfolios/update_all_prices/'
+    
+    response = requests.post(url, headers=get_headers())
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Error: {response.status_code}")
+        print(response.text)
+        return None
+
 def add_position(portfolio_id, stock_id, quantity, initial_price, purchase_date):
     data = {
         'portfolio': portfolio_id,

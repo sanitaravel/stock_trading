@@ -398,3 +398,85 @@ html[data-theme="dark"] .card-header.bg-primary .btn-outline-light.active {
         line-height: 1.4;
     }
 }
+
+/* Compact chart legend on portfolio comparison */
+#portfolioComparisonChart ~ .chartjs-legend ul {
+    display: block;
+}
+
+/* More specific selector to target the legend in the comparison chart */
+#portfolioComparisonChart + .chartjs-legend-list-wrapper ul li {
+    display: block;
+    margin-bottom: 8px !important; 
+    margin-right: 0 !important;
+}
+
+/* Improve Chart.js legend display for all charts */
+.chart-js-legend ul, 
+.chartjs-legend ul,
+canvas + .chartjs-legend ul {
+    display: block;
+    padding-left: 0;
+    margin-top: 10px;
+}
+
+.chart-js-legend ul li,
+.chartjs-legend ul li,
+canvas + .chartjs-legend ul li {
+    display: block;
+    margin-bottom: 8px !important;
+    margin-right: 0 !important;
+}
+
+/* Override Chart.js default legend styling */
+#portfolioComparisonChart {
+    margin-bottom: 10px !important;
+}
+
+/* Custom legend styling */
+.chart-container .chartjs-legend {
+    display: block;
+    padding: 5px 0;
+}
+
+.chart-container .chartjs-legend-item {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+.chart-container .chartjs-legend-item-color {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Position the legend for optimal spacing */
+.chart-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Add specific styles for portfolio comparison chart which might have many items */
+#portfolioComparisonChart ~ .chartjs-legend ul,
+#portfolioComparisonChart + .chartjs-legend-list-wrapper ul {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Ensure legend items alignment */
+.chart-js-legend ul li span,
+.chartjs-legend ul li span,
+canvas + .chartjs-legend ul li span {
+    vertical-align: middle;
+}
+
+/* Ensure dark theme compatibility */
+html[data-theme="dark"] #portfolioComparisonChart ~ .chartjs-legend ul,
+html[data-theme="dark"] #portfolioComparisonChart + .chartjs-legend-list-wrapper ul {
+    scrollbar-color: var(--body-color) var(--card-bg);
+}

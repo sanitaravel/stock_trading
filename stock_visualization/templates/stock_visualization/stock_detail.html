@@ -41,6 +41,14 @@
                             <strong>Latest Price:</strong> 
                             {{ stock.get_latest_close_price|money }}
                         </li>
+                        <!-- Add price change information -->
+                        <li class="list-group-item">
+                            <strong>Price Change:</strong> 
+                            <span class="{% if price_change > 0 %}text-success{% elif price_change < 0 %}text-danger{% endif %}">
+                                {% if price_change > 0 %}+{% endif %}{{ price_change|floatformat:2 }}
+                                ({% if price_change_percent > 0 %}+{% endif %}{{ price_change_percent|floatformat:2 }}%)
+                            </span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -140,7 +148,7 @@
                         data: [],
                         borderColor: 'var(--chart-primary)',
                         backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                        tension: 0.1,
+                        tension: 0, // Change from 0.1 to 0 for straight lines
                         fill: true
                     }]
                 },

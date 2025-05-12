@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add event listeners to date range buttons for portfolio history chart
     document.querySelectorAll('[data-range]').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click',
+             function() {
             const range = this.getAttribute('data-range');
             fetchPortfolioHistory(range);
         });
@@ -123,30 +124,33 @@ function fetchPortfolioHistory(range) {
             
             // Check if we have data
             if (data.labels && data.labels.length > 0) {
-                // Create new chart
+                // Use the provided initial value which is now reliably stored in the database
+                const initialValue = data.initial_value;
+                const barColors = data.values.map(value => 
+                    value >= initialValue ? 'rgba(40, 167, 69, 0.7)' : 'rgba(220, 53, 69, 0.7)'
+                );
+                
+                const borderColors = data.values.map(value => 
+                    value >= initialValue ? 'rgba(40, 167, 69, 1)' : 'rgba(220, 53, 69, 1)'
+                );
+                
+                // Create new bar chart
                 portfolioHistoryChart = new Chart(ctx, {
-                    type: 'line',
+                    type: 'bar',
                     data: {
                         labels: data.labels,
                         datasets: [{
                             label: 'Portfolio Value',
                             data: data.values,
-                            backgroundColor: 'rgba(78, 115, 223, 0.05)',
-                            borderColor: 'rgba(78, 115, 223, 1)',
-                            pointBackgroundColor: 'rgba(78, 115, 223, 1)',
-                            pointBorderColor: '#fff',
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: 'rgba(78, 115, 223, 1)',
-                            borderWidth: 2,
-                            pointRadius: 3,
-                            lineTension: 0.3,
-                            fill: true
+                            backgroundColor: barColors,
+                            borderColor: borderColors,
+                            borderWidth: 1
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: true,
-                        aspectRatio: 2, // Reduce the aspect ratio to make the chart taller
+                        aspectRatio: 2,
                         plugins: {
                             tooltip: {
                                 callbacks: {
@@ -155,15 +159,32 @@ function fetchPortfolioHistory(range) {
                                         if (label) {
                                             label += ': ';
                                         }
-                                        if (context.parsed.y !== null) {
-                                            label += new Intl.NumberFormat('en-US', {
-                                                style: 'currency',
-                                                currency: 'USD'
-                                            }).format(context.parsed.y);
-                                        }
-                                        return label;
+                                        
+                                        const value = context.parsed.y;
+                                        const formatted = new Intl.NumberFormat('en-US', {
+                                            style: 'currency',
+                                            currency: 'USD'
+                                        }).format(value);
+                                        
+                                        // Add comparison with initial investment
+                                        const diff = value - initialValue;
+                                        const diffFormatted = new Intl.NumberFormat('en-US', {
+                                            style: 'currency',
+                                            currency: 'USD',
+                                            signDisplay: 'always'
+                                        }).format(diff);
+                                        
+                                        const percentChange = ((value - initialValue) / initialValue * 100).toFixed(2);
+                                        
+                                        return [
+                                            `${label}${formatted}`,
+                                            `vs Initial: ${diffFormatted} (${percentChange}%)`
+                                        ];
                                     }
                                 }
+                            },
+                            legend: {
+                                display: false
                             },
                             title: {
                                 display: false
@@ -176,13 +197,44 @@ function fetchPortfolioHistory(range) {
                                 }
                             },
                             y: {
+                                beginAtZero: false,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                },
                                 ticks: {
                                     callback: function(value) {
                                         return '$' + value.toLocaleString();
                                     }
                                 }
                             }
-                        }
+                        },
+                        // Add a horizontal line for initial investment value
+                        plugins: [{
+                            afterDraw: function(chart) {
+                                const ctx = chart.ctx;
+                                const yAxis = chart.scales.y;
+                                const xAxis = chart.scales.x;
+                                const initialYPos = yAxis.getPixelForValue(initialValue);
+                                
+                                // Draw horizontal line at initial investment level
+                                ctx.save();
+                                ctx.beginPath();
+                                ctx.moveTo(xAxis.left, initialYPos);
+                                ctx.lineTo(xAxis.right, initialYPos);
+                                ctx.lineWidth = 2;
+                                ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+                                ctx.setLineDash([5, 5]);
+                                ctx.stroke();
+                                
+                                // Add label
+                                ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                                ctx.textAlign = 'left';
+                                ctx.textBaseline = 'bottom';
+                                ctx.font = '12px Arial';
+                                ctx.fillText('Initial Investment', xAxis.left + 5, initialYPos - 5);
+                                ctx.restore();
+                            }
+                        }]
                     }
                 });
             } else {

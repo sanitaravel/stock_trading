@@ -108,7 +108,8 @@ def portfolio_history_data(request, portfolio_id):
     
     history_data = {
         'labels': [],
-        'values': []
+        'values': [],
+        'initial_value': float(portfolio.initial_value())  # This now uses the stored value
     }
     
     # For each date, calculate portfolio value based on positions and stock prices
@@ -132,9 +133,12 @@ def portfolio_history_data(request, portfolio_id):
     # If we have no historical data, create some placeholder data
     if not history_data['labels']:
         days_range = min(30, (end_date - start_date).days)
+        initial_value = float(portfolio.initial_value())
+        current_value = float(portfolio.current_value())
         history_data = {
             'labels': [(end_date - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(days_range, 0, -1)],
-            'values': [float(portfolio.current_value()) for _ in range(days_range)]
+            'values': [current_value for _ in range(days_range)],
+            'initial_value': initial_value
         }
     
     return JsonResponse(history_data)
@@ -185,6 +189,11 @@ def all_portfolios_history_data(request):
         '#6f42c1', '#5a5c69', '#858796', '#3498db', '#e67e22'
     ]
     
+    # First, ensure all portfolios have updated prices
+    for portfolio in portfolios:
+        if portfolio.initial_price is None or portfolio.current_price is None:
+            portfolio.update_prices()
+    
     # For each portfolio, calculate values over time
     for i, portfolio in enumerate(portfolios):
         positions = portfolio.positions.select_related('stock').all()
@@ -210,10 +219,10 @@ def all_portfolios_history_data(request):
             # Create placeholder data
             days_range = min(30, (end_date - start_date).days)
             data['labels'] = [(end_date - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(days_range, 0, -1)]
-            values = [float(portfolio.current_value()) for _ in range(days_range)]
+            values = [float(portfolio.current_price or portfolio.current_value()) for _ in range(days_range)]
         
         dataset = {
-            'label': portfolio.name,
+            'label': portfolio.short_name if portfolio.short_name else portfolio.name,
             'data': values,
             'backgroundColor': 'transparent',
             'borderColor': colors[color_index],

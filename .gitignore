@@ -86,3 +86,4 @@ package-lock.json
 # Testing
 .pytest_cache/
 .tox/
+*.json
