@@ -141,10 +141,17 @@ function fetchPortfolioHistory(range) {
                         labels: data.labels,
                         datasets: [{
                             label: 'Portfolio Value',
-                            data: data.values,
-                            backgroundColor: barColors,
-                            borderColor: borderColors,
-                            borderWidth: 1
+                            // Transform data to show difference from initial value
+                            data: data.values.map(value => value - initialValue),
+                            backgroundColor: data.values.map(value => 
+                                value >= initialValue ? 'rgba(40, 167, 69, 0.7)' : 'rgba(220, 53, 69, 0.7)'
+                            ),
+                            borderColor: data.values.map(value => 
+                                value >= initialValue ? 'rgba(40, 167, 69, 1)' : 'rgba(220, 53, 69, 1)'
+                            ),
+                            borderWidth: 1,
+                            // Store the actual values for tooltips
+                            actualValues: data.values
                         }]
                     },
                     options: {
@@ -169,21 +176,22 @@ function fetchPortfolioHistory(range) {
                                             label += ': ';
                                         }
                                         
-                                        const value = context.parsed.y;
+                                        // Get the actual value (not the difference)
+                                        const actualValue = context.dataset.actualValues[context.dataIndex];
                                         const formatted = new Intl.NumberFormat('en-US', {
                                             style: 'currency',
                                             currency: 'USD'
-                                        }).format(value);
+                                        }).format(actualValue);
                                         
                                         // Add comparison with initial investment
-                                        const diff = value - initialValue;
+                                        const diff = actualValue - initialValue;
                                         const diffFormatted = new Intl.NumberFormat('en-US', {
                                             style: 'currency',
                                             currency: 'USD',
                                             signDisplay: 'always'
                                         }).format(diff);
                                         
-                                        const percentChange = ((value - initialValue) / initialValue * 100).toFixed(2);
+                                        const percentChange = ((actualValue - initialValue) / initialValue * 100).toFixed(2);
                                         
                                         return [
                                             `${label}${formatted}`,
@@ -222,41 +230,50 @@ function fetchPortfolioHistory(range) {
                                 }
                             },
                             y: {
-                                beginAtZero: false,
+                                beginAtZero: true, // Start from zero for gain/loss visualization
                                 grid: {
                                     color: 'rgba(0, 0, 0, 0.1)'
                                 },
                                 ticks: {
                                     callback: function(value) {
-                                        return '$' + value.toLocaleString();
+                                        // Format y-axis values to show the difference
+                                        return new Intl.NumberFormat('en-US', {
+                                            style: 'currency',
+                                            currency: 'USD',
+                                            signDisplay: 'always'
+                                        }).format(value);
                                     }
                                 }
                             }
                         },
-                        // Add a horizontal line for initial investment value
+                        // Add custom plugin to show the "zero" line representing initial investment
                         plugins: [{
                             afterDraw: function(chart) {
                                 const ctx = chart.ctx;
                                 const yAxis = chart.scales.y;
                                 const xAxis = chart.scales.x;
-                                const initialYPos = yAxis.getPixelForValue(initialValue);
                                 
-                                // Draw horizontal line at initial investment level
+                                // Draw horizontal line at zero (initial investment baseline)
+                                const zeroLineY = yAxis.getPixelForValue(0);
+                                
                                 ctx.save();
                                 ctx.beginPath();
-                                ctx.moveTo(xAxis.left, initialYPos);
-                                ctx.lineTo(xAxis.right, initialYPos);
+                                ctx.moveTo(xAxis.left, zeroLineY);
+                                ctx.lineTo(xAxis.right, zeroLineY);
                                 ctx.lineWidth = 2;
                                 ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
                                 ctx.setLineDash([5, 5]);
                                 ctx.stroke();
                                 
-                                // Add label
+                                // Add label for the baseline
                                 ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
                                 ctx.textAlign = 'left';
                                 ctx.textBaseline = 'bottom';
                                 ctx.font = '12px Arial';
-                                ctx.fillText('Initial Investment', xAxis.left + 5, initialYPos - 5);
+                                ctx.fillText('Initial Investment: ' + new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD'
+                                }).format(initialValue), xAxis.left + 5, zeroLineY - 5);
                                 ctx.restore();
                             }
                         }]
