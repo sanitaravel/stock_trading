@@ -1,0 +1,238 @@
+/* Footer Component */
+/* Footer styles for consistent bottom layout */
+
+footer {
+    padding: 1rem 0;
+    border-top: 1px solid var(--table-border);
+    background-color: var(--body-bg);
+    color: var(--body-color);
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-text {
+    color: var(--chart-text);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-links a {
+    color: var(--chart-text);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.footer-copyright {
+    color: var(--chart-text);
+    font-size: 0.75rem;
+    margin: 0;
+}
+
+/* Social Links */
+.footer-social {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--table-border);
+    border-radius: 50%;
+    color: var(--chart-text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.footer-social a:hover {
+    color: var(--link-color);
+    border-color: var(--link-color);
+    background-color: var(--table-stripe);
+    transform: translateY(-1px);
+}
+
+.footer-social svg {
+    width: 1rem;
+    height: 1rem;
+    fill: currentColor;
+}
+
+/* Footer Divider */
+.footer-divider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--table-border);
+    margin: 1rem 0;
+    border: none;
+}
+
+/* Footer Sections */
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-section h6 {
+    color: var(--heading-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section li {
+    margin-bottom: 0.25rem;
+}
+
+.footer-section a {
+    color: var(--chart-text);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+}
+
+.footer-section a:hover {
+    color: var(--link-color);
+}
+
+/* Sticky Footer */
+.main-content {
+    min-height: calc(100vh - 120px); /* Adjust based on footer height */
+    display: flex;
+    flex-direction: column;
+}
+
+.content-wrapper {
+    flex: 1;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+    
+    .footer-links {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    
+    .footer-social {
+        justify-content: center;
+    }
+    
+    .footer-section {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    
+    .footer-section:last-child {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    footer {
+        padding: 0.75rem 0;
+    }
+    
+    .footer-text,
+    .footer-links a,
+    .footer-section a {
+        font-size: 0.8rem;
+    }
+    
+    .footer-copyright {
+        font-size: 0.7rem;
+    }
+    
+    .footer-social a {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+    
+    .footer-social svg {
+        width: 0.875rem;
+        height: 0.875rem;
+    }
+}
+
+/* Dark Mode Specific Styles */
+html[data-theme="dark"] footer {
+    border-top-color: var(--table-border);
+    background-color: var(--body-bg);
+}
+
+html[data-theme="dark"] .footer-social a {
+    background-color: var(--card-bg);
+    border-color: var(--table-border);
+}
+
+html[data-theme="dark"] .footer-social a:hover {
+    background-color: var(--table-stripe);
+    border-color: var(--link-color);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .footer-social a,
+    .footer-links a,
+    .footer-section a {
+        transition: none;
+    }
+    
+    .footer-social a:hover {
+        transform: none;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    footer {
+        border-top-width: 2px;
+    }
+    
+    .footer-social a {
+        border-width: 2px;
+    }
+    
+    .footer-divider {
+        height: 2px;
+    }
+}

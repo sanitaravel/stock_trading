@@ -1,0 +1,39 @@
+/* Main CSS file - imports all modular components */
+/* Stock Visualization Application Styles */
+
+/* Import CSS custom properties first */
+@import './variables.css';
+
+/* Import base foundation styles */
+@import './base.css';
+
+/* Import component modules */
+@import './navigation.css';
+@import './cards.css';
+@import './buttons.css';
+@import './forms.css';
+@import './tables.css';
+@import './charts.css';
+@import './footer.css';
+
+/* Import utilities last */
+@import './utilities.css';
+
+/* Any page-specific overrides or legacy compatibility can go here */
+
+/* Legacy compatibility for card headers with bg-primary */
+.card-header.bg-primary {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card .card-header.bg-primary + .card-body .chartjs-title, 
+.card .card-header.bg-primary + .card-body .chartjs-legend {
+    color: var(--body-color) !important;
+}
+
+/* Ensure chart text colors are properly applied */
+html[data-theme="dark"] .chart-container .chartjs-legend-item,
+html[data-theme="dark"] .chart-js-legend ul li span,
+html[data-theme="dark"] .chartjs-legend ul li span {
+    color: var(--body-color) !important;
+}

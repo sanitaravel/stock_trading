@@ -1,0 +1,22 @@
+{% extends 'stock_visualization/base.html' %}
+{% load static %}
+
+{% block title %}{{ sector.name }} Sector{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h2>{{ sector.name }} Sector</h2>
+    </div>
+    <div class="card-body">
+        {% if sector.description %}
+        <div class="mb-4">
+            <h4>About this Sector</h4>
+            <p>{{ sector.description }}</p>
+        </div>
+        {% endif %}
+          <h4>Stocks in this Sector</h4>
+        {% include 'stock_visualization/partials/stock_table.html' with stocks=stocks show_industry=True %}
+    </div>
+</div>
+{% endblock %}

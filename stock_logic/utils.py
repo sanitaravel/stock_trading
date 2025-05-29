@@ -37,8 +37,7 @@ def fetch_with_yfinance(symbol):
         if data.empty:
             logger.warning(f"No data retrieved for {symbol} with yfinance")
             return None
-            
-        # Get the most recent trading day
+              # Get the most recent trading day
         latest_date = data.index[-1].date()
         
         # Get data for the latest trading day

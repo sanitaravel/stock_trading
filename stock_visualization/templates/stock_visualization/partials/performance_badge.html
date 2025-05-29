@@ -1,0 +1,13 @@
+{% load money_filters %}
+{% comment %}
+Performance badge component
+Parameters:
+- performance: Performance percentage value
+- gain: Optional gain/loss value (default: None)
+- show_gain: Boolean, whether to show gain in parentheses (default: True)
+- size: Badge size - "sm", "lg", or default (default: "")
+{% endcomment %}
+
+<span class="badge {% if size %}badge-{{ size }}{% endif %} {% if performance > 0 %}bg-success{% elif performance < 0 %}bg-danger{% else %}bg-secondary{% endif %}">
+    {% if performance > 0 %}+{% endif %}{{ performance|percentage }}{% if show_gain|default:True and gain is not None %} ({% if gain > 0 %}+{% endif %}{{ gain|money }}){% endif %}
+</span>

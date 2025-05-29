@@ -40,12 +40,18 @@ html {
 }
 
 .card {
-    border: none;
+    border: 1px solid var(--card-border);
     margin-bottom: 24px;
-    box-shadow: 0 1px 3px var(--shadow-color);
+    box-shadow: 0 2px 8px var(--shadow-color), 0 1px 3px rgba(0, 0, 0, 0.12);
     border-radius: 0.375rem;
     overflow: hidden;
     background-color: var(--card-bg);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px var(--shadow-color-hover), 0 2px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
 }
 
 .card-header {
@@ -245,13 +251,11 @@ footer {
     display: none;
 }
 
-html[data-theme="auto"] .theme-toggle .theme-icon-when-auto,
 html[data-theme="dark"] .theme-toggle .theme-icon-when-dark,
 html[data-theme="light"] .theme-toggle .theme-icon-when-light {
     display: block;
 }
 
-html[data-theme="auto"] .theme-toggle .theme-label-when-auto,
 html[data-theme="dark"] .theme-toggle .theme-label-when-dark,
 html[data-theme="light"] .theme-toggle .theme-label-when-light {
     display: block;

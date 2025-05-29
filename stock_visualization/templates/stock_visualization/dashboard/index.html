@@ -1,0 +1,60 @@
+{% extends 'stock_visualization/base.html' %}
+{% load money_filters %}
+
+{% block title %}AI Portfolio Leaderboard{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        {% include 'stock_visualization/partials/chart_container.html' with chart_id="portfolioComparisonChart" chart_title="Portfolio Growth Comparison" %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="m-0">Portfolio Leaderboard</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Portfolio</th>
+                                <th>Current Value</th>
+                                <th>Initial Value</th>
+                                <th>Performance</th>
+                            </tr>
+                        </thead>
+                        <tbody>                            {% for portfolio in portfolios %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{% url 'stock_visualization:portfolio_detail' portfolio.id %}">{{ portfolio.name }}</a></td>
+                                <td>{{ portfolio.current_value|money }}</td>
+                                <td>{{ portfolio.initial_value|money }}</td>                                <td>
+                                    {% with performance=portfolio.performance gain=portfolio.gain %}
+                                    {% include 'stock_visualization/partials/performance_badge.html' with performance=performance gain=gain %}
+                                    {% endwith %}
+                                </td>
+                            </tr>                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center">No portfolios found</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Portfolio data from the server
+    const portfolioData = {{ portfolio_data_json|safe }};
+</script>
+<script src="/static/stock_visualization/js/dashboard.js"></script>
+{% endblock %}

@@ -1,0 +1,249 @@
+/* Chart Components */
+/* Comprehensive chart styles for Chart.js and other visualization libraries */
+
+/* Chart Container */
+.chart-container {
+    position: relative;
+    width: 100%;
+    min-height: 350px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-container canvas {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 100%;
+}
+
+/* Add margin below chart elements to prevent cut-off */
+.chart-container > div,
+.chart-container > canvas {
+    margin-bottom: 20px;
+}
+
+/* Chart in Card Body */
+.card-body canvas {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 100%;
+}
+
+/* Chart Color Variables */
+.chart-override-js {
+    --chart-grid-color: var(--chart-grid);
+    --chart-text-color: var(--chart-text);
+}
+
+/* Chart Loader Overlay */
+.chart-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 0.375rem;
+}
+
+html[data-theme="dark"] .chart-loader {
+    background-color: rgba(31, 41, 55, 0.8);
+}
+
+html[data-theme="light"] .chart-loader {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Chart.js Legend Styling */
+.chart-js-legend ul, 
+.chartjs-legend ul,
+canvas + .chartjs-legend ul {
+    display: block;
+    padding-left: 0;
+    margin-top: 10px;
+    list-style: none;
+}
+
+.chart-js-legend ul li,
+.chartjs-legend ul li,
+canvas + .chartjs-legend ul li {
+    display: block;
+    margin-bottom: 8px !important;
+    margin-right: 0 !important;
+}
+
+/* Custom Legend Styling */
+.chart-container .chartjs-legend {
+    display: block;
+    padding: 5px 0;
+    margin-top: 10px;
+}
+
+.chart-container .chartjs-legend-item {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    color: var(--body-color);
+}
+
+.chart-container .chartjs-legend-item-color {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Ensure legend items alignment */
+.chart-js-legend ul li span,
+.chartjs-legend ul li span,
+canvas + .chartjs-legend ul li span {
+    vertical-align: middle;
+    color: var(--body-color);
+}
+
+/* Portfolio Comparison Chart Specific Styles */
+#portfolioComparisonChart {
+    margin-bottom: 10px !important;
+}
+
+/* Compact chart legend on portfolio comparison */
+#portfolioComparisonChart ~ .chartjs-legend ul {
+    display: block;
+}
+
+/* More specific selector to target the legend in the comparison chart */
+#portfolioComparisonChart + .chartjs-legend-list-wrapper ul li {
+    display: block;
+    margin-bottom: 8px !important; 
+    margin-right: 0 !important;
+}
+
+/* Add specific styles for portfolio comparison chart which might have many items */
+#portfolioComparisonChart ~ .chartjs-legend ul,
+#portfolioComparisonChart + .chartjs-legend-list-wrapper ul {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Chart Legend Scrollbar Styling */
+html[data-theme="dark"] #portfolioComparisonChart ~ .chartjs-legend ul,
+html[data-theme="dark"] #portfolioComparisonChart + .chartjs-legend-list-wrapper ul {
+    scrollbar-color: var(--body-color) var(--card-bg);
+    scrollbar-width: thin;
+}
+
+html[data-theme="dark"] #portfolioComparisonChart ~ .chartjs-legend ul::-webkit-scrollbar,
+html[data-theme="dark"] #portfolioComparisonChart + .chartjs-legend-list-wrapper ul::-webkit-scrollbar {
+    width: 6px;
+}
+
+html[data-theme="dark"] #portfolioComparisonChart ~ .chartjs-legend ul::-webkit-scrollbar-track,
+html[data-theme="dark"] #portfolioComparisonChart + .chartjs-legend-list-wrapper ul::-webkit-scrollbar-track {
+    background: var(--card-bg);
+}
+
+html[data-theme="dark"] #portfolioComparisonChart ~ .chartjs-legend ul::-webkit-scrollbar-thumb,
+html[data-theme="dark"] #portfolioComparisonChart + .chartjs-legend-list-wrapper ul::-webkit-scrollbar-thumb {
+    background-color: var(--body-color);
+    border-radius: 3px;
+}
+
+/* Chart Responsive Design */
+@media (max-width: 768px) {
+    .chart-container {
+        min-height: 250px;
+    }
+    
+    .chart-container .chartjs-legend-item {
+        font-size: 0.75rem;
+        margin-bottom: 6px;
+    }
+    
+    .chart-container .chartjs-legend-item-color {
+        width: 10px;
+        height: 10px;
+        margin-right: 6px;
+    }
+}
+
+@media (max-width: 576px) {
+    .chart-container {
+        min-height: 200px;
+    }
+    
+    .chart-container > div,
+    .chart-container > canvas {
+        margin-bottom: 10px;
+    }
+}
+
+/* Chart Animation Settings */
+@media (prefers-reduced-motion: reduce) {
+    .chart-container canvas {
+        /* Disable chart animations for users who prefer reduced motion */
+        --chart-animation-duration: 0ms;
+    }
+}
+
+/* Chart Accessibility */
+.chart-container canvas:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+}
+
+/* Chart Loading State */
+.chart-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    color: var(--chart-text);
+    font-size: 0.875rem;
+}
+
+.chart-loading::after {
+    content: "Loading chart...";
+}
+
+/* Chart Error State */
+.chart-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    color: var(--badge-danger-bg);
+    font-size: 0.875rem;
+    background-color: rgba(239, 68, 68, 0.1);
+    border-radius: 0.375rem;
+    border: 1px dashed var(--badge-danger-bg);
+}
+
+.chart-error::after {
+    content: "Failed to load chart";
+}
+
+/* Chart Tooltip Styling (if custom tooltips are used) */
+.chart-tooltip {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    font-size: 0.875rem;
+    color: var(--body-color);
+    z-index: 1000;
+}
+
+.chart-tooltip .tooltip-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--heading-color);
+}

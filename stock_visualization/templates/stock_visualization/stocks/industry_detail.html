@@ -1,0 +1,27 @@
+{% extends 'stock_visualization/base.html' %}
+{% load static %}
+
+{% block title %}{{ industry.name }} Industry{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h2>{{ industry.name }} Industry</h2>
+        {% if industry.sector %}
+        <p class="mb-0">
+            Sector: <a href="{% url 'stock_visualization:sector_detail' industry.sector.id %}">{{ industry.sector.name }}</a>
+        </p>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        {% if industry.description %}
+        <div class="mb-4">
+            <h4>About this Industry</h4>
+            <p>{{ industry.description }}</p>
+        </div>
+        {% endif %}
+          <h4>Stocks in this Industry</h4>
+        {% include 'stock_visualization/partials/stock_table.html' with stocks=stocks show_industry=False %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% comment %}
+Chart container component with date range selector
+Parameters:
+- chart_id: ID for the canvas element
+- chart_title: Title for the chart card
+- show_date_selector: Boolean, whether to show date range buttons (default: True)
+- chart_height: Height attribute for canvas (default: 350)
+{% endcomment %}
+
+<div class="card shadow">
+    <div class="card-header bg-primary text-white">
+        <h5 class="m-0">{{ chart_title }}</h5>
+    </div>
+    <div class="card-body chart-container">
+        {% if show_date_selector|default:True %}
+        <div class="mb-3 d-flex flex-wrap">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Date range selector">
+                <button type="button" class="btn btn-outline-primary" data-range="1D">1D</button>
+                <button type="button" class="btn btn-outline-primary" data-range="1W">1W</button>
+                <button type="button" class="btn btn-outline-primary" data-range="1M">1M</button>
+                <button type="button" class="btn btn-outline-primary" data-range="3M">3M</button>
+                <button type="button" class="btn btn-outline-primary" data-range="6M">6M</button>
+                <button type="button" class="btn btn-outline-primary" data-range="YTD">YTD</button>
+                <button type="button" class="btn btn-outline-primary" data-range="1Y">1Y</button>
+                <button type="button" class="btn btn-outline-primary" data-range="3Y">3Y</button>
+                <button type="button" class="btn btn-outline-primary" data-range="5Y">5Y</button>
+                <button type="button" class="btn btn-outline-primary" data-range="MAX">Max</button>
+            </div>
+        </div>
+        {% endif %}
+        <canvas id="{{ chart_id }}" {% if chart_height %}height="{{ chart_height }}"{% else %}height="350"{% endif %}{% if extra_attributes %} {{ extra_attributes }}{% endif %}></canvas>
+    </div>
+</div>
