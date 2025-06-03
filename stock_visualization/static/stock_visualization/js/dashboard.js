@@ -219,21 +219,14 @@ function fetchPortfolioComparison(range) {
                                 title: {
                                     display: true,
                                     text: 'Date'
-                                },
-                                ticks: {
+                                },                                ticks: {
                                     callback: function(value, index) {
                                         // Format x-axis date labels
                                         const label = this.getLabelForValue(value);
-                                        const date = new Date(label);
+                                        const allLabels = this.chart.data.labels;
                                         
-                                        // Different formatting based on date range
-                                        if (data.labels.length > 30) {
-                                            // For longer periods, just show month/year
-                                            return date.toLocaleDateString(undefined, { month: 'short', year: '2-digit' });
-                                        } else {
-                                            // For shorter periods, show day/month
-                                            return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-                                        }
+                                        // Use smart date formatting for consistent display
+                                        return window.formatChartDateSmart(label, index, allLabels);
                                     },
                                     maxRotation: 45,
                                     minRotation: 0

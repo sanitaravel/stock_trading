@@ -1,0 +1,141 @@
+/**
+ * Card Component Styles
+ * Reusable card styles with consistent design
+ */
+
+/* === CARD BASE === */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.375rem;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  transition: box-shadow var(--transition-normal), 
+              transform var(--transition-normal);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* === CARD HEADER === */
+.card-header {
+  background-color: var(--card-bg) !important;
+  border-bottom: 1px solid var(--table-border);
+  color: var(--heading-color) !important;
+  font-weight: 600;
+  padding: 1rem 1.25rem;
+}
+
+.card-header h1,
+.card-header h2,
+.card-header h3,
+.card-header h4,
+.card-header h5,
+.card-header h6 {
+  margin-bottom: 0;
+  color: inherit;
+}
+
+/* === CARD BODY === */
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-body canvas {
+  height: auto !important;
+  max-height: 100%;
+  width: 100% !important;
+}
+
+/* === CARD FOOTER === */
+.card-footer {
+  background-color: var(--card-bg);
+  border-top: 1px solid var(--table-border);
+  padding: 0.75rem 1.25rem;
+}
+
+/* === CARD VARIANTS === */
+
+/* Primary card */
+.card-primary .card-header {
+  background-color: var(--btn-primary-bg) !important;
+  color: var(--primary-text) !important;
+  border-bottom-color: var(--btn-primary-bg);
+}
+
+/* Success card */
+.card-success .card-header {
+  background-color: var(--success-bg) !important;
+  color: var(--primary-text) !important;
+  border-bottom-color: var(--success-bg);
+}
+
+/* Danger card */
+.card-danger .card-header {
+  background-color: var(--danger-bg) !important;
+  color: var(--primary-text) !important;
+  border-bottom-color: var(--danger-bg);
+}
+
+/* Warning card */
+.card-warning .card-header {
+  background-color: var(--warning-bg) !important;
+  color: var(--primary-text) !important;
+  border-bottom-color: var(--warning-bg);
+}
+
+/* === CARD UTILITIES === */
+.card-flush {
+  border-radius: 0;
+}
+
+.card-borderless {
+  border: none;
+  box-shadow: none;
+}
+
+.card-minimal {
+  border: 1px solid var(--table-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-minimal:hover {
+  box-shadow: var(--shadow-md);
+  transform: none;
+}
+
+/* === RESPONSIVE CARDS === */
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: 1rem;
+  }
+  
+  .card-header,
+  .card-body,
+  .card-footer {
+    padding: 0.75rem 1rem;
+  }
+  
+  .card-header h5 {
+    font-size: 1rem;
+  }
+}
+
+/* === DARK THEME SPECIFIC === */
+html[data-theme="dark"] .card .card-header {
+  background-color: var(--card-bg) !important;
+  border-color: var(--table-border);
+}
+
+html[data-theme="dark"] .card-body {
+  background-color: var(--card-bg);
+  color: var(--body-color);
+}
+
+html[data-theme="dark"] .card-footer {
+  background-color: var(--card-bg);
+  border-color: var(--table-border);
+}

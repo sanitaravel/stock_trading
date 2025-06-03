@@ -1,0 +1,86 @@
+{% extends 'stock_visualization/base.html' %}
+{% load static %}
+{% load money_filters %}
+
+{% block title %}{{ stock.symbol }} - {{ stock.company_name }}{% endblock %}
+
+{% block content %}
+<article class="card mb-4">
+    <header class="card-header">
+        <h1 class="h2">{{ stock.symbol }} - {{ stock.company_name }}</h1>
+    </header>
+    <section class="card-body">
+        <section class="row mb-3">
+            <section class="col-md-8">
+                {% if stock.description %}
+                <p>{{ stock.description }}</p>
+                {% endif %}
+            </section>
+            <aside class="col-md-4">
+                <article class="card">
+                    <header class="card-header">Key Information</header>
+                    <ul class="list-group list-group-flush">
+                        <!-- Add sector and industry information here -->
+                        <li class="list-group-item">
+                            <strong>Sector:</strong> 
+                            {% if stock.sector %}
+                            <a href="{% url 'stock_visualization:sector_detail' stock.sector.id %}">{{ stock.sector.name }}</a>
+                            {% else %}
+                            N/A
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Industry:</strong> 
+                            {% if stock.industry %}
+                            <a href="{% url 'stock_visualization:industry_detail' stock.industry.id %}">{{ stock.industry.name }}</a>
+                            {% else %}
+                            N/A
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Latest Price:</strong> 
+                            {{ stock.get_latest_close_price|money }}
+                        </li>
+                        <!-- Add price change information -->
+                        <li class="list-group-item">
+                            <strong>Price Change:</strong> 
+                            <span class="{% if price_change > 0 %}text-success{% elif price_change < 0 %}text-danger{% endif %}">
+                                {% if price_change > 0 %}+{% endif %}{{ price_change|floatformat:2 }}
+                                ({% if price_change_percent > 0 %}+{% endif %}{{ price_change_percent|floatformat:2 }}%)
+                            </span>                        </li>
+                    </ul>
+                </article>
+            </aside>
+        </section>
+
+        <!-- Rest of stock detail content -->
+        <section class="card mb-4">
+            <header class="card-header">Price History</header>
+            <section class="card-body">
+                <!-- Add date range selector -->
+                <nav class="mb-3 d-flex flex-wrap" aria-label="Date range selector">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Date range selector">
+                        <button type="button" class="btn btn-outline-primary" data-range="1D">1D</button>
+                        <button type="button" class="btn btn-outline-primary" data-range="1W">1W</button>
+                        <button type="button" class="btn btn-outline-primary" data-range="1M">1M</button>
+                        <button type="button" class="btn btn-outline-primary" data-range="3M">3M</button>
+                        <button type="button" class="btn btn-outline-primary" data-range="6M">6M</button>
+                        <button type="button" class="btn btn-outline-primary" data-range="YTD">YTD</button>
+                        <button type="button" class="btn btn-outline-primary" data-range="1Y">1Y</button>
+                        <button type="button" class="btn btn-outline-primary" data-range="3Y">3Y</button>
+                        <button type="button" class="btn btn-outline-primary" data-range="5Y">5Y</button>                        <button type="button" class="btn btn-outline-primary" data-range="MAX">Max</button>
+                    </div>
+                </nav>
+                <canvas id="priceChart" width="100%" height="40" data-stock-id="{{ stock.id }}"></canvas>
+            </section>
+        </section>
+    </section>
+</article>
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'stock_visualization/js/stock_detail.js' %}"></script>
+{% endblock %}

@@ -129,6 +129,20 @@ class Stock(models.Model):
         if latest_price:
             return latest_price.open_price
         return 0
+    
+    def get_daily_change(self):
+        """Get the daily change percentage and absolute change."""
+        open_price = self.get_latest_open_price()
+        close_price = self.get_latest_close_price()
+        
+        if open_price and close_price and open_price > 0:
+            change = close_price - open_price
+            percent_change = (change / open_price) * 100
+            return {
+                'change': round(float(change), 2),
+                'percent': round(float(percent_change), 2)
+            }
+        return None
 
 class PortfolioPosition(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE, related_name='positions')

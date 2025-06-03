@@ -1,0 +1,27 @@
+/**
+ * Stock Detail Page Styles
+ */
+
+.chart-loader {
+    z-index: 10;
+}
+
+/* Fix for Key Information card in dark mode */
+html[data-theme="dark"] .card .card-header {
+    background-color: var(--card-bg) !important;
+    border-color: var(--table-border);
+}
+
+html[data-theme="dark"] .list-group-item {
+    background-color: var(--card-bg);
+    color: var(--body-color);
+    border-color: var(--table-border);
+}
+
+html[data-theme="dark"] .list-group-flush .list-group-item {
+    border-color: var(--table-border);
+}
+
+html[data-theme="dark"] .list-group-item a {
+    color: var(--link-color);
+}

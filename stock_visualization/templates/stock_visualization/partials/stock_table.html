@@ -1,0 +1,68 @@
+{% comment %}
+Reusable stock table component
+Parameters:
+- stocks: QuerySet of stock objects
+- show_industry: Boolean, whether to show industry column (default: True)
+- show_sector: Boolean, whether to show sector column (default: False)
+{% endcomment %}
+
+<section class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Company Name</th>
+                {% if show_industry|default:True %}
+                <th>Industry</th>
+                {% endif %}
+                {% if show_sector %}
+                <th>Sector</th>
+                {% endif %}
+                <th>Latest Price</th>
+                <th>Daily Change</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+            <tr>
+                <td><a href="{% url 'stock_visualization:stock_detail' stock.id %}">{{ stock.symbol }}</a></td>
+                <td>{{ stock.company_name }}</td>
+                {% if show_industry|default:True %}
+                <td>
+                    {% if stock.industry %}
+                    <a href="{% url 'stock_visualization:industry_detail' stock.industry.id %}">{{ stock.industry.name }}</a>
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </td>
+                {% endif %}
+                {% if show_sector %}
+                <td>
+                    {% if stock.sector %}
+                    <a href="{% url 'stock_visualization:sector_detail' stock.sector.id %}">{{ stock.sector.name }}</a>
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </td>
+                {% endif %}
+                <td>${{ stock.get_latest_close_price|floatformat:2 }}</td>
+                <td>
+                    {% with daily_change=stock.get_daily_change %}
+                    {% if daily_change %}
+                        <span style="color: {% if daily_change.change > 0 %}green{% elif daily_change.change < 0 %}red{% else %}gray{% endif %};">
+                            ${{ daily_change.change|floatformat:2 }} ({{ daily_change.percent|floatformat:2 }}%)
+                        </span>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                    {% endwith %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="{% if show_industry|default:True and show_sector %}6{% elif show_industry|default:True or show_sector %}5{% else %}4{% endif %}" class="text-center">No stocks found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
