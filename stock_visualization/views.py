@@ -32,7 +32,7 @@ def index(request):
         'portfolios': sorted_portfolios,
         'portfolio_data_json': json.dumps(portfolio_data),
     }
-    return render(request, 'stock_visualization/index.html', context)
+    return render(request, 'stock_visualization/dashboard/index.html', context)
 
 def portfolio_detail(request, portfolio_id):
     """Individual portfolio detail page"""
@@ -72,7 +72,7 @@ def portfolio_detail(request, portfolio_id):
         'portfolio_initial_formatted': "${:,.2f}".format(portfolio.initial_value()),
         'portfolio_gain_formatted': "${:,.2f}".format(portfolio.gain()),  # Format gain
     }
-    return render(request, 'stock_visualization/portfolio_detail.html', context)
+    return render(request, 'stock_visualization/portfolios/detail.html', context)
 
 def portfolio_history_data(request, portfolio_id):
     """API endpoint to get portfolio history data for charts"""
@@ -297,7 +297,7 @@ def stock_detail(request, stock_id):
         'price_change_percent': price_change_percent,
         'api_price_history_url': api_price_history_url
     }
-    return render(request, 'stock_visualization/stock_detail.html', context)
+    return render(request, 'stock_visualization/stocks/detail.html', context)
 
 # New views for sectors
 def sector_list(request):
@@ -305,16 +305,21 @@ def sector_list(request):
     context = {
         'sectors': sectors,
     }
-    return render(request, 'stock_visualization/sector_list.html', context)
+    return render(request, 'stock_visualization/stocks/sector_list.html', context)
 
 def sector_detail(request, sector_id):
     sector = get_object_or_404(Sector, id=sector_id)
     stocks = Stock.objects.filter(sector=sector)
+    
+    # Sort stocks by daily change percentage (descending)
+    stocks_list = list(stocks)
+    stocks_list.sort(key=lambda stock: stock.get_daily_change().get('percent', 0) if stock.get_daily_change() else 0, reverse=True)
+    
     context = {
         'sector': sector,
-        'stocks': stocks,
+        'stocks': stocks_list,
     }
-    return render(request, 'stock_visualization/sector_detail.html', context)
+    return render(request, 'stock_visualization/stocks/sector_detail.html', context)
 
 # New views for industries
 def industry_list(request):
@@ -322,7 +327,7 @@ def industry_list(request):
     context = {
         'industries': industries,
     }
-    return render(request, 'stock_visualization/industry_list.html', context)
+    return render(request, 'stock_visualization/stocks/industry_list.html', context)
 
 def industry_detail(request, industry_id):
     industry = get_object_or_404(Industry, id=industry_id)
@@ -331,4 +336,12 @@ def industry_detail(request, industry_id):
         'industry': industry,
         'stocks': stocks,
     }
-    return render(request, 'stock_visualization/industry_detail.html', context)
+    return render(request, 'stock_visualization/stocks/industry_detail.html', context)
+
+def privacy_policy(request):
+    """Privacy Policy page"""
+    return render(request, 'stock_visualization/legal/privacy_policy.html')
+
+def terms_of_service(request):
+    """Terms of Service page"""
+    return render(request, 'stock_visualization/legal/terms_of_service.html')

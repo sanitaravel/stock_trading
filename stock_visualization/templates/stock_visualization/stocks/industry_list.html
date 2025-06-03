@@ -4,39 +4,39 @@
 {% block title %}Industries{% endblock %}
 
 {% block content %}
-<div class="card mb-4">
-    <div class="card-header">
-        <h2>Market Industries</h2>
-    </div>
-    <div class="card-body">
-        <div class="row">
+<main class="card mb-4">
+    <header class="card-header">
+        <h1 class="h2">Market Industries</h1>
+    </header>
+    <section class="card-body">
+        <section class="row">
             {% for industry in industries %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ industry.name }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">
+            <section class="col-md-4 mb-4">
+                <article class="card h-100">
+                    <section class="card-body">
+                        <h2 class="h5 card-title">{{ industry.name }}</h2>
+                        <h3 class="h6 card-subtitle mb-2 text-muted">
                             {% if industry.sector %}
                             Sector: <a href="{% url 'stock_visualization:sector_detail' industry.sector.id %}">{{ industry.sector.name }}</a>
                             {% else %}
                             No sector assigned
                             {% endif %}
-                        </h6>
+                        </h3>
                         {% if industry.description %}
                         <p class="card-text">{{ industry.description|truncatewords:20 }}</p>
                         {% endif %}
-                    </div>
-                    <div class="card-footer">
+                    </section>
+                    <footer class="card-footer">
                         <a href="{% url 'stock_visualization:industry_detail' industry.id %}" class="btn btn-primary">View Stocks</a>
-                    </div>
-                </div>
-            </div>
+                    </footer>
+                </article>
+            </section>
             {% empty %}
-            <div class="col-12">
+            <section class="col-12">
                 <p class="text-center">No industries found.</p>
-            </div>
+            </section>
             {% endfor %}
-        </div>
-    </div>
-</div>
+        </section>
+    </section>
+</main>
 {% endblock %}

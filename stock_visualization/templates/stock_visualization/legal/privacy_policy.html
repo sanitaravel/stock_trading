@@ -1,0 +1,521 @@
+{% extends 'stock_visualization/base.html' %}
+{% load static %}
+{% block title %}Privacy Policy - AI Stock Portfolio Competition{% endblock %}
+{% block content %}
+<main class="container my-5">
+  <article class="row justify-content-center">
+    <section class="col-lg-10">
+      <header class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h1 class="h3 mb-0">Privacy Policy</h1>
+        </div>
+        <div class="card-body">
+          <time class="text-muted mb-4" datetime="{% now 'Y-m-d' %}">
+            <strong>Last updated:</strong> {% now "F j, Y" %}
+          </time>
+          <section class="mb-4">
+            <h2 class="h4 text-primary">1. Introduction</h2>
+            <p>
+              Welcome to AI Stock Portfolio Competition ("we," "our," or "us").
+              This Privacy Policy explains how we collect, use, disclose, and
+              safeguard information when you use our stock portfolio tracking
+              and analysis platform.
+            </p>
+            <p>
+              This is a portfolio monitoring system designed for tracking and
+              analyzing stock portfolio performance. By accessing our service,
+              you agree to the collection and use of information in accordance
+              with this policy.
+            </p>
+          </section>
+          <section class="mb-4">
+            <h2 class="h4 text-primary">2. Information We Collect</h2>
+
+            <article>
+              <h3 class="h5">2.1 Portfolio Tracking Data</h3>
+              <ul>
+                <li>
+                  <strong>Portfolio Information:</strong> Names, descriptions,
+                  and performance data of tracked portfolios.
+                </li>
+                <li>
+                  <strong>Stock Holdings:</strong> Information about stock
+                  positions, quantities, purchase prices, and dates.
+                </li>
+                <li>
+                  <strong>Performance Metrics:</strong> Calculated gains,
+                  losses, and performance percentages for analysis purposes.
+                </li>
+              </ul>
+            </article>
+
+            <article>
+              <h3 class="h5">2.2 Automatically Collected Information</h3>
+              <ul>
+                <li>
+                  <strong>Usage Data:</strong> Information about how the
+                  platform is accessed, including pages visited and features
+                  used.
+                </li>
+                <li>
+                  <strong>Device Information:</strong> Basic information about
+                  devices accessing the platform, browser type, and IP address.
+                </li>
+                <li>
+                  <strong>Session Data:</strong> Technical data to maintain
+                  platform functionality and security.
+                </li>
+              </ul>
+            </article>
+
+            <article>
+              <h3 class="h5">2.3 Third-Party Market Data</h3>
+              <ul>
+                <li>
+                  <strong>Stock Market Data:</strong> Real-time and historical
+                  stock prices from financial data providers (Alpha Vantage
+                  API).
+                </li>
+                <li>
+                  <strong>Company Information:</strong> Public company data
+                  including sector, industry, and financial metrics.
+                </li>
+                <li>
+                  <strong>Market Indicators:</strong> General market performance
+                  data for comparative analysis.
+                </li>
+              </ul>
+            </article>
+          </section>
+          <section class="mb-4">
+            <h2 class="h4 text-primary">3. How We Use Information</h2>
+            <p>The collected information is used for the following purposes:</p>
+            <ul>
+              <li>
+                <strong>Portfolio Tracking:</strong> To monitor and display
+                stock portfolio performance and analytics.
+              </li>
+              <li>
+                <strong>Data Analysis:</strong> To calculate performance
+                metrics, generate charts, and provide investment insights.
+              </li>
+              <li>
+                <strong>Platform Operation:</strong> To maintain system
+                functionality, security, and performance optimization.
+              </li>
+              <li>
+                <strong>Historical Records:</strong> To maintain historical
+                performance data for trend analysis.
+              </li>
+              <li>
+                <strong>Reporting:</strong> To generate performance reports and
+                comparative analyses.
+              </li>
+              <li>
+                <strong>System Administration:</strong> To manage the platform
+                and ensure proper operation.
+              </li>
+            </ul>
+          </section>
+          <section class="mb-4">
+            <h2 class="h4 text-primary">
+              4. Information Sharing and Disclosure
+            </h2>
+
+            <article>
+              <h3 class="h5">4.1 Public Display</h3>
+              <p>
+                Portfolio performance data is displayed publicly on leaderboards
+                and analytics dashboards for educational and demonstration
+                purposes. No personal identification information is disclosed.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">4.2 Service Providers</h3>
+              <p>
+                We share information with third-party service providers who
+                assist in platform operation, including financial data providers
+                (Alpha Vantage), cloud hosting services, and analytics tools.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">4.3 Legal Requirements</h3>
+              <p>
+                We may disclose information if required by law, regulation, or
+                legal process, or to protect system security and integrity.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">4.4 No Personal Data Sales</h3>
+              <p>
+                Since this is a portfolio tracking system without user accounts,
+                we do not collect or sell personal information for marketing
+                purposes.
+              </p>
+            </article>
+          </section>
+          <section class="mb-4">
+            <h2 class="h4 text-primary">5. Data Security</h2>
+            <p>
+              We implement appropriate technical and organizational security
+              measures to protect platform data against:
+            </p>
+            <ul>
+              <li>Unauthorized access to the administrative interface</li>
+              <li>Data corruption or loss</li>
+              <li>System intrusions and security threats</li>
+              <li>Improper data handling</li>
+            </ul>
+            <p>
+              The platform uses Django's built-in security features, secure
+              database connections, and proper access controls. However, no
+              system is 100% secure, and we continuously work to improve our
+              security measures.
+            </p>
+          </section>
+          <section class="mb-4">
+            <h2 class="h4 text-primary">6. Data Retention</h2>
+            <p>We retain platform data as follows:</p>
+            <ul>
+              <li>
+                <strong>Portfolio Data:</strong> Maintained for ongoing tracking
+                and historical analysis
+              </li>
+              <li>
+                <strong>Stock Price History:</strong> Retained for trend
+                analysis and performance calculations
+              </li>
+              <li>
+                <strong>Performance Records:</strong> Kept for comparative
+                analysis and reporting purposes
+              </li>
+              <li>
+                <strong>System Logs:</strong> Maintained for security and
+                operational purposes, typically for limited periods
+              </li>
+            </ul>
+            <p>
+              Data is retained as long as it serves a legitimate purpose for
+              portfolio tracking and analysis.
+            </p>
+          </section>
+          <section class="mb-4">
+            <h2 class="h4 text-primary">7. Platform Access and Use</h2>
+            <p>This platform operates under the following principles:</p>
+
+            <article>
+              <h3 class="h5">7.1 Administrative Access</h3>
+              <p>
+                The platform is managed through an administrative interface for
+                creating and managing portfolio data.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">7.2 Public Viewing</h3>
+              <p>
+                Portfolio performance data is publicly viewable for educational
+                and analytical purposes.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">7.3 No User Registration</h3>
+              <p>
+                The system does not require user registration or account
+                creation for viewing portfolio data.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">7.4 Cookies and Sessions</h3>
+              <p>
+                Basic cookies may be used for platform functionality. These do
+                not track personal information but help maintain session state
+                and preferences.
+              </p>
+            </article>
+          </section>
+          <section class="mb-4">
+            <h2 class="h4 text-primary">8. Educational Purpose</h2>
+            <p>
+              This platform is designed for educational and analytical purposes.
+              It tracks and displays stock portfolio performance to demonstrate
+              investment strategies and market analysis techniques. No personal
+              investment advice is provided, and the platform should not be used
+              as the sole basis for investment decisions.
+            </p>
+          </section>
+          <section class="mb-4">
+            <h2 class="h4 text-primary">9. Third-Party Services</h2>
+            <p>
+              The Platform integrates with third-party services to provide
+              comprehensive functionality. These services may collect and
+              process data according to their own privacy policies:
+            </p>
+            <h5 class="h6 text-secondary mb-3">External APIs</h5>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div
+                  class="card border-info library-card"
+                  data-url="https://www.alphavantage.co/"
+                  role="button"
+                  tabindex="0"
+                >
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      Alpha Vantage API
+                      <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </h5>
+                    <p class="card-text mb-1">
+                      <strong>Purpose:</strong> Stock market data and pricing
+                      information
+                    </p>
+                    <p class="card-text">
+                      <strong>Data:</strong> Stock symbols, pricing data (no
+                      personal information shared)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h5 class="h6 text-secondary mb-3">Frontend Libraries (CDN)</h5>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <div
+                  class="card border-secondary library-card"
+                  data-url="https://getbootstrap.com/"
+                  role="button"
+                  tabindex="0"
+                >
+                  <div class="card-body">
+                    <h6 class="card-title">
+                      Bootstrap CSS
+                      <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </h6>
+                    <p class="card-text small">
+                      <strong>Version:</strong> 5.2.3<br />
+                      <strong>Purpose:</strong> UI framework and styling
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div
+                  class="card border-secondary library-card"
+                  data-url="https://www.chartjs.org/"
+                  role="button"
+                  tabindex="0"
+                >
+                  <div class="card-body">
+                    <h6 class="card-title">
+                      Chart.js <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </h6>
+                    <p class="card-text small">
+                      <strong>Version:</strong> 3.9.1<br />
+                      <strong>Purpose:</strong> Data visualization charts
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div
+                  class="card border-secondary library-card"
+                  data-url="https://icons.getbootstrap.com/"
+                  role="button"
+                  tabindex="0"
+                >
+                  <div class="card-body">
+                    <h6 class="card-title">
+                      Bootstrap Icons
+                      <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </h6>
+                    <p class="card-text small">
+                      <strong>Version:</strong> 1.10.0<br />
+                      <strong>Purpose:</strong> Icon library
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h5 class="h6 text-secondary mb-3">Backend Technologies</h5>
+            <div class="row">
+              <div class="col-md-6">
+                <div
+                  class="card border-warning library-card"
+                  data-url="https://www.django-rest-framework.org/"
+                  role="button"
+                  tabindex="0"
+                >
+                  <div class="card-body">
+                    <h6 class="card-title">
+                      Django REST Framework
+                      <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </h6>
+                    <p class="card-text small">
+                      <strong>Purpose:</strong> API functionality and
+                      authentication
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div
+                  class="card border-warning library-card"
+                  data-url="https://drf-yasg.readthedocs.io/"
+                  role="button"
+                  tabindex="0"
+                >
+                  <div class="card-body">
+                    <h6 class="card-title">
+                      drf-yasg <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </h6>
+                    <p class="card-text small">
+                      <strong>Purpose:</strong> API documentation generation
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="alert alert-info mt-3">
+              <strong>Note:</strong> CDN services may collect basic request data
+              (IP addresses, user agents) for their own analytics and service
+              delivery purposes. We do not control these third-party data
+              collection practices.
+            </div>
+          </section>
+          <section class="mb-4">
+            <h2 class="h4 text-primary">10. Changes to This Privacy Policy</h2>
+            <p>
+              We may update this Privacy Policy from time to time to reflect
+              changes in our practices or for legal and regulatory reasons.
+              Changes will be posted on this page with an updated "Last updated"
+              date.
+            </p>
+            <p>
+              For significant changes that affect data handling practices, we
+              may provide additional notice through the platform interface.
+            </p>
+          </section>
+          <aside class="alert alert-info">
+            <h5 class="alert-heading">
+              <i class="bi bi-info-circle"></i> Important Note
+            </h5>
+            <p class="mb-0">
+              This is a simulated stock trading platform for educational and
+              competition purposes. No real money or actual stock transactions
+              are involved. All portfolio data is for demonstration and
+              competition purposes only.
+            </p>
+          </aside>
+
+          <nav class="text-center mt-4">
+            <a
+              href="{% url 'stock_visualization:index' %}"
+              class="btn btn-primary"
+            >
+              <i class="bi bi-arrow-left"></i> Back to Home
+            </a>
+          </nav>
+        </div>
+      </header>
+    </section>
+  </article>
+</main>
+{% endblock %} {% block extra_css %}
+<style>
+  .card-body section h2 {
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-body article h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-body ul {
+    margin-bottom: 1rem;
+  }
+
+  .card-body li {
+    margin-bottom: 0.5rem;
+  }
+
+  .library-card {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .library-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .library-card:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+  }
+
+  /* Semantic HTML styling */
+  main {
+    min-height: 70vh;
+  }
+
+  article {
+    background: transparent;
+  }
+
+  section {
+    margin-bottom: 2rem;
+  }
+
+  aside.alert {
+    margin: 2rem 0;
+  }
+
+  nav.text-center {
+    padding: 1rem 0;
+    border-top: 1px solid #e9ecef;
+    margin-top: 2rem;
+  }
+
+  time {
+    display: block;
+    font-style: italic;
+  }
+</style>
+{% endblock %} {% block extra_js %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Add click functionality to library cards
+    const libraryCards = document.querySelectorAll(".library-card");
+
+    libraryCards.forEach((card) => {
+      // Handle click events
+      card.addEventListener("click", function () {
+        const url = this.getAttribute("data-url");
+        if (url) {
+          window.open(url, "_blank");
+        }
+      });
+
+      // Handle keyboard navigation (Enter and Space)
+      card.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          const url = this.getAttribute("data-url");
+          if (url) {
+            window.open(url, "_blank");
+          }
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

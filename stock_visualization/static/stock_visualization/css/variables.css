@@ -1,0 +1,164 @@
+/**
+ * CSS Variables for Light and Dark Themes
+ * Central location for all theme-related custom properties
+ */
+
+:root {
+  /* === LIGHT THEME (DEFAULT) === */
+  
+  /* Layout & Background */
+  --body-bg: #f9fafb;
+  --body-color: #1f2937;
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.125);
+  --navbar-bg: #ffffff;
+  --navbar-border: #e5e7eb;
+  
+  /* Typography */
+  --heading-color: #111827;
+  --text-muted: #6b7280;
+  --primary-text: #ffffff;
+  --primary-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  
+  /* Links */
+  --link-color: #2563eb;
+  --link-hover-color: #1d4ed8;
+  
+  /* Tables */
+  --table-stripe: #f9fafb;
+  --table-border: #e5e7eb;
+  
+  /* Shadows */
+  --shadow-color: rgba(0, 0, 0, 0.12);
+  --shadow-color-hover: rgba(0, 0, 0, 0.18);
+  --shadow-sm: 0 1px 3px var(--shadow-color);
+  --shadow-md: 0 2px 8px var(--shadow-color), 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 4px 12px var(--shadow-color-hover), 0 2px 6px rgba(0, 0, 0, 0.15);
+    /* Status Colors */
+  --success-bg: #10b981;
+  --success-color: #059669;
+  --danger-bg: #ef4444;
+  --danger-color: #dc2626;
+  --warning-bg: #f59e0b;
+  --warning-color: #d97706;
+  --info-bg: #3b82f6;
+  --info-color: #2563eb;
+  
+  /* Badge Colors */
+  --badge-success-bg: #10b981;
+  --badge-danger-bg: #ef4444;
+  --badge-warning-bg: #f59e0b;
+  --badge-secondary-bg: #6b7280;
+  
+  /* Form Elements */
+  --input-bg: #ffffff;
+  --input-border: #e5e7eb;
+  --input-focus-border: #3b82f6;
+  
+  /* Buttons */
+  --btn-primary-bg: #2563eb;
+  --btn-primary-hover: #1d4ed8;
+  --btn-secondary-bg: #6b7280;
+  --btn-secondary-hover: #4b5563;
+  
+  /* Chart Colors */
+  --chart-grid: #e5e7eb;
+  --chart-text: #6b7280;
+  --chart-tooltip-bg: rgba(255, 255, 255, 0.95);
+  --chart-tooltip-border: #e5e7eb;
+  
+  /* Footer */
+  --footer-bg: #f8f9fa;
+  --footer-text: #6b7280;
+  --footer-border: #e5e7eb;
+  
+  /* Animation & Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.2s ease;
+  --transition-slow: 0.3s ease;
+  
+  /* Z-index Scale */
+  --z-loader: 10;
+  --z-tooltip: 20;
+  --z-dropdown: 30;
+  --z-navbar: 1000;
+  --z-modal: 1050;
+}
+
+/* === DARK THEME === */
+html[data-theme="dark"] {
+  /* Layout & Background */
+  --body-bg: #111827;
+  --body-color: #e5e7eb;
+  --card-bg: #1f2937;
+  --card-border: rgba(255, 255, 255, 0.125);
+  --navbar-bg: #1f2937;
+  --navbar-border: #374151;
+  
+  /* Typography */
+  --heading-color: #f3f4f6;
+  --text-muted: #9ca3af;
+  
+  /* Links */
+  --link-color: #3b82f6;
+  --link-hover-color: #60a5fa;
+  
+  /* Tables */
+  --table-stripe: #1a202c;
+  --table-border: #374151;
+  
+  /* Shadows */
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-color-hover: rgba(0, 0, 0, 0.4);
+    /* Status Colors (darker variants) */
+  --success-bg: #059669;
+  --success-color: #10b981;
+  --danger-bg: #dc2626;
+  --danger-color: #ef4444;
+  --warning-bg: #d97706;
+  --warning-color: #f59e0b;
+  --info-bg: #2563eb;
+  --info-color: #3b82f6;
+  
+  /* Badge Colors (darker variants) */
+  --badge-success-bg: #059669;
+  --badge-danger-bg: #dc2626;
+  --badge-warning-bg: #d97706;
+  --badge-secondary-bg: #4b5563;
+  
+  /* Form Elements */
+  --input-bg: #374151;
+  --input-border: #4b5563;
+  --input-focus-border: #60a5fa;
+  
+  /* Buttons */
+  --btn-primary-bg: #3b82f6;
+  --btn-primary-hover: #2563eb;
+  --btn-secondary-bg: #4b5563;
+  --btn-secondary-hover: #6b7280;
+  
+  /* Chart Colors */
+  --chart-grid: #374151;
+  --chart-text: #9ca3af;
+  --chart-tooltip-bg: rgba(31, 41, 55, 0.95);
+  --chart-tooltip-border: #374151;
+  
+  /* Footer */
+  --footer-bg: #1f2937;
+  --footer-text: #9ca3af;
+  --footer-border: #374151;
+}
+
+/* === THEME TRANSITION === */
+* {
+  transition: background-color var(--transition-normal), 
+              color var(--transition-normal), 
+              border-color var(--transition-normal);
+}
+
+/* Override transitions for elements that shouldn't animate */
+canvas,
+.chart-container,
+.chart-loader {
+  transition: none !important;
+}

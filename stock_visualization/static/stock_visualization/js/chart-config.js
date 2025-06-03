@@ -33,8 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             return tooltipItems[0]?.label || '';
         };
-        
-        // Global date formatter function that can be used across charts
+          // Global date formatter function that can be used across charts
         window.formatChartDate = function(dateStr, format = 'short') {
             if (!dateStr) return '';
             const date = new Date(dateStr);
@@ -65,6 +64,66 @@ document.addEventListener('DOMContentLoaded', function() {
                         day: 'numeric' 
                     });
             }
+        };        // Smart date formatter that shows day always, and month/year only on first occurrence
+        // Each component is displayed on a separate line for better readability
+        window.formatChartDateSmart = function(dateStr, index, allLabels) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            const day = date.getDate();
+            
+            let lines = [day.toString()];
+            
+            // Check if we need to show month (first occurrence or month changed)
+            const showMonth = index === 0 || 
+                (index > 0 && new Date(allLabels[index - 1]).getMonth() !== date.getMonth());
+            
+            if (showMonth) {
+                const monthName = date.toLocaleDateString(undefined, { month: 'long' });
+                lines.unshift(monthName);
+                
+                // Check if we need to show year (first occurrence or year changed)
+                const showYear = index === 0 || 
+                    (index > 0 && new Date(allLabels[index - 1]).getFullYear() !== date.getFullYear());
+                
+                if (showYear) {
+                    const year = date.getFullYear();
+                    lines.push(year.toString());
+                }
+            }
+            
+            return lines.join('\n');
+        };
+
+        /**
+         * Smart date formatting for Date objects that shows day always, month only on first occurrence, year only on first occurrence
+         * Each component is displayed on a separate line for better readability
+         * @param {Date} date - The date to format
+         * @param {number} index - The index of the data point
+         * @param {Array} allDates - Array of all dates in the dataset
+         * @returns {string} Formatted date string with line breaks
+         */
+        window.formatSmartDate = function(date, index, allDates) {
+            if (!date || !(date instanceof Date)) {
+                return '';
+            }
+            
+            const day = date.getDate();
+            const month = date.toLocaleDateString('en-US', { month: 'long' });
+            const year = date.getFullYear();
+            
+            let lines = [day.toString()];
+            
+            // Show month if it's the first date or if month changed from previous date
+            if (index === 0 || (allDates[index - 1] && new Date(allDates[index - 1]).getMonth() !== date.getMonth())) {
+                lines.unshift(month);
+            }
+            
+            // Show year if it's the first date or if year changed from previous date
+            if (index === 0 || (allDates[index - 1] && new Date(allDates[index - 1]).getFullYear() !== date.getFullYear())) {
+                lines.push(year.toString());
+            }
+            
+            return lines.join('\n');
         };
         
         // Function to create charts with theme awareness
@@ -89,8 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 config.options.scales[scale].ticks.color = getComputedStyle(document.documentElement)
                     .getPropertyValue('--chart-text').trim();
             });
-            
-            // Apply date formatting to x-axis if it contains dates
+              // Apply date formatting to x-axis if it contains dates
             if (config.data && config.data.labels && config.data.labels.length > 0) {
                 const firstLabel = config.data.labels[0];
                 // Check if labels are dates in ISO format
@@ -98,8 +156,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (!config.options.scales.x.ticks.callback) {
                         config.options.scales.x.ticks.callback = function(value, index) {
                             const label = this.getLabelForValue(value);
-                            return window.formatChartDate(label, 
-                                config.data.labels.length > 30 ? 'monthYear' : 'short');
+                            const allLabels = this.chart.data.labels;
+                            return window.formatChartDateSmart(label, index, allLabels);
                         };
                     }
                 }

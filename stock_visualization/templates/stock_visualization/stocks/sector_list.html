@@ -1,0 +1,35 @@
+{% extends 'stock_visualization/base.html' %}
+{% load static %}
+
+{% block title %}Sectors{% endblock %}
+
+{% block content %}
+<main class="card mb-4">
+    <header class="card-header">
+        <h1 class="h2">Market Sectors</h1>
+    </header>
+    <section class="card-body">
+        <section class="row">
+            {% for sector in sectors %}
+            <section class="col-md-4 mb-4">
+                <article class="card h-100">
+                    <section class="card-body">
+                        <h2 class="h5 card-title">{{ sector.name }}</h2>
+                        {% if sector.description %}
+                        <p class="card-text">{{ sector.description|truncatewords:20 }}</p>
+                        {% endif %}
+                    </section>
+                    <footer class="card-footer">
+                        <a href="{% url 'stock_visualization:sector_detail' sector.id %}" class="btn btn-primary">View Stocks</a>
+                    </footer>
+                </article>
+            </section>
+            {% empty %}
+            <section class="col-12">
+                <p class="text-center">No sectors found.</p>
+            </section>
+            {% endfor %}
+        </section>
+    </section>
+</main>
+{% endblock %}
