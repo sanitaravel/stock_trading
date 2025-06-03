@@ -1,0 +1,443 @@
+{% extends 'stock_visualization/base.html' %}
+{% load static %}
+{% block title %}Terms of Service - AI Stock Portfolio Competition{% endblock %}
+{% block content %}
+<main class="container my-5">
+  <article class="row justify-content-center">
+    <section class="col-lg-10">
+      <header class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h1 class="h3 mb-0">Terms of Service</h1>
+        </div>
+        <div class="card-body">
+          <time class="text-muted mb-4" datetime="{% now 'Y-m-d' %}">
+            <strong>Last updated:</strong> {% now "F j, Y" %}
+          </time>
+
+          <section class="mb-4">
+            <h2 class="h4 text-primary">1. Agreement to Terms</h2>
+            <p>
+              By accessing and using the AI Stock Portfolio Competition platform
+              ("Service," "Platform," "we," "us," or "our"), you accept and
+              agree to be bound by the terms and provision of this agreement.
+            </p>
+            <p>
+              This is a simulated stock trading and portfolio management
+              platform designed for educational, analytical, and competition
+              purposes. No real money or actual stock transactions are involved.
+            </p>
+          </section>
+
+          <section class="mb-4">
+            <h2 class="h4 text-primary">2. Description of Service</h2>
+
+            <article>
+              <h3 class="h5">2.1 Platform Purpose</h3>
+              <p>
+                The AI Stock Portfolio Competition is an educational platform
+                that:
+              </p>
+              <ul>
+                <li>
+                  Tracks and displays simulated stock portfolio performance
+                </li>
+                <li>Provides market data visualization and analysis tools</li>
+                <li>
+                  Demonstrates investment strategies and portfolio management
+                  techniques
+                </li>
+                <li>
+                  Facilitates learning about financial markets and investment
+                  principles
+                </li>
+              </ul>
+            </article>
+
+            <article>
+              <h3 class="h5">2.2 Simulated Environment</h3>
+              <p>
+                All portfolio data, trading activities, and financial
+                information displayed on this platform are simulated and for
+                educational purposes only. This platform does not:
+              </p>
+              <ul>
+                <li>Execute real stock trades or financial transactions</li>
+                <li>Handle real money or actual investments</li>
+                <li>Provide licensed financial advisory services</li>
+                <li>Guarantee any financial returns or investment outcomes</li>
+              </ul>
+            </article>
+          </section>
+
+          <section class="mb-4">
+            <h2 class="h4 text-primary">
+              3. User Responsibilities and Conduct
+            </h2>
+
+            <article>
+              <h3 class="h5">3.1 Permitted Use</h3>
+              <p>You may use this platform for:</p>
+              <ul>
+                <li>Educational learning about stock market concepts</li>
+                <li>
+                  Analyzing portfolio performance and investment strategies
+                </li>
+                <li>Participating in simulated trading competitions</li>
+                <li>Research and academic purposes</li>
+              </ul>
+            </article>
+
+            <article>
+              <h3 class="h5">3.2 Prohibited Activities</h3>
+              <p>You agree not to:</p>
+              <ul>
+                <li>
+                  Use the platform for any illegal or unauthorized purpose
+                </li>
+                <li>
+                  Attempt to gain unauthorized access to the system or
+                  administrative functions
+                </li>
+                <li>
+                  Interfere with or disrupt the platform's operation or security
+                </li>
+                <li>
+                  Use automated scripts, bots, or data scraping tools without
+                  permission
+                </li>
+                <li>
+                  Misrepresent the simulated nature of the platform or its data
+                </li>
+                <li>
+                  Use the platform's data for commercial purposes without
+                  authorization
+                </li>
+              </ul>
+            </article>
+
+            <article>
+              <h3 class="h5">3.3 Compliance</h3>
+              <p>
+                Users must comply with all applicable local, state, national,
+                and international laws and regulations when using the platform.
+              </p>
+            </article>
+          </section>
+
+          <section class="mb-4">
+            <h2 class="h4 text-primary">4. Educational Disclaimer</h2>
+
+            <article>
+              <h3 class="h5">4.1 No Financial Advice</h3>
+              <p>
+                This platform is strictly for educational and demonstration
+                purposes. The information provided:
+              </p>
+              <ul>
+                <li>
+                  Does not constitute financial, investment, or trading advice
+                </li>
+                <li>
+                  Should not be relied upon for actual investment decisions
+                </li>
+                <li>Is based on simulated scenarios and historical data</li>
+                <li>May not reflect real market conditions or performance</li>
+              </ul>
+            </article>
+
+            <article>
+              <h3 class="h5">4.2 Risk Awareness</h3>
+              <p>
+                Users should understand that real stock market investing
+                involves significant risks, including the potential loss of
+                principal. This platform's simulated environment cannot fully
+                replicate the complexities and risks of actual financial
+                markets.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">4.3 Professional Consultation</h3>
+              <p>
+                Before making any real investment decisions, users should
+                consult with qualified financial advisors, investment
+                professionals, or other appropriate experts.
+              </p>
+            </article>
+          </section>
+
+          <section class="mb-4">
+            <h2 class="h4 text-primary">5. Data and Privacy</h2>
+
+            <article>
+              <h3 class="h5">5.1 Data Collection</h3>
+              <p>
+                The platform collects and processes data as outlined in our
+                <a
+                  href="{% url 'stock_visualization:privacy_policy' %}"
+                  class="text-primary"
+                  >Privacy Policy</a
+                >. By using the service, you consent to such data collection and
+                processing.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">5.2 Public Display</h3>
+              <p>
+                Portfolio performance data and competition results may be
+                displayed publicly for educational and analytical purposes. No
+                personal identification information is disclosed without
+                explicit consent.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">5.3 Third-Party Services</h3>
+              <p>
+                The platform integrates with third-party services for market
+                data and functionality. These services operate under their own
+                terms and privacy policies.
+              </p>
+            </article>
+          </section>
+
+          <section class="mb-4">
+            <h2 class="h4 text-primary">6. Intellectual Property</h2>
+
+            <article>
+              <h3 class="h5">6.1 Platform Content</h3>
+              <p>
+                The platform's design, code, algorithms, and original content
+                are protected by intellectual property rights. Users may not
+                copy, modify, or distribute proprietary platform elements
+                without permission.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">6.2 Market Data</h3>
+              <p>
+                Stock market data is provided by third-party sources and is
+                subject to their respective terms of use and licensing
+                agreements.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">6.3 User-Generated Content</h3>
+              <p>
+                Any content, feedback, or data submitted by users may be used by
+                the platform for improvement, research, and educational
+                purposes.
+              </p>
+            </article>
+          </section>
+
+          <section class="mb-4">
+            <h2 class="h4 text-primary">7. Disclaimers and Limitations</h2>
+
+            <article>
+              <h3 class="h5">7.1 Service Availability</h3>
+              <p>
+                The platform is provided "as is" without warranties of any kind.
+                We do not guarantee:
+              </p>
+              <ul>
+                <li>Continuous or uninterrupted service availability</li>
+                <li>Accuracy or completeness of market data</li>
+                <li>Error-free operation or data processing</li>
+                <li>Compatibility with all devices or browsers</li>
+              </ul>
+            </article>
+
+            <article>
+              <h3 class="h5">7.2 Data Accuracy</h3>
+              <p>
+                While we strive for accuracy, market data and platform
+                calculations may contain errors, delays, or inaccuracies. Users
+                should verify important information through independent sources.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">7.3 Limitation of Liability</h3>
+              <p>
+                To the maximum extent permitted by law, we shall not be liable
+                for any indirect, incidental, special, or consequential damages
+                arising from platform use, including but not limited to data
+                loss, system downtime, or decision-making based on platform
+                information.
+              </p>
+            </article>
+          </section>
+
+          <section class="mb-4">
+            <h2 class="h4 text-primary">8. Platform Modifications</h2>
+
+            <article>
+              <h3 class="h5">8.1 Service Changes</h3>
+              <p>
+                We reserve the right to modify, suspend, or discontinue any
+                aspect of the platform at any time without prior notice. This
+                includes changes to features, data sources, or functionality.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">8.2 Content Updates</h3>
+              <p>
+                Portfolio data, market information, and platform content may be
+                updated, modified, or removed as needed for accuracy,
+                compliance, or operational reasons.
+              </p>
+            </article>
+          </section>
+
+          <section class="mb-4">
+            <h2 class="h4 text-primary">9. Termination</h2>
+
+            <article>
+              <h3 class="h5">9.1 Service Termination</h3>
+              <p>
+                We may terminate or suspend access to the platform immediately,
+                without prior notice, for conduct that violates these Terms of
+                Service or is harmful to other users, the platform, or third
+                parties.
+              </p>
+            </article>
+
+            <article>
+              <h3 class="h5">9.2 Effect of Termination</h3>
+              <p>
+                Upon termination, your right to use the platform ceases
+                immediately. Provisions that by their nature should survive
+                termination shall survive, including intellectual property
+                rights, disclaimers, and limitations of liability.
+              </p>
+            </article>
+          </section>
+          <section class="mb-4">
+            <h2 class="h4 text-primary">10. Governing Law</h2>
+            <p>
+              These Terms of Service shall be governed by and construed in
+              accordance with applicable laws. Any disputes arising from these
+              terms or platform use shall be resolved through appropriate legal
+              channels.
+            </p>
+          </section>
+
+          <section class="mb-4">
+            <h2 class="h4 text-primary">11. Changes to Terms</h2>
+            <p>
+              We reserve the right to modify these Terms of Service at any time.
+              Changes will be posted on this page with an updated "Last updated"
+              date. Continued use of the platform after changes constitutes
+              acceptance of the modified terms.
+            </p>
+            <p>
+              For significant changes that materially affect user rights or
+              obligations, we may provide additional notice through the platform
+              interface.
+            </p>
+          </section>
+
+          <section class="mb-4">
+            <h2 class="h4 text-primary">12. Contact and Support</h2>
+            <p>
+              This platform is designed for educational purposes and operates as
+              a demonstration system. For technical issues or questions about
+              the platform's operation, users may refer to the platform
+              documentation or educational resources.
+            </p>
+          </section>
+
+          <aside class="alert alert-warning">
+            <h5 class="alert-heading">
+              <i class="bi bi-exclamation-triangle"></i> Important Reminder
+            </h5>
+            <p class="mb-0">
+              This is a simulated trading environment for educational purposes
+              only. No real money is involved, and no actual financial
+              transactions occur. All portfolio data and trading activities are
+              fictional and designed for learning and demonstration purposes.
+            </p>
+          </aside>
+
+          <nav class="text-center mt-4">
+            <a
+              href="{% url 'stock_visualization:index' %}"
+              class="btn btn-primary me-2"
+            >
+              <i class="bi bi-arrow-left"></i> Back to Home
+            </a>
+            <a
+              href="{% url 'stock_visualization:privacy_policy' %}"
+              class="btn btn-outline-secondary"
+            >
+              <i class="bi bi-shield-check"></i> Privacy Policy
+            </a>
+          </nav>
+        </div>
+      </header>
+    </section>
+  </article>
+</main>
+{% endblock %} {% block extra_css %}
+<style>
+  .card-body section h2 {
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-body article h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-body ul {
+    margin-bottom: 1rem;
+  }
+
+  .card-body li {
+    margin-bottom: 0.5rem;
+  }
+
+  .text-primary {
+    text-decoration: none;
+  }
+
+  .text-primary:hover {
+    text-decoration: underline;
+  }
+
+  /* Semantic HTML styling */
+  main {
+    min-height: 70vh;
+  }
+
+  article {
+    background: transparent;
+  }
+
+  section {
+    margin-bottom: 2rem;
+  }
+
+  aside.alert {
+    margin: 2rem 0;
+  }
+
+  nav.text-center {
+    padding: 1rem 0;
+    border-top: 1px solid #e9ecef;
+    margin-top: 2rem;
+  }
+
+  time {
+    display: block;
+    font-style: italic;
+  }
+</style>
+{% endblock %}

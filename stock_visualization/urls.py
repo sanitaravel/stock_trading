@@ -13,4 +13,7 @@ urlpatterns = [
     path('sectors/<int:sector_id>/', views.sector_detail, name='sector_detail'),
     path('industries/', views.industry_list, name='industry_list'),
     path('industries/<int:industry_id>/', views.industry_detail, name='industry_detail'),
+    # Legal pages
+    path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
+    path('terms-of-service/', views.terms_of_service, name='terms_of_service'),
 ]

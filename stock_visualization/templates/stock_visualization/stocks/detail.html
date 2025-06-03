@@ -5,20 +5,20 @@
 {% block title %}{{ stock.symbol }} - {{ stock.company_name }}{% endblock %}
 
 {% block content %}
-<div class="card mb-4">
-    <div class="card-header">
-        <h2>{{ stock.symbol }} - {{ stock.company_name }}</h2>
-    </div>
-    <div class="card-body">
-        <div class="row mb-3">
-            <div class="col-md-8">
+<article class="card mb-4">
+    <header class="card-header">
+        <h1 class="h2">{{ stock.symbol }} - {{ stock.company_name }}</h1>
+    </header>
+    <section class="card-body">
+        <section class="row mb-3">
+            <section class="col-md-8">
                 {% if stock.description %}
                 <p>{{ stock.description }}</p>
                 {% endif %}
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">Key Information</div>
+            </section>
+            <aside class="col-md-4">
+                <article class="card">
+                    <header class="card-header">Key Information</header>
                     <ul class="list-group list-group-flush">
                         <!-- Add sector and industry information here -->
                         <li class="list-group-item">
@@ -47,19 +47,18 @@
                             <span class="{% if price_change > 0 %}text-success{% elif price_change < 0 %}text-danger{% endif %}">
                                 {% if price_change > 0 %}+{% endif %}{{ price_change|floatformat:2 }}
                                 ({% if price_change_percent > 0 %}+{% endif %}{{ price_change_percent|floatformat:2 }}%)
-                            </span>
-                        </li>
+                            </span>                        </li>
                     </ul>
-                </div>
-            </div>
-        </div>
+                </article>
+            </aside>
+        </section>
 
         <!-- Rest of stock detail content -->
-        <div class="card mb-4">
-            <div class="card-header">Price History</div>
-            <div class="card-body">
+        <section class="card mb-4">
+            <header class="card-header">Price History</header>
+            <section class="card-body">
                 <!-- Add date range selector -->
-                <div class="mb-3 d-flex flex-wrap">
+                <nav class="mb-3 d-flex flex-wrap" aria-label="Date range selector">
                     <div class="btn-group btn-group-sm" role="group" aria-label="Date range selector">
                         <button type="button" class="btn btn-outline-primary" data-range="1D">1D</button>
                         <button type="button" class="btn btn-outline-primary" data-range="1W">1W</button>
@@ -69,15 +68,14 @@
                         <button type="button" class="btn btn-outline-primary" data-range="YTD">YTD</button>
                         <button type="button" class="btn btn-outline-primary" data-range="1Y">1Y</button>
                         <button type="button" class="btn btn-outline-primary" data-range="3Y">3Y</button>
-                        <button type="button" class="btn btn-outline-primary" data-range="5Y">5Y</button>
-                        <button type="button" class="btn btn-outline-primary" data-range="MAX">Max</button>
+                        <button type="button" class="btn btn-outline-primary" data-range="5Y">5Y</button>                        <button type="button" class="btn btn-outline-primary" data-range="MAX">Max</button>
                     </div>
-                </div>
+                </nav>
                 <canvas id="priceChart" width="100%" height="40" data-stock-id="{{ stock.id }}"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
+            </section>
+        </section>
+    </section>
+</article>
 {% endblock %}
 
 {% block extra_css %}

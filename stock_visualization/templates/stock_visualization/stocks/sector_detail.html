@@ -4,19 +4,21 @@
 {% block title %}{{ sector.name }} Sector{% endblock %}
 
 {% block content %}
-<div class="card mb-4">
-    <div class="card-header">
-        <h2>{{ sector.name }} Sector</h2>
-    </div>
-    <div class="card-body">
+<article class="card mb-4">
+    <header class="card-header">
+        <h1 class="h2">{{ sector.name }} Sector</h1>
+    </header>
+    <section class="card-body">
         {% if sector.description %}
-        <div class="mb-4">
-            <h4>About this Sector</h4>
+        <section class="mb-4">
+            <h2 class="h4">About this Sector</h2>
             <p>{{ sector.description }}</p>
-        </div>
+        </section>
         {% endif %}
-          <h4>Stocks in this Sector</h4>
-        {% include 'stock_visualization/partials/stock_table.html' with stocks=stocks show_industry=True %}
-    </div>
-</div>
+        <section>
+            <h2 class="h4">Stocks in this Sector</h2>
+            {% include 'stock_visualization/partials/stock_table.html' with stocks=stocks show_industry=True %}
+        </section>
+    </section>
+</article>
 {% endblock %}

@@ -7,13 +7,13 @@ Parameters:
 - chart_height: Height attribute for canvas (default: 350)
 {% endcomment %}
 
-<div class="card shadow">
-    <div class="card-header bg-primary text-white">
-        <h5 class="m-0">{{ chart_title }}</h5>
-    </div>
-    <div class="card-body chart-container">
+<article class="card shadow">
+    <header class="card-header bg-primary text-white">
+        <h2 class="h5 m-0">{{ chart_title }}</h2>
+    </header>
+    <section class="card-body chart-container">
         {% if show_date_selector|default:True %}
-        <div class="mb-3 d-flex flex-wrap">
+        <nav class="mb-3 d-flex flex-wrap" aria-label="Chart date range selector">
             <div class="btn-group btn-group-sm" role="group" aria-label="Date range selector">
                 <button type="button" class="btn btn-outline-primary" data-range="1D">1D</button>
                 <button type="button" class="btn btn-outline-primary" data-range="1W">1W</button>
@@ -26,8 +26,8 @@ Parameters:
                 <button type="button" class="btn btn-outline-primary" data-range="5Y">5Y</button>
                 <button type="button" class="btn btn-outline-primary" data-range="MAX">Max</button>
             </div>
-        </div>
+        </nav>
         {% endif %}
         <canvas id="{{ chart_id }}" {% if chart_height %}height="{{ chart_height }}"{% else %}height="350"{% endif %}{% if extra_attributes %} {{ extra_attributes }}{% endif %}></canvas>
-    </div>
-</div>
+    </section>
+</article>

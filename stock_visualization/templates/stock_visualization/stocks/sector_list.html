@@ -4,32 +4,32 @@
 {% block title %}Sectors{% endblock %}
 
 {% block content %}
-<div class="card mb-4">
-    <div class="card-header">
-        <h2>Market Sectors</h2>
-    </div>
-    <div class="card-body">
-        <div class="row">
+<main class="card mb-4">
+    <header class="card-header">
+        <h1 class="h2">Market Sectors</h1>
+    </header>
+    <section class="card-body">
+        <section class="row">
             {% for sector in sectors %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ sector.name }}</h5>
+            <section class="col-md-4 mb-4">
+                <article class="card h-100">
+                    <section class="card-body">
+                        <h2 class="h5 card-title">{{ sector.name }}</h2>
                         {% if sector.description %}
                         <p class="card-text">{{ sector.description|truncatewords:20 }}</p>
                         {% endif %}
-                    </div>
-                    <div class="card-footer">
+                    </section>
+                    <footer class="card-footer">
                         <a href="{% url 'stock_visualization:sector_detail' sector.id %}" class="btn btn-primary">View Stocks</a>
-                    </div>
-                </div>
-            </div>
+                    </footer>
+                </article>
+            </section>
             {% empty %}
-            <div class="col-12">
+            <section class="col-12">
                 <p class="text-center">No sectors found.</p>
-            </div>
+            </section>
             {% endfor %}
-        </div>
-    </div>
-</div>
+        </section>
+    </section>
+</main>
 {% endblock %}

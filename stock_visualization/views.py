@@ -337,3 +337,11 @@ def industry_detail(request, industry_id):
         'stocks': stocks,
     }
     return render(request, 'stock_visualization/stocks/industry_detail.html', context)
+
+def privacy_policy(request):
+    """Privacy Policy page"""
+    return render(request, 'stock_visualization/legal/privacy_policy.html')
+
+def terms_of_service(request):
+    """Terms of Service page"""
+    return render(request, 'stock_visualization/legal/terms_of_service.html')
